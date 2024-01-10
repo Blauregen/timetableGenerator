@@ -2,8 +2,7 @@
 <module version="4">
   <component name="AdditionalModuleElements">
     <content url="file://$MODULE_DIR$" dumb="true">
-      <excludeFolder url="file://$MODULE_DIR$/.idea/dataSources" />
-      <excludeFolder url="file://$MODULE_DIR$/logs" />
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
   </component>
 </module>

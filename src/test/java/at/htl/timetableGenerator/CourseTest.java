@@ -36,12 +36,12 @@ class CourseTest {
 	}
 
 	@Test
-	void name() {
+	void testName() {
 		assertEquals("Angewandte Mathematik", course.name());
 	}
 
 	@Test
-	void shortName() {
+	void testShortName() {
 		assertEquals("AM", course.shortName());
 	}
 }

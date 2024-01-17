@@ -38,7 +38,7 @@ public class WeeklyCourses {
 			return false;
 		}
 		WeeklyCourses that = (WeeklyCourses) o;
-		return Objects.equals(course, that.course);
+		return Objects.equals(course, that.course) && this.noPerWeek == ((WeeklyCourses) o).noPerWeek;
 	}
 
 	/**

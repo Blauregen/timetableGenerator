@@ -18,11 +18,20 @@ public final class TimeSlot {
 	 * Constructs a new TimeSlot with the specified day and hour.
 	 *
 	 * @param day  the day of the week
-	 * @param hour the hour of the day
+	 * @param hour the hour of the day (0-indexed)
 	 */
 	public TimeSlot(DayOfWeek day, int hour) {
 		this.day = day;
 		this.hour = hour;
+	}
+
+	/**
+	 * Returns the day of the week for this time slot.
+	 *
+	 * @return the day of the week
+	 */
+	public DayOfWeek getDay() {
+		return day;
 	}
 
 	/**
@@ -35,30 +44,21 @@ public final class TimeSlot {
 	}
 
 	/**
+	 * Returns the hour of the day for this time slot.
+	 *
+	 * @return the hour of the day
+	 */
+	public int getHour() {
+		return hour;
+	}
+
+	/**
 	 * Sets the hour of the day for this time slot.
 	 *
 	 * @param hour the hour of the day
 	 */
 	public void setHour(int hour) {
 		this.hour = hour;
-	}
-
-	/**
-	 * Returns the day of the week for this time slot.
-	 *
-	 * @return the day of the week
-	 */
-	public DayOfWeek day() {
-		return day;
-	}
-
-	/**
-	 * Returns the hour of the day for this time slot.
-	 *
-	 * @return the hour of the day
-	 */
-	public int hour() {
-		return hour;
 	}
 
 	/**

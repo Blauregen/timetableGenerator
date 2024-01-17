@@ -52,6 +52,10 @@ public class Timetable {
 			throw new IllegalArgumentException("Too few/many days in the timetable");
 		}
 
+		if (timetable[0].length != maxNoOfHoursPerDay) {
+			throw new IllegalArgumentException("Too few/many hours in the timetable");
+		}
+
 		this.timetable = timetable;
 	}
 
@@ -78,16 +82,16 @@ public class Timetable {
 	 * @param lesson   the lesson to set
 	 */
 	public void setLesson(@NotNull TimeSlot timeSlot, Course lesson) {
-		if (timeSlot.day().ordinal() > getNoOfDayPerWeek()) {
+		if (timeSlot.getDay().ordinal() > getNoOfDayPerWeek()) {
 			throw new IllegalArgumentException("Day is invalid");
 		}
 
-		if (timeSlot.hour() >= maxNoOfHoursPerDay || timeSlot.hour() < 0) {
+		if (timeSlot.getHour() >= maxNoOfHoursPerDay || timeSlot.getHour() < 0) {
 			throw new IllegalArgumentException("Time is invalid");
 		}
 
-		timetable[timeSlot.day().ordinal()][timeSlot.hour()] =
-				new Lesson(lesson, new TimeSlot(timeSlot.day(), timeSlot.hour()));
+		timetable[timeSlot.getDay().ordinal()][timeSlot.getHour()] =
+				new Lesson(lesson, new TimeSlot(timeSlot.getDay(), timeSlot.getHour()));
 	}
 
 	/**
@@ -167,7 +171,7 @@ public class Timetable {
 	 */
 	public Lesson getLesson(@NotNull TimeSlot timeSlot) {
 		try {
-			return timetable[timeSlot.day().ordinal()][timeSlot.hour()];
+			return timetable[timeSlot.getDay().ordinal()][timeSlot.getHour()];
 		} catch (ArrayIndexOutOfBoundsException e) {
 			throw new IllegalArgumentException("Tried to get Lesson with invalid day or time", e);
 		}

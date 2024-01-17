@@ -3,6 +3,8 @@ package at.htl.timetableGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Objects;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -32,7 +34,7 @@ class CourseTest {
 
 	@Test
 	void testHashCode() {
-		assertEquals(2026504968, course.hashCode());
+		assertEquals(Objects.hash(course.name()), course.hashCode());
 	}
 
 	@Test

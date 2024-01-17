@@ -6,11 +6,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 public class TeacherTest {
 	@Test
-	void testConstructor(){
+	void testConstructor() {
 		String name = "Walter von der Vogelweide";
 		Set<Course> subjects = new HashSet<>();
 		subjects.add(new Course("German", "GE"));
@@ -22,7 +21,7 @@ public class TeacherTest {
 	}
 
 	@Test
-	void testSetters(){
+	void testSetters() {
 		Set<Course> subjects = new HashSet<>();
 		subjects.add(new Course("German", "GE"));
 		subjects.add(new Course("Medicine", "ME"));

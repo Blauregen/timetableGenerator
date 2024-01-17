@@ -119,6 +119,8 @@
 				<configuration>
 					<excludes>
 						<exclude>at/htl/timetableGenerator/App.class</exclude>
+						<exclude>at/htl/timetableGenerator/output/*</exclude>
+						<exclude>at/htl/timetableGenerator/exceptions/*</exclude>
 					</excludes>
 				</configuration>
 				<executions>

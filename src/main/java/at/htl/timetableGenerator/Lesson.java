@@ -1,5 +1,7 @@
 package at.htl.timetableGenerator;
 
+import at.htl.timetableGenerator.exceptions.IncompatibleCourseException;
+
 import java.util.Objects;
 
 public class Lesson {

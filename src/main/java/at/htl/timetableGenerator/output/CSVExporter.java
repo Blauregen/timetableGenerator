@@ -1,6 +1,5 @@
 package at.htl.timetableGenerator.output;
 
-import at.htl.timetableGenerator.Lesson;
 import at.htl.timetableGenerator.TimeSlot;
 import at.htl.timetableGenerator.Timetable;
 import at.htl.timetableGenerator.exceptions.ExportException;
@@ -31,7 +30,7 @@ public class CSVExporter {
 	 * @param path      the path of the CSV file
 	 * @param name      the name of the timetable
 	 */
-	public static void exportTimetablesToSingleFile(Timetable timetable, String path, String name) {
+	public static void exportTimetableToFile(Timetable timetable, String path, String name) {
 		HashMap<String, Timetable> timetables = new HashMap<>();
 		timetables.put(name, timetable);
 		exportTimetablesToSingleFile(timetables, path);
@@ -57,23 +56,7 @@ public class CSVExporter {
 		     CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT)) {
 			timetables.forEach((name, timetable) -> {
 				try {
-					csvPrinter.printRecord("-".repeat(5) + name + "-".repeat(5));
-					List<String> headers = new LinkedList<>();
-
-					for (int i = 0; i < timetable.getNoOfDayPerWeek(); i++) {
-						headers.add(DayOfWeek.of(i + 1).toString().substring(0, 2));
-					}
-
-					csvPrinter.printRecord(headers);
-
-					for (int j = 0; j < timetable.getTimetable()[0].length; j++) {
-						List<Lesson> row = new LinkedList<>();
-						for (int i = 0; i < timetable.getTimetable().length; i++) {
-							row.add(timetable.getLesson(new TimeSlot(DayOfWeek.of(i + 1), j)));
-						}
-
-						csvPrinter.printRecord(row);
-					}
+					generateCSV(timetable, csvPrinter, name);
 
 					csvPrinter.println();
 				} catch (IOException e) {
@@ -105,22 +88,7 @@ public class CSVExporter {
 			try (Writer writer = new FileWriter(directory + "/" + name + ".csv");
 			     CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT)) {
 				try {
-					List<String> headers = new LinkedList<>();
-
-					for (int i = 0; i < timetable.getNoOfDayPerWeek(); i++) {
-						headers.add(DayOfWeek.of(i + 1).toString().substring(0, 2));
-					}
-
-					csvPrinter.printRecord(headers);
-
-					for (int j = 0; j < timetable.getTimetable()[0].length; j++) {
-						List<Lesson> row = new LinkedList<>();
-						for (int i = 0; i < timetable.getTimetable().length; i++) {
-							row.add(timetable.getLesson(new TimeSlot(DayOfWeek.of(i + 1), j)));
-						}
-
-						csvPrinter.printRecord(row);
-					}
+					generateCSV(timetable, csvPrinter, name);
 				} catch (IOException e) {
 					throw new RuntimeException(e);
 				}
@@ -128,5 +96,28 @@ public class CSVExporter {
 				throw new RuntimeException(e);
 			}
 		});
+	}
+
+	private static void generateCSV(Timetable timetable, CSVPrinter csvPrinter, String name) throws IOException {
+		List<String> headers = new LinkedList<>();
+
+		for (int i = 0; i < timetable.getNoOfDayPerWeek(); i++) {
+			headers.add(DayOfWeek.of(i + 1).toString().substring(0, 2));
+		}
+
+		headers.add("Class");
+		headers.add("Teacher");
+
+		csvPrinter.printRecord(headers);
+
+		for (int j = 0; j < timetable.getTimetable()[0].length; j++) {
+			List<String> row = new LinkedList<>();
+			for (int i = 0; i < timetable.getTimetable().length; i++) {
+				row.add(timetable.getLesson(new TimeSlot(DayOfWeek.of(i + 1), j)).toString());
+			}
+
+			row.add(name);
+			csvPrinter.printRecord(row);
+		}
 	}
 }

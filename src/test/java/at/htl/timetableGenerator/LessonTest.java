@@ -4,17 +4,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class LessonTest {
-
-	@BeforeEach
-	void setup() {
-
-	}
 
 	@Test
 	void testConstructor() {
@@ -78,5 +75,20 @@ class LessonTest {
 		Lesson lesson = new Lesson(course, timeslot);
 
 		assertEquals(Objects.hash(course, timeslot), lesson.hashCode());
+	}
+
+	@Test
+	void testSetAndGetTeacher() {
+		Set<Course> subjects = new HashSet<>();
+		Course german = new Course("German", "GE");
+		TimeSlot monday0 = new TimeSlot(DayOfWeek.MONDAY, 0);
+		subjects.add(german);
+		subjects.add(new Course("Dichtung", "DT"));
+		Teacher ludwig = new Teacher("Carl Joachim Friedrich Ludwig „Achim“ von Arnim", subjects, new Timetable(5,
+				10));
+
+		ludwig.setLesson(monday0, german);
+
+		assertEquals(german, ludwig.getLesson(monday0).getCourse());
 	}
 }

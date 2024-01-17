@@ -75,13 +75,15 @@ public class Timetable {
 		setTimetable(lessons);
 	}
 
+	//TODO: Fix this bullshit (i.e. switch the parameters)
+
 	/**
 	 * Sets the lesson at a given time slot.
 	 *
 	 * @param timeSlot the time slot to set the lesson at
-	 * @param lesson   the lesson to set
+	 * @param course   the course to set
 	 */
-	public void setLesson(@NotNull TimeSlot timeSlot, Course lesson) {
+	public void setLesson(@NotNull TimeSlot timeSlot, Course course) {
 		if (timeSlot.getDay().ordinal() > getNoOfDayPerWeek()) {
 			throw new IllegalArgumentException("Day is invalid");
 		}
@@ -91,7 +93,7 @@ public class Timetable {
 		}
 
 		timetable[timeSlot.getDay().ordinal()][timeSlot.getHour()] =
-				new Lesson(lesson, new TimeSlot(timeSlot.getDay(), timeSlot.getHour()));
+				new Lesson(course, new TimeSlot(timeSlot.getDay(), timeSlot.getHour()));
 	}
 
 	/**

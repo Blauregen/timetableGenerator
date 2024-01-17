@@ -40,8 +40,8 @@ public class CSVExporter {
 	/**
 	 * Exports multiple timetables to a single CSV file.
 	 *
-	 * @param timetables  the map of timetable names to timetables
-	 * @param stringPath  the path of the CSV file
+	 * @param timetables the map of timetable names to timetables
+	 * @param stringPath the path of the CSV file
 	 */
 	public static void exportTimetablesToSingleFile(Map<String, Timetable> timetables, String stringPath) {
 		Path path = Paths.get(stringPath);

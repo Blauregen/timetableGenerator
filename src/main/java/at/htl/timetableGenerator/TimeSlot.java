@@ -63,9 +63,11 @@ public final class TimeSlot {
 
 	/**
 	 * Checks if this time slot is equal to the specified object.
-	 * The result is true if and only if the argument is not null and is a TimeSlot object that has the same day and hour as this object.
+	 * The result is true if and only if the argument is not null and is a TimeSlot object that has the same day and
+	 * hour as this object.
 	 *
 	 * @param obj the object to compare this TimeSlot against
+	 *
 	 * @return true if the given object represents a TimeSlot equivalent to this time slot, false otherwise
 	 */
 	public boolean equals(Object obj) {
@@ -135,6 +137,7 @@ public final class TimeSlot {
 	 * Throws an IllegalArgumentException if the hour is 0.
 	 *
 	 * @return a new TimeSlot that represents the same day at the previous hour
+	 *
 	 * @throws IllegalArgumentException if the hour is 0
 	 */
 	@Contract(" -> new")

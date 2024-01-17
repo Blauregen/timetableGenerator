@@ -76,7 +76,7 @@ public final class TimetablePrinter {
 				String paddingString = " ".repeat(noOfPaddingSpaces);
 				formattedTT.append(paddingString);
 				formattedTT.append(String.format("%1$-" + (columnWidth - paddingString.length()) + "s",
-				                                 currentCourse));
+						currentCourse));
 			} catch (ArrayIndexOutOfBoundsException e) {
 				formattedTT.append(" ".repeat(columnWidth));
 			}

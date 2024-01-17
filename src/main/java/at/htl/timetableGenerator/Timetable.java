@@ -1,14 +1,9 @@
 package at.htl.timetableGenerator;
 
-import at.htl.timetableGenerator.constrains.DoubleHourConstraint;
-import at.htl.timetableGenerator.constrains.TeacherConstraint;
 import at.htl.timetableGenerator.output.TimetablePrinter;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.DayOfWeek;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * This class represents a timetable.
@@ -23,7 +18,6 @@ public class Timetable {
 	private Lesson[][] timetable;  // The timetable
 	private int maxNoOfHoursPerDay;  // The maximum number of hours per day
 	private int noOfDayPerWeek;  // The number of days per week
-	private Set<Constraint> constraints = new HashSet<>();  // The set of constraints for this timetable
 
 	/**
 	 * Constructs a new Timetable with the specified number of days per week, maximum number of hours per day, and
@@ -31,27 +25,13 @@ public class Timetable {
 	 *
 	 * @param noOfDayPerWeek     the number of days per week
 	 * @param maxNoOfHoursPerDay the maximum number of hours per day
-	 * @param constraints        the set of constraints for this timetable
 	 */
-	public Timetable(int noOfDayPerWeek, int maxNoOfHoursPerDay, @NotNull Set<Constraint> constraints) {
+	public Timetable(int noOfDayPerWeek, int maxNoOfHoursPerDay) {
 		setNoOfDayPerWeek(noOfDayPerWeek);
 		setMaxNoOfHoursPerDay(maxNoOfHoursPerDay);
-		this.constraints = constraints.stream().filter((o) -> !(o instanceof DoubleHourConstraint ||
-		                                                        o instanceof TeacherConstraint))
-		                              .collect(Collectors.toSet());
-
 		setTimetable(FREISTUNDE);
 	}
 
-	/**
-	 * Constructs a new Timetable with the specified number of days per week and maximum number of hours per day.
-	 *
-	 * @param noOfDayPerWeek     the number of days per week
-	 * @param maxNoOfHoursPerDay the maximum number of hours per day
-	 */
-	public Timetable(int noOfDayPerWeek, int maxNoOfHoursPerDay) {
-		this(noOfDayPerWeek, maxNoOfHoursPerDay, new HashSet<>());
-	}
 
 	/**
 	 * Returns the timetable.
@@ -168,46 +148,6 @@ public class Timetable {
 		for (Lesson[] lessons : timetable) {
 			for (Lesson lesson : lessons) {
 				if (lesson.getCourse() == course) {
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * Checks if the given time slot and course meet all constraints.
-	 *
-	 * @param timeSlot The time slot to check.
-	 * @param course   The course to check.
-	 *
-	 * @return true if all constraints are met, false otherwise.
-	 */
-	private boolean checkConstraints(TimeSlot timeSlot, Course course) {
-		for (Constraint constraint : constraints) {
-			if (!constraint.check(this, timeSlot, course, new HashSet<>())) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Checks if there is an available double hour spot for a given course.
-	 * A double hour spot is defined as a free time slot that is preceded by the given course.
-	 *
-	 * @param course The course to check for.
-	 *
-	 * @return true if there is an available double hour spot, false otherwise.
-	 */
-	public boolean hasAvailableDoubleHourSpot(Course course) {
-		for (int i = 0; i < timetable.length; i++) {
-			for (int j = 1; j < timetable.length; j++) {
-				TimeSlot currentSlot = new TimeSlot(DayOfWeek.of(i + 1), j);
-
-				if (getLesson(currentSlot.prevHour()).getCourse() == course && checkConstraints(currentSlot, course)) {
 					return true;
 				}
 			}

@@ -26,10 +26,12 @@ public class ExcelExporter {
 	 * Each timetable is exported to a separate sheet in the workbook.
 	 * The name of the sheet is the name of the timetable.
 	 * The first row of each sheet contains the days of the week.
-	 * Each subsequent row represents a time slot and contains the short name of the course scheduled at that time slot.
+	 * Each subsequent row represents a time slot and contains the short name of the course scheduled at that time
+	 * slot.
 	 *
 	 * @param timetables the map of timetable names to timetables
 	 * @param stringPath the path of the Excel workbook
+	 *
 	 * @throws ExportException if an error occurs during the export process
 	 */
 	public static void exportToWorkbook(Map<String, Timetable> timetables, String stringPath) {

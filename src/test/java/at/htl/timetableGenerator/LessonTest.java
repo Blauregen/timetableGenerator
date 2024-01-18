@@ -3,7 +3,9 @@ package at.htl.timetableGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -12,48 +14,48 @@ class LessonTest {
 
 	@Test
 	void testConstructor() {
-		Course course = new Course("Maths", "M");
+		Subject subject = new Subject("Maths", "M");
 		TimeSlot timeslot = new TimeSlot(DayOfWeek.FRIDAY, 8);
-		Lesson lesson = new Lesson(course, timeslot);
+		Lesson lesson = new Lesson(subject, timeslot);
 
-		assertEquals(lesson.getCourse(), course);
+		assertEquals(lesson.getSubject(), subject);
 		assertEquals(lesson.getTimeSlot(), timeslot);
 	}
 
 	@Test
 	void testSetters() {
-		Course course = new Course("Maths", "M");
+		Subject subject = new Subject("Maths", "M");
 		TimeSlot timeslot = new TimeSlot(DayOfWeek.SATURDAY, 9);
-		Lesson lesson = new Lesson(course, timeslot);
-		Course newCourse = new Course("English", "E");
+		Lesson lesson = new Lesson(subject, timeslot);
+		Subject newSubject = new Subject("English", "E");
 		TimeSlot newTimeSlot = new TimeSlot(DayOfWeek.MONDAY, 7);
 
-		lesson.setCourse(newCourse);
+		lesson.setSubject(newSubject);
 		lesson.setTimeSlot(newTimeSlot);
 
-		assertEquals(newCourse, lesson.getCourse());
+		assertEquals(newSubject, lesson.getSubject());
 		assertEquals(newTimeSlot, lesson.getTimeSlot());
 	}
 
 	@Test
 	void testToString() {
-		Course course = new Course("Maths", "M");
+		Subject subject = new Subject("Maths", "M");
 		TimeSlot timeslot = new TimeSlot(DayOfWeek.SATURDAY, 9);
-		Lesson lesson = new Lesson(course, timeslot);
+		Lesson lesson = new Lesson(subject, timeslot);
 
 		assertEquals("SA 9: M", lesson.toString());
 	}
 
 	@Test
 	void testEquals() {
-		Course course = new Course("Maths", "M");
-		Course MathGerman = new Course("Maths", "D");
-		Course itp = new Course("ITP", "D");
+		Subject subject = new Subject("Maths", "M");
+		Subject MathGerman = new Subject("Maths", "D");
+		Subject itp = new Subject("ITP", "D");
 		TimeSlot timeslot = new TimeSlot(DayOfWeek.SATURDAY, 9);
-		Lesson lesson = new Lesson(course, timeslot);
+		Lesson lesson = new Lesson(subject, timeslot);
 		Lesson sameLesson = new Lesson(MathGerman, timeslot);
 		Lesson differentLesson = new Lesson(itp, timeslot);
-		Lesson alsoDifferentLesson = new Lesson(course, timeslot.prevHour());
+		Lesson alsoDifferentLesson = new Lesson(subject, timeslot.prevHour());
 		Lesson stillDifferentLesson = new Lesson(itp, timeslot.prevHour());
 
 		assertEquals(lesson, lesson);
@@ -67,25 +69,28 @@ class LessonTest {
 
 	@Test
 	void testHashCode() {
-		Course course = new Course("Maths", "M");
+		Subject subject = new Subject("Maths", "M");
 		TimeSlot timeslot = new TimeSlot(DayOfWeek.SATURDAY, 9);
-		Lesson lesson = new Lesson(course, timeslot);
+		Lesson lesson = new Lesson(subject, timeslot);
 
-		assertEquals(Objects.hash(course, timeslot), lesson.hashCode());
+		assertEquals(Objects.hash(subject, timeslot), lesson.hashCode());
 	}
 
-//	@Test
-//	void testSetAndGetTeacher() {
-//		Set<Course> subjects = new HashSet<>();
-//		Course german = new Course("German", "GE");
-//		TimeSlot monday0 = new TimeSlot(DayOfWeek.MONDAY, 0);
-//		subjects.add(german);
-//		subjects.add(new Course("Dichtung", "DT"));
-//		Teacher ludwig = new Teacher("Carl Joachim Friedrich Ludwig „Achim“ von Arnim", subjects, new Timetable(5,
-//				10));
-//
-//		ludwig.setLesson(new Lesson(german, monday0));
-//
-//		assertEquals(german, ludwig.getLesson(monday0).getCourse());
-//	}
+	@Test
+	void testSetAndGetTeacher() {
+		Set<Subject> subjects = new HashSet<>();
+		Subject german = new Subject("German", "GE");
+		Subject minnegesang = new Subject("Minnegesang", "MG");
+		subjects.add(german);
+		subjects.add(minnegesang);
+		TimeSlot timeSlot = new TimeSlot(DayOfWeek.THURSDAY, 7);
+
+		Teacher derKuerenberger = new Teacher("Der Kürenberger", subjects, new Timetable(5, 10));
+
+		Lesson lesson = new Lesson(minnegesang, timeSlot);
+		lesson.setTeacher(derKuerenberger);
+
+		assertEquals(derKuerenberger, lesson.getTeacher());
+		assertEquals(lesson, derKuerenberger.getLesson(timeSlot));
+	}
 }

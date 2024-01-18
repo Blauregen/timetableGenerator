@@ -68,7 +68,8 @@ public final class TimeSlot {
 	 *
 	 * @param obj the object to compare this TimeSlot against
 	 *
-	 * @return true if the given object represents a TimeSlot equivalent to this time slot, false otherwise
+	 * @return true if the given object represents a TimeSlot with the same day and hour to this time slot, false
+	 * otherwise
 	 */
 	public boolean equals(Object obj) {
 		if (obj == this) {

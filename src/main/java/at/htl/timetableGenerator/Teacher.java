@@ -3,12 +3,12 @@ package at.htl.timetableGenerator;
 import java.util.Set;
 
 /**
- * This class represents a teacher in a timetable.
+ * This class represents a teacher.
  * A teacher is defined by a name, a set of subjects they can teach, and a timetable of occupied lessons.
  */
 public class Teacher {
 	private final String name;  // The name of the teacher
-	private Set<Course> subjects;  // The set of subjects this teacher can teach
+	private Set<Subject> subjects;  // The set of subjects this teacher can teach
 	private Timetable occupiedLessons; // The timetable of lessons this teacher is occupied with
 
 	/**
@@ -20,7 +20,7 @@ public class Teacher {
 	 *                        and
 	 *                        hours they can be assigned. Can be overwritten later.
 	 */
-	public Teacher(String name, Set<Course> subjects, Timetable occupiedLessons) {
+	public Teacher(String name, Set<Subject> subjects, Timetable occupiedLessons) {
 		this.name = name;
 		this.subjects = subjects;
 		this.occupiedLessons = occupiedLessons;
@@ -40,7 +40,7 @@ public class Teacher {
 	 *
 	 * @return the set of subjects this teacher can teach
 	 */
-	public Set<Course> getSubjects() {
+	public Set<Subject> getSubjects() {
 		return subjects;
 	}
 
@@ -49,7 +49,7 @@ public class Teacher {
 	 *
 	 * @param subjects the set of subjects this teacher can teach
 	 */
-	public void setSubjects(Set<Course> subjects) {
+	public void setSubjects(Set<Subject> subjects) {
 		this.subjects = subjects;
 	}
 
@@ -58,7 +58,7 @@ public class Teacher {
 	 *
 	 * @return the timetable of lessons this teacher is occupied with
 	 */
-	public Timetable getOccupiedLessons() {
+	public Timetable getTimetable() {
 		return occupiedLessons;
 	}
 
@@ -80,5 +80,24 @@ public class Teacher {
 	 **/
 	public Lesson getLesson(TimeSlot timeSlot) {
 		return occupiedLessons.getLesson(timeSlot);
+	}
+
+	/**
+	 * Sets the lesson for this teacher in the occupiedLessons timetable.
+	 * If the teacher of the lesson is not this teacher, it also sets this teacher to the lesson.
+	 *
+	 * @param lesson The lesson to set
+	 */
+	public void setLesson(Lesson lesson) {
+		this.occupiedLessons.setLesson(lesson);
+
+		if (lesson.getTeacher() != this) {
+			lesson.setTeacher(this);
+		}
+	}
+
+	@Override
+	public String toString() {
+		return this.name;
 	}
 }

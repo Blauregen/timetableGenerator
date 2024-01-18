@@ -40,7 +40,7 @@ class TimetableTest {
 
 	@Test
 	void setTimetable() {
-		Course am = new Course("Mathe", "AM");
+		Subject am = new Subject("Mathe", "AM");
 		HashMap<TimeSlot, Lesson> lessons = new HashMap<>();
 		lessons.put(new TimeSlot(DayOfWeek.MONDAY, 0), new Lesson(am, new TimeSlot(DayOfWeek.MONDAY, 0)));
 		timetable.setTimetable(lessons);
@@ -49,7 +49,7 @@ class TimetableTest {
 		for (int i = 0; i < timetable.getNoOfDayPerWeek(); i++) {
 			for (int j = 0; j < timetable.getMaxNoOfHoursPerDay(); j++) {
 				TimeSlot slot = new TimeSlot(DayOfWeek.of(i + 1), j);
-				lessons.put(slot, new Lesson(Timetable.FREISTUNDE, slot));
+				lessons.put(slot, new Lesson(am, slot));
 			}
 		}
 
@@ -59,15 +59,15 @@ class TimetableTest {
 
 	@Test
 	void setAndGetLesson() {
-		Course am = new Course("Mathe", "AM");
+		Subject am = new Subject("Mathe", "AM");
 		TimeSlot slot = new TimeSlot(DayOfWeek.MONDAY, 0);
 		timetable.setLesson(new Lesson(am, slot));
-		assertEquals(timetable.getLesson(slot).getCourse(), am);
+		assertEquals(timetable.getLesson(slot).getSubject(), am);
 	}
 
 	@Test
 	void setAndGetLessonInvalidTime() {
-		Course am = new Course("Mathe", "AM");
+		Subject am = new Subject("Mathe", "AM");
 		TimeSlot slot = new TimeSlot(DayOfWeek.SUNDAY, 0);
 		TimeSlot secondSlot = new TimeSlot(DayOfWeek.MONDAY, 11);
 		TimeSlot thirdSlot = new TimeSlot(DayOfWeek.MONDAY, -1);
@@ -79,8 +79,7 @@ class TimetableTest {
 				"Time is invalid");
 		assertThrows(IllegalArgumentException.class, () -> timetable.setLesson(new Lesson(am, thirdSlot)),
 				"Time is invalid");
-		assertThrows(IllegalArgumentException.class, () -> timetable.getLesson(fourthSlot),
-				"Tried to get Lesson with invalid day or time");
+		assertEquals(new Lesson(Timetable.FREISTUNDE, fourthSlot), timetable.getLesson(fourthSlot));
 	}
 
 	@Test
@@ -123,8 +122,8 @@ class TimetableTest {
 
 	@Test
 	void contains() {
-		Course am = new Course("Mathe", "AM");
-		Course d = new Course("german", "D");
+		Subject am = new Subject("Mathe", "AM");
+		Subject d = new Subject("german", "D");
 		TimeSlot slot = new TimeSlot(DayOfWeek.MONDAY, 0);
 		timetable.setLesson(new Lesson(am, slot));
 		assertTrue(timetable.contains(am));
@@ -133,7 +132,7 @@ class TimetableTest {
 
 	@Test
 	void testToString() {
-		Course am = new Course("Mathe", "AM");
+		Subject am = new Subject("Mathe", "AM");
 		TimeSlot slot = new TimeSlot(DayOfWeek.MONDAY, 0);
 		timetable.setLesson(new Lesson(am, slot));
 		assertTrue(timetable.toString().contains("AM"));

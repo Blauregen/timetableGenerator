@@ -2,6 +2,7 @@ package at.htl.timetableGenerator;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.DayOfWeek;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,9 +12,9 @@ public class TeacherTest {
 	@Test
 	void testConstructor() {
 		String name = "Walter von der Vogelweide";
-		Set<Course> subjects = new HashSet<>();
-		subjects.add(new Course("German", "GE"));
-		subjects.add(new Course("Music", "MU"));
+		Set<Subject> subjects = new HashSet<>();
+		subjects.add(new Subject("German", "GE"));
+		subjects.add(new Subject("Music", "MU"));
 		Teacher walter = new Teacher(name, subjects, new Timetable(5, 10));
 
 		assertEquals(name, walter.getName());
@@ -22,32 +23,43 @@ public class TeacherTest {
 
 	@Test
 	void testSetters() {
-		Set<Course> subjects = new HashSet<>();
-		subjects.add(new Course("German", "GE"));
-		subjects.add(new Course("Medicine", "ME"));
+		Set<Subject> subjects = new HashSet<>();
+		subjects.add(new Subject("German", "GE"));
+		subjects.add(new Subject("Medicine", "ME"));
 		Teacher hildegard = new Teacher("Hildegard von Bingen", subjects, new Timetable(5, 10));
 
-		Set<Course> newSubjects = new HashSet<>();
+		Set<Subject> newSubjects = new HashSet<>();
 		Timetable timetable = new Timetable(5, 8);
 
 		hildegard.setSubjects(newSubjects);
 		hildegard.setOccupiedLessons(timetable);
 
 		assertEquals(newSubjects, hildegard.getSubjects());
-		assertEquals(timetable, hildegard.getOccupiedLessons());
+		assertEquals(timetable, hildegard.getTimetable());
 	}
 
-//	@Test
-//	void testSingleSetterAndGetters() {
-//		Set<Course> subjects = new HashSet<>();
-//		Course german = new Course("German", "GE");
-//		TimeSlot monday0 = new TimeSlot(DayOfWeek.MONDAY, 0);
-//		subjects.add(german);
-//		subjects.add(new Course("Dichtung", "DT"));
-//		Teacher ludwig = new Teacher("Carl Joachim Friedrich Ludwig „Achim“ von Arnim", subjects, new Timetable(5,
-//				10));
-//
-//
-//		assertEquals(german, ludwig.getLesson(monday0).getCourse());
-//	}
+	@Test
+	void testSingleSetterAndGetters() {
+		Set<Subject> subjects = new HashSet<>();
+		Subject german = new Subject("German", "GE");
+		TimeSlot monday0 = new TimeSlot(DayOfWeek.MONDAY, 0);
+		subjects.add(german);
+		subjects.add(new Subject("Lyrik", "LY"));
+		Teacher ludwig = new Teacher("Carl Joachim Friedrich Ludwig „Achim“ von Arnim", subjects, new Timetable(5,
+				10));
+
+		ludwig.setLesson(new Lesson(german, monday0));
+
+		assertEquals(german, ludwig.getLesson(monday0).getSubject());
+		assertEquals(ludwig, ludwig.getLesson(monday0).getTeacher());
+	}
+
+	@Test
+	void testToString() {
+		Subject dichtung = new Subject("Dichtung", "Dt");
+		Set<Subject> subjects = new HashSet<>();
+		subjects.add(dichtung);
+		Teacher heinrich = new Teacher("Heinrich von Veldeke", subjects, new Timetable(5, 10));
+		assertEquals("Heinrich von Veldeke", heinrich.toString());
+	}
 }

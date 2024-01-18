@@ -1,10 +1,10 @@
 package at.htl.timetableGenerator.output;
 
-import at.htl.timetableGenerator.TimeSlot;
 import at.htl.timetableGenerator.Timetable;
 import at.htl.timetableGenerator.exceptions.ExportException;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,7 +12,6 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.DayOfWeek;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,6 +40,8 @@ public class CSVExporter {
 	 *
 	 * @param timetables the map of timetable names to timetables
 	 * @param stringPath the path of the CSV file
+	 *
+	 * @throws ExportException if there is an error exporting.
 	 */
 	public static void exportTimetablesToSingleFile(Map<String, Timetable> timetables, String stringPath) {
 		Path path = Paths.get(stringPath);
@@ -54,17 +55,35 @@ public class CSVExporter {
 
 		try (Writer writer = new FileWriter(stringPath);
 		     CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT)) {
-			timetables.forEach((name, timetable) -> {
-				try {
-					generateCSV(timetable, csvPrinter, name);
+			printHeaders(csvPrinter);
 
-					csvPrinter.println();
-				} catch (IOException e) {
-					throw new RuntimeException(e);
-				}
-			});
-		} catch (IOException e) {
+			timetables.forEach((name, timetable) -> generateCSV(timetable, csvPrinter, name));
+		} catch (IOException | ExportException e) {
 			throw new ExportException("Error writing to csv file", e);
+		}
+	}
+
+	/**
+	 * Prints the headers for the CSV file.
+	 * The headers are "day", "hour", "subject", "teacher", and "class".
+	 *
+	 * @param csvPrinter The CSVPrinter to use for printing the headers
+	 *
+	 * @throws ExportException if there is an error exporting.
+	 **/
+	private static void printHeaders(@NotNull CSVPrinter csvPrinter) {
+		List<String> headers = new LinkedList<>();
+
+		headers.add("day");
+		headers.add("hour");
+		headers.add("subject");
+		headers.add("teacher");
+		headers.add("class");
+
+		try {
+			csvPrinter.printRecord(headers);
+		} catch (IOException e) {
+			throw new ExportException("Error writing headers to csv", e);
 		}
 	}
 
@@ -73,6 +92,8 @@ public class CSVExporter {
 	 *
 	 * @param timetables the map of timetable names to timetables
 	 * @param directory  the directory to save the CSV files
+	 *
+	 * @throws ExportException if there is an error exporting.
 	 */
 	public static void exportTimetablesToMultipleFiles(Map<String, Timetable> timetables, String directory) {
 		Path path = Paths.get(directory);
@@ -87,37 +108,45 @@ public class CSVExporter {
 		timetables.forEach((name, timetable) -> {
 			try (Writer writer = new FileWriter(directory + "/" + name + ".csv");
 			     CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT)) {
-				try {
-					generateCSV(timetable, csvPrinter, name);
-				} catch (IOException e) {
-					throw new RuntimeException(e);
-				}
-			} catch (IOException e) {
-				throw new RuntimeException(e);
+
+				printHeaders(csvPrinter);
+				generateCSV(timetable, csvPrinter, name);
+			} catch (ExportException | IOException e) {
+				throw new ExportException("Error writing to csv file", e);
 			}
 		});
 	}
 
-	private static void generateCSV(Timetable timetable, CSVPrinter csvPrinter, String name) throws IOException {
-		List<String> headers = new LinkedList<>();
+	/**
+	 * Generates a CSV representation of the given timetable.
+	 * The CSV contains a row for each time slot in the timetable.
+	 * Each row contains the day of the week, the hour of the day, the subject, the teacher, and the class.
+	 *
+	 * @param timetable   The timetable to generate the CSV for
+	 * @param csvPrinter  The CSVPrinter to use for generating the CSV
+	 * @param schoolClass The class for which the timetable is generated
+	 *
+	 * @throws ExportException if there is an error exporting.
+	 */
+	private static void generateCSV(@NotNull Timetable timetable, CSVPrinter csvPrinter, String schoolClass) {
 
-		for (int i = 0; i < timetable.getNoOfDayPerWeek(); i++) {
-			headers.add(DayOfWeek.of(i + 1).toString().substring(0, 2));
-		}
-
-		headers.add("Class");
-		headers.add("Teacher");
-
-		csvPrinter.printRecord(headers);
-
-		for (int j = 0; j < timetable.getTimetableAsArray()[0].length; j++) {
-			List<String> row = new LinkedList<>();
-			for (int i = 0; i < timetable.getTimetableAsArray().length; i++) {
-				row.add(timetable.getLesson(new TimeSlot(DayOfWeek.of(i + 1), j)).toString());
+		timetable.getTimetable().forEach((slot, lesson) -> {
+			LinkedList<String> row = new LinkedList<>();
+			row.add(slot.getDay().toString());
+			row.add(String.valueOf(slot.getHour()));
+			row.add(lesson.getSubject().toString());
+			if (lesson.getTeacher() != null) {
+				row.add(lesson.getTeacher().toString());
+			} else {
+				row.add("none");
 			}
 
-			row.add(name);
-			csvPrinter.printRecord(row);
-		}
+			row.add(schoolClass);
+			try {
+				csvPrinter.printRecord(row);
+			} catch (IOException e) {
+				throw new ExportException("Error writing data to csv file", e);
+			}
+		});
 	}
 }

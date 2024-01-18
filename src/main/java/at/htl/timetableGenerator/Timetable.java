@@ -10,11 +10,11 @@ import java.util.HashMap;
 /**
  * This class represents a timetable.
  * A timetable is defined by a number of days per week, a maximum number of hours per day, and a set of constraints.
- * It provides methods to get and set the timetable, check if a course is in the timetable, check if a double hour spot
- * is available for a course, and get a lesson at a given time slot.
+ * It provides methods to get and set the timetable, check if a subject is in the timetable, check if a double hour spot
+ * is available for a subject, and get a lesson at a given time slot.
  */
 public class Timetable {
-	public static final Course FREISTUNDE = new Course("Freistunde", "");
+	public static final Subject FREISTUNDE = new Subject("Freistunde", "");
 	public static final int MIN_NUMBER_OF_HOURS_PER_DAY = 1;
 	public static final int MIN_NUMBER_OF_DAYS_PER_WEEK = 1;
 	private HashMap<TimeSlot, Lesson> timetable;  // The timetable
@@ -54,11 +54,11 @@ public class Timetable {
 	}
 
 	/**
-	 * Sets the timetable with a given course.
+	 * Sets the timetable with a given subject.
 	 *
-	 * @param fill the course to fill the timetable with
+	 * @param fill the subject to fill the timetable with
 	 */
-	public void setTimetable(Course fill) {
+	public void setTimetable(Subject fill) {
 		HashMap<TimeSlot, Lesson> lessons = new HashMap<>();
 		for (int i = 0; i < noOfDayPerWeek; i++) {
 			for (int j = 0; j < maxNoOfHoursPerDay; j++) {
@@ -71,11 +71,11 @@ public class Timetable {
 	}
 
 	/**
-	 * Sets the lesson at a given time slot.
+	 * Sets the lesson at its timeslot.
 	 *
 	 * @param lesson the lesson to set
 	 */
-	public void setLesson(Lesson lesson) {
+	public void setLesson(@NotNull Lesson lesson) {
 		TimeSlot timeSlot = lesson.getTimeSlot();
 
 		if (timeSlot.getDay().ordinal() > getNoOfDayPerWeek()) {
@@ -137,17 +137,17 @@ public class Timetable {
 	}
 
 	/**
-	 * Checks if the timetable contains a specific course.
+	 * Checks if the timetable contains a specific subject.
 	 *
-	 * @param course The course to check for.
+	 * @param subject The subject to check for.
 	 *
-	 * @return true if the timetable contains the course, false otherwise.
+	 * @return true if the timetable contains the subject, false otherwise.
 	 */
-	public boolean contains(Course course) {
+	public boolean contains(Subject subject) {
 		boolean[] toReturn = new boolean[1];
 
 		timetable.forEach((slot, lesson) -> {
-			if (lesson.getCourse() == course) {
+			if (lesson.getSubject() == subject) {
 				toReturn[0] = true;
 			}
 		});
@@ -161,11 +161,9 @@ public class Timetable {
 	 * @param timeSlot The time slot to get the lesson for.
 	 *
 	 * @return The lesson at the given time slot.
-	 *
-	 * @throws IllegalArgumentException If the day or time of the time slot is invalid.
 	 */
 	public Lesson getLesson(@NotNull TimeSlot timeSlot) {
-		return timetable.get(timeSlot);
+		return timetable.getOrDefault(timeSlot, new Lesson(FREISTUNDE, timeSlot));
 	}
 
 	/**
@@ -178,6 +176,13 @@ public class Timetable {
 		return TimetablePrinter.print(this);
 	}
 
+	/**
+	 * Returns the timetable as a 2D array of lessons.
+	 * The first dimension represents the days of the week, and the second dimension represents the hours of the day.
+	 * Each element in the array is a lesson at the corresponding day and hour.
+	 *
+	 * @return A 2D array of lessons representing the timetable
+	 */
 	public Lesson[][] getTimetableAsArray() {
 		Lesson[][] lessonsArray = new Lesson[noOfDayPerWeek][maxNoOfHoursPerDay];
 		Collection<Lesson> lessons = timetable.values();

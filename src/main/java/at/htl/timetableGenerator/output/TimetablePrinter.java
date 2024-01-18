@@ -1,7 +1,7 @@
 package at.htl.timetableGenerator.output;
 
-import at.htl.timetableGenerator.Course;
 import at.htl.timetableGenerator.Lesson;
+import at.htl.timetableGenerator.Subject;
 import at.htl.timetableGenerator.Timetable;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -51,7 +51,7 @@ public final class TimetablePrinter {
 
 		for (Lesson[] lessons : tt.getTimetableAsArray()) {
 			for (Lesson lesson : lessons) {
-				columnWidth = Math.max(columnWidth, lesson.getCourse().shortName().length());
+				columnWidth = Math.max(columnWidth, lesson.getSubject().shortName().length());
 			}
 		}
 
@@ -60,7 +60,7 @@ public final class TimetablePrinter {
 	}
 
 	/**
-	 * Prints a row of courses in the timetable.
+	 * Prints a row of subjects in the timetable.
 	 *
 	 * @param tt          The timetable to print the row for.
 	 * @param time        The index of the row to print.
@@ -70,13 +70,13 @@ public final class TimetablePrinter {
 	public static void printRow(@NotNull Timetable tt, int time, int columnWidth, StringBuilder formattedTT) {
 		for (int i = 0; i < tt.getNoOfDayPerWeek(); i++) {
 			try {
-				Course currentCourse = tt.getTimetableAsArray()[i][time].getCourse();
+				Subject currentSubject = tt.getTimetableAsArray()[i][time].getSubject();
 
-				int noOfPaddingSpaces = getPadding(columnWidth, currentCourse.shortName());
+				int noOfPaddingSpaces = getPadding(columnWidth, currentSubject.shortName());
 				String paddingString = " ".repeat(noOfPaddingSpaces);
 				formattedTT.append(paddingString);
 				formattedTT.append(String.format("%1$-" + (columnWidth - paddingString.length()) + "s",
-						currentCourse));
+						currentSubject));
 			} catch (ArrayIndexOutOfBoundsException e) {
 				formattedTT.append(" ".repeat(columnWidth));
 			}

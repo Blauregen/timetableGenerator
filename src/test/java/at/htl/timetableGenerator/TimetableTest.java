@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,56 +24,44 @@ class TimetableTest {
 
 	@Test
 	void getTimetable() {
-		Lesson[][] lessons = new Lesson[5][10];
+		HashMap<TimeSlot, Lesson> lessons = new HashMap<>();
 
-		for (int i = 0; i < lessons.length; i++) {
+		for (int i = 0; i < timetable.getNoOfDayPerWeek(); i++) {
 			for (int j = 0; j < timetable.getMaxNoOfHoursPerDay(); j++) {
-				lessons[i][j] = new Lesson(Timetable.FREISTUNDE, new TimeSlot(DayOfWeek.of(i + 1), j));
+				TimeSlot slot = new TimeSlot(DayOfWeek.of(i + 1), j);
+				lessons.put(slot, new Lesson(Timetable.FREISTUNDE, slot));
 			}
 		}
 
-		assertArrayEquals(lessons, timetable.getTimetable());
+		timetable.setTimetable(lessons);
+
+		assertEquals(lessons, timetable.getTimetable());
 	}
 
 	@Test
 	void setTimetable() {
 		Course am = new Course("Mathe", "AM");
-		Lesson[][] lessons = new Lesson[5][10];
-		lessons[1][1] = new Lesson(am, new TimeSlot(DayOfWeek.THURSDAY, 1));
+		HashMap<TimeSlot, Lesson> lessons = new HashMap<>();
+		lessons.put(new TimeSlot(DayOfWeek.MONDAY, 0), new Lesson(am, new TimeSlot(DayOfWeek.MONDAY, 0)));
 		timetable.setTimetable(lessons);
-		assertArrayEquals(lessons, timetable.getTimetable());
+		assertEquals(lessons, timetable.getTimetable());
 
-		for (int i = 0; i < lessons.length; i++) {
+		for (int i = 0; i < timetable.getNoOfDayPerWeek(); i++) {
 			for (int j = 0; j < timetable.getMaxNoOfHoursPerDay(); j++) {
-				lessons[i][j] = new Lesson(am, new TimeSlot(DayOfWeek.of(i + 1), j));
+				TimeSlot slot = new TimeSlot(DayOfWeek.of(i + 1), j);
+				lessons.put(slot, new Lesson(Timetable.FREISTUNDE, slot));
 			}
 		}
 
 		timetable.setTimetable(am);
-		assertArrayEquals(lessons, timetable.getTimetable());
-	}
-
-	@Test
-	void setTimetableInvalidDays() {
-		Lesson[][] lessons = new Lesson[6][10];
-
-		assertThrows(IllegalArgumentException.class, () -> timetable.setTimetable(lessons),
-				"Too few/many days in the timetable");
-	}
-
-	@Test
-	void setTimetableInvalidHours() {
-		Lesson[][] lessons = new Lesson[5][11];
-
-		assertThrows(IllegalArgumentException.class, () -> timetable.setTimetable(lessons),
-				"Too few/many hours in the timetable");
+		assertEquals(lessons, timetable.getTimetable());
 	}
 
 	@Test
 	void setAndGetLesson() {
 		Course am = new Course("Mathe", "AM");
 		TimeSlot slot = new TimeSlot(DayOfWeek.MONDAY, 0);
-		timetable.setLesson(slot, am);
+		timetable.setLesson(new Lesson(am, slot));
 		assertEquals(timetable.getLesson(slot).getCourse(), am);
 	}
 
@@ -84,9 +73,12 @@ class TimetableTest {
 		TimeSlot thirdSlot = new TimeSlot(DayOfWeek.MONDAY, -1);
 		TimeSlot fourthSlot = new TimeSlot(DayOfWeek.MONDAY, 11);
 
-		assertThrows(IllegalArgumentException.class, () -> timetable.setLesson(slot, am), "Day is invalid");
-		assertThrows(IllegalArgumentException.class, () -> timetable.setLesson(secondSlot, am), "Time is invalid");
-		assertThrows(IllegalArgumentException.class, () -> timetable.setLesson(thirdSlot, am), "Time is invalid");
+		assertThrows(IllegalArgumentException.class, () -> timetable.setLesson(new Lesson(am, slot)),
+				"Day is " + "invalid");
+		assertThrows(IllegalArgumentException.class, () -> timetable.setLesson(new Lesson(am, secondSlot)),
+				"Time is invalid");
+		assertThrows(IllegalArgumentException.class, () -> timetable.setLesson(new Lesson(am, thirdSlot)),
+				"Time is invalid");
 		assertThrows(IllegalArgumentException.class, () -> timetable.getLesson(fourthSlot),
 				"Tried to get Lesson with invalid day or time");
 	}
@@ -134,7 +126,7 @@ class TimetableTest {
 		Course am = new Course("Mathe", "AM");
 		Course d = new Course("german", "D");
 		TimeSlot slot = new TimeSlot(DayOfWeek.MONDAY, 0);
-		timetable.setLesson(slot, am);
+		timetable.setLesson(new Lesson(am, slot));
 		assertTrue(timetable.contains(am));
 		assertFalse(timetable.contains(d));
 	}
@@ -143,7 +135,7 @@ class TimetableTest {
 	void testToString() {
 		Course am = new Course("Mathe", "AM");
 		TimeSlot slot = new TimeSlot(DayOfWeek.MONDAY, 0);
-		timetable.setLesson(slot, am);
+		timetable.setLesson(new Lesson(am, slot));
 		assertTrue(timetable.toString().contains("AM"));
 	}
 }

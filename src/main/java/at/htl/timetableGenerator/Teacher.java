@@ -1,7 +1,5 @@
 package at.htl.timetableGenerator;
 
-import at.htl.timetableGenerator.exceptions.IncompatibleCourseException;
-
 import java.util.Set;
 
 /**
@@ -79,22 +77,8 @@ public class Teacher {
 	 * @param timeSlot The time slot to get the lesson for.
 	 *
 	 * @return The lesson at the given time slot.
-	 *
-	 * @throws IllegalArgumentException If the day or time of the time slot is invalid.
-	 */
+	 **/
 	public Lesson getLesson(TimeSlot timeSlot) {
 		return occupiedLessons.getLesson(timeSlot);
-	}
-
-	/**
-	 * Sets the lesson at a given time slot, and also sets this to be the teacher of said lesson
-	 *
-	 * @param timeSlot the time slot to set the lesson at
-	 * @param course   the course to set
-	 *
-	 * @throws IncompatibleCourseException If the course is not a part of the subjects of the teacher
-	 */
-	public void setLesson(TimeSlot timeSlot, Course course) {
-		occupiedLessons.setLesson(timeSlot, course);
 	}
 }

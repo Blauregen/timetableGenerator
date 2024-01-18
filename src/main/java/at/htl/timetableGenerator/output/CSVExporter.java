@@ -110,9 +110,9 @@ public class CSVExporter {
 
 		csvPrinter.printRecord(headers);
 
-		for (int j = 0; j < timetable.getTimetable()[0].length; j++) {
+		for (int j = 0; j < timetable.getTimetableAsArray()[0].length; j++) {
 			List<String> row = new LinkedList<>();
-			for (int i = 0; i < timetable.getTimetable().length; i++) {
+			for (int i = 0; i < timetable.getTimetableAsArray().length; i++) {
 				row.add(timetable.getLesson(new TimeSlot(DayOfWeek.of(i + 1), j)).toString());
 			}
 

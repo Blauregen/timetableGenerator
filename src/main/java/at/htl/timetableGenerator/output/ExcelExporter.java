@@ -53,10 +53,10 @@ public class ExcelExporter {
 					row.createCell(i).setCellValue(DayOfWeek.of(i + 1).toString().substring(0, 2));
 				}
 
-				for (int j = 0; j < timetable.getTimetable()[0].length; j++) {
+				for (int j = 0; j < timetable.getTimetableAsArray()[0].length; j++) {
 					row = sheet.createRow(j + 1);
 
-					for (int i = 0; i < timetable.getTimetable().length; i++) {
+					for (int i = 0; i < timetable.getTimetableAsArray().length; i++) {
 						row.createCell(i).setCellValue(
 								timetable.getLesson(new TimeSlot(DayOfWeek.of(i + 1), j)).getCourse().shortName());
 					}

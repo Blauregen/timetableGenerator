@@ -5,6 +5,7 @@ import java.util.Objects;
 public class Lesson {
 	private Course course;
 	private TimeSlot timeSlot;
+	private Teacher teacher;
 
 	public Lesson(Course course, TimeSlot timeSlot) {
 		this.course = course;

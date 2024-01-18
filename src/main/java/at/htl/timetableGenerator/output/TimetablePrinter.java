@@ -49,7 +49,7 @@ public final class TimetablePrinter {
 	public static int calculateColumnWidth(@NotNull Timetable tt) {
 		int columnWidth = 0;
 
-		for (Lesson[] lessons : tt.getTimetable()) {
+		for (Lesson[] lessons : tt.getTimetableAsArray()) {
 			for (Lesson lesson : lessons) {
 				columnWidth = Math.max(columnWidth, lesson.getCourse().shortName().length());
 			}
@@ -70,7 +70,7 @@ public final class TimetablePrinter {
 	public static void printRow(@NotNull Timetable tt, int time, int columnWidth, StringBuilder formattedTT) {
 		for (int i = 0; i < tt.getNoOfDayPerWeek(); i++) {
 			try {
-				Course currentCourse = tt.getTimetable()[i][time].getCourse();
+				Course currentCourse = tt.getTimetableAsArray()[i][time].getCourse();
 
 				int noOfPaddingSpaces = getPadding(columnWidth, currentCourse.shortName());
 				String paddingString = " ".repeat(noOfPaddingSpaces);

@@ -4,6 +4,8 @@ import at.htl.timetableGenerator.output.TimetablePrinter;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.DayOfWeek;
+import java.util.Collection;
+import java.util.HashMap;
 
 /**
  * This class represents a timetable.
@@ -15,7 +17,7 @@ public class Timetable {
 	public static final Course FREISTUNDE = new Course("Freistunde", "");
 	public static final int MIN_NUMBER_OF_HOURS_PER_DAY = 1;
 	public static final int MIN_NUMBER_OF_DAYS_PER_WEEK = 1;
-	private Lesson[][] timetable;  // The timetable
+	private HashMap<TimeSlot, Lesson> timetable;  // The timetable
 	private int maxNoOfHoursPerDay;  // The maximum number of hours per day
 	private int noOfDayPerWeek;  // The number of days per week
 
@@ -38,7 +40,7 @@ public class Timetable {
 	 *
 	 * @return the timetable
 	 */
-	public Lesson[][] getTimetable() {
+	public HashMap<TimeSlot, Lesson> getTimetable() {
 		return timetable;
 	}
 
@@ -47,15 +49,7 @@ public class Timetable {
 	 *
 	 * @param timetable the timetable to set
 	 */
-	public void setTimetable(@NotNull Lesson[] @NotNull [] timetable) {
-		if (timetable.length != noOfDayPerWeek) {
-			throw new IllegalArgumentException("Too few/many days in the timetable");
-		}
-
-		if (timetable[0].length != maxNoOfHoursPerDay) {
-			throw new IllegalArgumentException("Too few/many hours in the timetable");
-		}
-
+	public void setTimetable(HashMap<TimeSlot, Lesson> timetable) {
 		this.timetable = timetable;
 	}
 
@@ -65,25 +59,25 @@ public class Timetable {
 	 * @param fill the course to fill the timetable with
 	 */
 	public void setTimetable(Course fill) {
-		Lesson[][] lessons = new Lesson[this.noOfDayPerWeek][this.maxNoOfHoursPerDay];
-		for (int i = 0; i < lessons.length; i++) {
+		HashMap<TimeSlot, Lesson> lessons = new HashMap<>();
+		for (int i = 0; i < noOfDayPerWeek; i++) {
 			for (int j = 0; j < maxNoOfHoursPerDay; j++) {
-				lessons[i][j] = new Lesson(fill, new TimeSlot(DayOfWeek.of(i + 1), j));
+				Lesson lesson = new Lesson(fill, new TimeSlot(DayOfWeek.of(i + 1), j));
+				lessons.put(lesson.getTimeSlot(), lesson);
 			}
 		}
 
 		setTimetable(lessons);
 	}
 
-	//TODO: Fix this bullshit (i.e. switch the parameters)
-
 	/**
 	 * Sets the lesson at a given time slot.
 	 *
-	 * @param timeSlot the time slot to set the lesson at
-	 * @param course   the course to set
+	 * @param lesson the lesson to set
 	 */
-	public void setLesson(@NotNull TimeSlot timeSlot, Course course) {
+	public void setLesson(Lesson lesson) {
+		TimeSlot timeSlot = lesson.getTimeSlot();
+
 		if (timeSlot.getDay().ordinal() > getNoOfDayPerWeek()) {
 			throw new IllegalArgumentException("Day is invalid");
 		}
@@ -92,8 +86,7 @@ public class Timetable {
 			throw new IllegalArgumentException("Time is invalid");
 		}
 
-		timetable[timeSlot.getDay().ordinal()][timeSlot.getHour()] =
-				new Lesson(course, new TimeSlot(timeSlot.getDay(), timeSlot.getHour()));
+		timetable.put(timeSlot, lesson);
 	}
 
 	/**
@@ -151,15 +144,15 @@ public class Timetable {
 	 * @return true if the timetable contains the course, false otherwise.
 	 */
 	public boolean contains(Course course) {
-		for (Lesson[] lessons : timetable) {
-			for (Lesson lesson : lessons) {
-				if (lesson.getCourse() == course) {
-					return true;
-				}
-			}
-		}
+		boolean[] toReturn = new boolean[1];
 
-		return false;
+		timetable.forEach((slot, lesson) -> {
+			if (lesson.getCourse() == course) {
+				toReturn[0] = true;
+			}
+		});
+
+		return toReturn[0];
 	}
 
 	/**
@@ -172,11 +165,7 @@ public class Timetable {
 	 * @throws IllegalArgumentException If the day or time of the time slot is invalid.
 	 */
 	public Lesson getLesson(@NotNull TimeSlot timeSlot) {
-		try {
-			return timetable[timeSlot.getDay().ordinal()][timeSlot.getHour()];
-		} catch (ArrayIndexOutOfBoundsException e) {
-			throw new IllegalArgumentException("Tried to get Lesson with invalid day or time", e);
-		}
+		return timetable.get(timeSlot);
 	}
 
 	/**
@@ -187,5 +176,16 @@ public class Timetable {
 	@Override
 	public String toString() {
 		return TimetablePrinter.print(this);
+	}
+
+	public Lesson[][] getTimetableAsArray() {
+		Lesson[][] lessonsArray = new Lesson[noOfDayPerWeek][maxNoOfHoursPerDay];
+		Collection<Lesson> lessons = timetable.values();
+
+		lessons.forEach(
+				lesson -> lessonsArray[lesson.getTimeSlot().getDay().ordinal()][lesson.getTimeSlot().getHour()] =
+						lesson);
+
+		return lessonsArray;
 	}
 }

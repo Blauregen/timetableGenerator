@@ -1,0 +1,19 @@
+name: Deploy Javadoc
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy JavaDoc 🚀
+        uses: MathieuSoysal/Javadoc-publisher.yml@v2.3.2
+        with:
+          GITHUB_TOKEN: ${{ secrets.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 }}
+          javadoc-branch: javadoc
+          java-version: 17
+          project: maven # or gradle
+          # subdirectories: moduleA moduleB #for subdirectories support, needs to be run with custom command

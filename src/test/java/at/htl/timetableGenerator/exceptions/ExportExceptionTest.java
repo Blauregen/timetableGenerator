@@ -1,6 +1,5 @@
-package at.htl.timetableGenerator;
+package at.htl.timetableGenerator.exceptions;
 
-import at.htl.timetableGenerator.exceptions.ExportException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;

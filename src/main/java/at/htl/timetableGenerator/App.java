@@ -1,10 +1,12 @@
 package at.htl.timetableGenerator;
 
-import at.htl.timetableGenerator.output.CSVExporter;
-import at.htl.timetableGenerator.output.ExcelExporter;
+import at.htl.timetableGenerator.output.ExportData;
+import at.htl.timetableGenerator.output.ExportFormat;
+import org.apache.commons.cli.*;
+import org.ini4j.Ini;
 
-import java.time.DayOfWeek;
-import java.util.HashMap;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,24 +24,52 @@ public class App {
 	 * @param args The command-line arguments
 	 */
 	public static void main(String[] args) {
-		Timetable timetable = new Timetable(5, 10);
-		Subject ly = new Subject("Lyric", "LY");
-		Set<Subject> subjects = new HashSet<>();
-		subjects.add(ly);
-		Teacher dietmar = new Teacher("Dietmar von Aist", subjects, new Timetable(5, 10));
-		Lesson lesson = new Lesson(ly, new TimeSlot(DayOfWeek.MONDAY, 0));
-		lesson.setTeacher(dietmar);
-		timetable.setLesson(lesson);
+		Options options = new Options();
+		options.addOption("c", "config", true, "Path to the config file");
 
-		HashMap<String, Timetable> timetableHashMap = new HashMap<>();
-		timetableHashMap.put("3Bhitm", timetable);
-		timetableHashMap.put("Dietmar von Aist", dietmar.getTimetable());
+		CommandLineParser parser = new DefaultParser();
+		try {
+			CommandLine cmd = parser.parse(options, args);
+			String configFile = cmd.getOptionValue("config");
 
-		System.out.println(timetable);
-		System.out.println(dietmar.getTimetable());
-		ExcelExporter.exportToWorkbook(timetableHashMap, "output/excel.xlsx");
-		CSVExporter.exportTimetablesToSingleFile(timetableHashMap, "output/all.csv");
-		CSVExporter.exportTimetablesToMultipleFiles(timetableHashMap, "output/multiple/");
-		CSVExporter.exportTimetableToFile(dietmar.getTimetable(), "output/dietmar.csv", "Dietmar von Aist");
+			Ini ini = new Ini(new File(configFile));
+			int noOfDaysPerWeek = Integer.parseInt(ini.get("general", "noOfDaysPerWeek").strip());
+			int noOfHoursPerDay = Integer.parseInt(ini.get("general", "noOfHoursPerDay").strip());
+			String schoolName = ini.get("general", "schoolName").strip();
+			String delimiter = ini.get("general", "delimiter").strip();
+
+			String exportFormatString = ini.get("output", "outputFormat").strip();
+			exportFormatString = exportFormatString.substring(1, exportFormatString.length() - 1);
+
+			Set<ExportFormat> exportFormat = new HashSet<>();
+			for (String format : exportFormatString.split(",")) {
+				exportFormat.add(ExportFormat.valueOf(format.strip()));
+			}
+
+			String exportDataString = ini.get("output", "outputData").strip();
+			exportDataString = exportDataString.substring(1, exportDataString.length() - 1);
+
+			Set<ExportData> exportData = new HashSet<>();
+			for (String format : exportDataString.split(",")) {
+				exportData.add(ExportData.valueOf(format.strip()));
+			}
+
+			String outputPath = ini.get("output", "outputPath").strip();
+
+			String constraintString = ini.get("constraints", "constraints").strip();
+			constraintString = constraintString.substring(1, constraintString.length() - 1);
+
+			Set<Constraint> constraints = new HashSet<>();
+			for (String constraint : constraintString.split(",")) {
+				constraints.add(ConstraintUtils.getConstraintFromString(constraintString));
+			}
+
+			String subjectsPath = ini.get("input", "subjects");
+			String weeklySubjectsPath = ini.get("input", "weeklySubjectsPath");
+			String classesPath = ini.get("input", "classes");
+			String teachersPath = ini.get("input", "teachers");
+		} catch (ParseException | IOException e) {
+			throw new IllegalArgumentException("No valid config file passed");
+		}
 	}
 }

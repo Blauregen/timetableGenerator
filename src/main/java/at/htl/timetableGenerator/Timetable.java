@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * This class represents a timetable.
+ * This class represents a timetable in a School.
  * A timetable is defined by a number of days per week, a maximum number of hours per day, and a set of constraints.
  * It provides methods to get and set the timetable, check if a subject is in the timetable, check if a double hour spot
  * is available for a subject, and get a lesson at a given time slot.

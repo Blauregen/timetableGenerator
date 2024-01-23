@@ -18,11 +18,20 @@ public final class TimeSlot {
 	 * Constructs a new TimeSlot with the specified day and hour.
 	 *
 	 * @param day  the day of the week
-	 * @param hour the hour of the day
+	 * @param hour the hour of the day (0-indexed)
 	 */
 	public TimeSlot(DayOfWeek day, int hour) {
 		this.day = day;
 		this.hour = hour;
+	}
+
+	/**
+	 * Returns the day of the week for this time slot.
+	 *
+	 * @return the day of the week
+	 */
+	public DayOfWeek getDay() {
+		return day;
 	}
 
 	/**
@@ -35,6 +44,15 @@ public final class TimeSlot {
 	}
 
 	/**
+	 * Returns the hour of the day for this time slot.
+	 *
+	 * @return the hour of the day
+	 */
+	public int getHour() {
+		return hour;
+	}
+
+	/**
 	 * Sets the hour of the day for this time slot.
 	 *
 	 * @param hour the hour of the day
@@ -44,29 +62,14 @@ public final class TimeSlot {
 	}
 
 	/**
-	 * Returns the day of the week for this time slot.
-	 *
-	 * @return the day of the week
-	 */
-	public DayOfWeek day() {
-		return day;
-	}
-
-	/**
-	 * Returns the hour of the day for this time slot.
-	 *
-	 * @return the hour of the day
-	 */
-	public int hour() {
-		return hour;
-	}
-
-	/**
 	 * Checks if this time slot is equal to the specified object.
-	 * The result is true if and only if the argument is not null and is a TimeSlot object that has the same day and hour as this object.
+	 * The result is true if and only if the argument is not null and is a TimeSlot object that has the same day and
+	 * hour as this object.
 	 *
 	 * @param obj the object to compare this TimeSlot against
-	 * @return true if the given object represents a TimeSlot equivalent to this time slot, false otherwise
+	 *
+	 * @return true if the given object represents a TimeSlot with the same day and hour to this time slot, false
+	 * otherwise
 	 */
 	public boolean equals(Object obj) {
 		if (obj == this) {
@@ -135,6 +138,7 @@ public final class TimeSlot {
 	 * Throws an IllegalArgumentException if the hour is 0.
 	 *
 	 * @return a new TimeSlot that represents the same day at the previous hour
+	 *
 	 * @throws IllegalArgumentException if the hour is 0
 	 */
 	@Contract(" -> new")

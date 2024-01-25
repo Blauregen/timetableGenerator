@@ -10,7 +10,7 @@ public final class ConstraintUtils {
 			case "DoubleHourConstraint" -> new DoubleHourConstraint();
 			case "NoMoreThanThreeInRowConstraint" -> new NoMoreThanThreeInRowConstraint();
 			case "TeacherConstraint" -> new TeacherConstraint();
-			default -> throw new IllegalArgumentException("No constraint with given name");
+			default -> throw new IllegalArgumentException("No constraint with given name: " + constraintString);
 		};
 
 	}

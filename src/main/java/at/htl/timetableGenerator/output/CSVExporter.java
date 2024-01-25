@@ -27,11 +27,10 @@ public class CSVExporter {
 	 *
 	 * @param timetable the timetable to export
 	 * @param path      the path of the CSV file
-	 * @param name      the name of the timetable
 	 */
-	public static void exportTimetableToFile(Timetable timetable, String path, String name) {
+	public static void exportTimetableToFile(Timetable timetable, String path) {
 		HashMap<String, Timetable> timetables = new HashMap<>();
-		timetables.put(name, timetable);
+		timetables.put("Timetable", timetable);
 		exportTimetablesToSingleFile(timetables, path);
 	}
 
@@ -57,7 +56,7 @@ public class CSVExporter {
 		     CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT)) {
 			printHeaders(csvPrinter);
 
-			timetables.forEach((name, timetable) -> generateCSV(timetable, csvPrinter, name));
+			timetables.forEach((name, timetable) -> generateCSV(timetable, csvPrinter));
 		} catch (IOException | ExportException e) {
 			throw new ExportException("Error writing to csv file", e);
 		}
@@ -110,7 +109,7 @@ public class CSVExporter {
 			     CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT)) {
 
 				printHeaders(csvPrinter);
-				generateCSV(timetable, csvPrinter, name);
+				generateCSV(timetable, csvPrinter);
 			} catch (ExportException | IOException e) {
 				throw new ExportException("Error writing to csv file", e);
 			}
@@ -122,26 +121,30 @@ public class CSVExporter {
 	 * The CSV contains a row for each time slot in the timetable.
 	 * Each row contains the day of the week, the hour of the day, the subject, the teacher, and the class.
 	 *
-	 * @param timetable   The timetable to generate the CSV for
-	 * @param csvPrinter  The CSVPrinter to use for generating the CSV
-	 * @param schoolClass The class for which the timetable is generated
+	 * @param timetable  The timetable to generate the CSV for
+	 * @param csvPrinter The CSVPrinter to use for generating the CSV
 	 *
 	 * @throws ExportException if there is an error exporting.
 	 */
-	private static void generateCSV(@NotNull Timetable timetable, CSVPrinter csvPrinter, String schoolClass) {
-
+	private static void generateCSV(@NotNull Timetable timetable, CSVPrinter csvPrinter) {
 		timetable.getTimetable().forEach((slot, lesson) -> {
 			LinkedList<String> row = new LinkedList<>();
 			row.add(slot.getDay().toString());
 			row.add(String.valueOf(slot.getHour()));
 			row.add(lesson.getSubject().toString());
+
 			if (lesson.getTeacher() != null) {
 				row.add(lesson.getTeacher().toString());
 			} else {
-				row.add("none");
+				row.add("");
 			}
 
-			row.add(schoolClass);
+			if (lesson.getSchoolClass() != null) {
+				row.add(lesson.getSchoolClass().toString());
+			} else {
+				row.add("");
+			}
+
 			try {
 				csvPrinter.printRecord(row);
 			} catch (IOException e) {

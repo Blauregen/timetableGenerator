@@ -12,7 +12,7 @@ public class Lesson {
 	private Subject subject;
 	private TimeSlot timeSlot;
 	private Teacher teacher;
-
+	private SchoolClass schoolClass;
 	/**
 	 * Constructs a new Lesson with the specified subject and time slot.
 	 *
@@ -22,6 +22,17 @@ public class Lesson {
 	public Lesson(Subject subject, TimeSlot timeSlot) {
 		this.subject = subject;
 		this.timeSlot = timeSlot;
+	}
+
+	public SchoolClass getSchoolClass() {
+		return schoolClass;
+	}
+
+	public void setSchoolClass(@NotNull SchoolClass schoolClass) {
+		this.schoolClass = schoolClass;
+		if (schoolClass.getLesson(this.timeSlot) != this) {
+			schoolClass.setLesson(this);
+		}
 	}
 
 	/**

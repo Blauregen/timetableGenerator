@@ -5,7 +5,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.DayOfWeek;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -15,8 +14,9 @@ import java.util.Set;
 public class SchoolClass {
 	private final String name;  // The name of the school class
 	private final Set<Constraint> constraints = new HashSet<>();  // The set of constraints for this school class
-	private List<WeeklySubjects> weeklySubjects;  // The list of weekly courses for this school class
-
+	private HashSet<WeeklySubjects> weeklySubjects;  // The list of weekly courses for this school class
+	private Timetable timetable;
+	private Teacher formTeacher;
 
 	/**
 	 * Constructs a new SchoolClass with the specified name and weekly courses.
@@ -24,10 +24,18 @@ public class SchoolClass {
 	 * @param name           the name of the school class
 	 * @param weeklySubjects the list of weekly courses for this school class
 	 */
-	public SchoolClass(String name, List<WeeklySubjects> weeklySubjects) {
+	public SchoolClass(String name, HashSet<WeeklySubjects> weeklySubjects) {
 		this.name = name;
 		constraints.add(new NonePlacedBeforeConstraint());
 		setWeeklySubjects(weeklySubjects);
+	}
+
+	public Teacher getFormTeacher() {
+		return formTeacher;
+	}
+
+	public void setFormTeacher(Teacher formTeacher) {
+		this.formTeacher = formTeacher;
 	}
 
 	/**
@@ -58,16 +66,28 @@ public class SchoolClass {
 	 * @return the generated timetable
 	 */
 	public Timetable generateTimetable(int daysPerWeek, int maxHoursPerDay, Set<Teacher> teachers) {
-		Timetable timetable = new Timetable(daysPerWeek, maxHoursPerDay, constraints);
+		this.timetable = new Timetable(daysPerWeek, maxHoursPerDay, constraints);
 
 		for (WeeklySubjects weeklySubject : weeklySubjects) {
 			for (int i = 0; i < weeklySubject.getNoPerWeek(); i++) {
 				TimeSlot bestAvailableSlot = getBestAvailableSlot(timetable, weeklySubject.getSubject(), teachers);
-				timetable.setLesson(new Lesson(weeklySubject.getSubject(), bestAvailableSlot));
+				this.setLesson(new Lesson(weeklySubject.getSubject(), bestAvailableSlot));
 			}
 		}
 
+		return this.timetable;
+	}
+
+	public Set<Constraint> getConstraints() {
+		return constraints;
+	}
+
+	public Timetable getTimetable() {
 		return timetable;
+	}
+
+	public void setTimetable(Timetable timetable) {
+		this.timetable = timetable;
 	}
 
 	/**
@@ -141,9 +161,9 @@ public class SchoolClass {
 	/**
 	 * Returns the list of weekly courses for this school class.
 	 *
-	 * @return the list of weekly courses for this school class
+	 * @return the set of weekly courses for this school class
 	 */
-	public List<WeeklySubjects> getWeeklySubjects() {
+	public HashSet<WeeklySubjects> getWeeklySubjects() {
 		return weeklySubjects;
 	}
 
@@ -152,11 +172,34 @@ public class SchoolClass {
 	 *
 	 * @param weeklySubjects the list of weekly courses to set
 	 */
-	public void setWeeklySubjects(List<WeeklySubjects> weeklySubjects) {
+	public void setWeeklySubjects(HashSet<WeeklySubjects> weeklySubjects) {
 		if (weeklySubjects == null || weeklySubjects.isEmpty()) {
 			throw new IllegalArgumentException("weeklySubjects was null or empty");
 		}
 
 		this.weeklySubjects = weeklySubjects;
+	}
+
+	public Lesson getLesson(TimeSlot slot) {
+		if (timetable != null) {
+			return timetable.getLesson(slot);
+		}
+
+		return null;
+	}
+
+	public void setLesson(Lesson lesson) {
+		if (timetable != null) {
+			timetable.setLesson(lesson);
+
+			if (lesson.getSchoolClass() != this) {
+				lesson.setSchoolClass(this);
+			}
+		}
+	}
+
+	@Override
+	public String toString() {
+		return name;
 	}
 }

@@ -3,7 +3,6 @@ package at.htl.timetableGenerator;
 import at.htl.timetableGenerator.constrains.DoubleHourConstraint;
 import at.htl.timetableGenerator.constrains.NoMoreThanThreeInRowConstraint;
 import at.htl.timetableGenerator.constrains.TeacherConstraint;
-import at.htl.timetableGenerator.output.CSVExporter;
 import at.htl.timetableGenerator.output.ExportData;
 import at.htl.timetableGenerator.output.ExportFormat;
 import org.apache.commons.cli.*;
@@ -11,7 +10,6 @@ import org.ini4j.Ini;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -127,27 +125,29 @@ public class App {
 		teachers.add(luger);
 
 		SchoolClass bhitm3 = new SchoolClass("3bhitm", weeklySubjectsBhitm);
-		bhitm3.addConstraint(new DoubleHourConstraint());
-		bhitm3.addConstraint(new NoMoreThanThreeInRowConstraint());
-		bhitm3.addConstraint(new TeacherConstraint());
-		bhitm3.generateTimetable(5, 5, teachers);
-
 		SchoolClass ahitm3 = new SchoolClass("3ahitm", weeklySubjectsAhitm);
-		ahitm3.addConstraint(new DoubleHourConstraint());
-		ahitm3.addConstraint(new NoMoreThanThreeInRowConstraint());
-		ahitm3.addConstraint(new TeacherConstraint());
-		ahitm3.generateTimetable(5, 5, teachers);
 
-		HashMap<String, Timetable> timetables = new HashMap<>();
-		timetables.put("3bhitm", bhitm3.getTimetable());
-		timetables.put("3ahitm", ahitm3.getTimetable());
-		timetables.put("Kerschi", kerschi.getTimetable());
-		timetables.put("Aberger", aberger.getTimetable());
-		timetables.put("Luger", luger.getTimetable());
+		School htl = new School("HTL Leonding");
+		htl.addSchoolClass(bhitm3);
+		htl.addSchoolClass(ahitm3);
+		htl.addTeacher(kerschi);
+		htl.addTeacher(aberger);
+		htl.addTeacher(luger);
+		htl.addConstraint(new DoubleHourConstraint());
+		htl.addConstraint(new NoMoreThanThreeInRowConstraint());
+		htl.addConstraint(new TeacherConstraint());
 
-		CSVExporter.exportTimetablesToMultipleFiles(timetables, "./output/");
+		htl.generateTimetables(5, 5);
 
-		System.out.println(bhitm3.getTimetable());
-		System.out.println(ahitm3.getTimetable());
+		HashSet<ExportData> exportData = new HashSet<>();
+		exportData.add(ExportData.TEACHERS);
+		exportData.add(ExportData.CLASSES);
+
+		HashSet<ExportFormat> exportFormat = new HashSet<>();
+		exportFormat.add(ExportFormat.EXCEL);
+		exportFormat.add(ExportFormat.CSV);
+		exportFormat.add(ExportFormat.CSV_MULTIPLE);
+
+		htl.exportAllTimetables(exportData, exportFormat, "./outputs/");
 	}
 }

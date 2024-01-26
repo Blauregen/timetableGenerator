@@ -128,24 +128,28 @@ public class CSVExporter {
 	 */
 	private static void generateCSV(@NotNull Timetable timetable, CSVPrinter csvPrinter) {
 		timetable.getTimetable().forEach((slot, lesson) -> {
-			LinkedList<String> row = new LinkedList<>();
-			row.add(slot.getDay().toString());
-			row.add(String.valueOf(slot.getHour()));
-			row.add(lesson.getSubject().toString());
-
-			if (lesson.getTeacher() != null) {
-				row.add(lesson.getTeacher().toString());
-			} else {
-				row.add("");
-			}
-
-			if (lesson.getSchoolClass() != null) {
-				row.add(lesson.getSchoolClass().toString());
-			} else {
-				row.add("");
-			}
-
 			try {
+				if (lesson.getSubject() == Timetable.FREISTUNDE) {
+					return;
+				}
+
+				LinkedList<String> row = new LinkedList<>();
+				row.add(slot.getDay().toString());
+				row.add(String.valueOf(slot.getHour()));
+				row.add(lesson.getSubject().toString());
+
+				if (lesson.getTeacher() != null) {
+					row.add(lesson.getTeacher().toString());
+				} else {
+					row.add("");
+				}
+
+				if (lesson.getSchoolClass() != null) {
+					row.add(lesson.getSchoolClass().toString());
+				} else {
+					row.add("");
+				}
+
 				csvPrinter.printRecord(row);
 			} catch (IOException e) {
 				throw new ExportException("Error writing data to csv file", e);

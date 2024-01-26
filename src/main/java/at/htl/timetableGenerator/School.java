@@ -1,6 +1,13 @@
 package at.htl.timetableGenerator;
 
+import at.htl.timetableGenerator.output.CSVExporter;
+import at.htl.timetableGenerator.output.ExcelExporter;
+import at.htl.timetableGenerator.output.ExportData;
+import at.htl.timetableGenerator.output.ExportFormat;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -8,19 +15,26 @@ import java.util.Set;
  * A school is defined by a set of school classes and a set of teachers.
  */
 public class School {
-	private Set<SchoolClass> schoolClasses;  // The set of school classes in this school
-	private Set<Teacher> teachers;  // The set of teachers in this school
-
+	private final Set<Constraint> constraints = new HashSet<>();
+	private final String name;
+	private Set<SchoolClass> schoolClasses = new HashSet<>();  // The set of school classes in this school
+	private Set<Teacher> teachers = new HashSet<>();  // The set of teachers in this school
 
 	/**
 	 * Constructs a new School with the specified school classes and teachers.
 	 *
+	 * @param name          the name of the school
 	 * @param schoolClasses the set of school classes in this school
 	 * @param teachers      the set of teachers in this school
 	 */
-	public School(Set<SchoolClass> schoolClasses, Set<Teacher> teachers) {
+	public School(String name, Set<SchoolClass> schoolClasses, Set<Teacher> teachers) {
+		this.name = name;
 		setSchoolClasses(schoolClasses);
 		setTeachers(teachers);
+	}
+
+	public School(String name) {
+		this.name = name;
 	}
 
 	/**
@@ -77,6 +91,8 @@ public class School {
 	 * @param constraint the constraint to add
 	 */
 	public void addConstraint(Constraint constraint) {
+		constraints.add(constraint);
+
 		for (SchoolClass schoolClass : schoolClasses) {
 			schoolClass.addConstraint(constraint);
 		}
@@ -88,8 +104,58 @@ public class School {
 	 * @param constraint the constraint to remove
 	 */
 	public void removeConstraint(Constraint constraint) {
+		constraints.remove(constraint);
+
 		for (SchoolClass schoolClass : schoolClasses) {
 			schoolClass.removeConstraint(constraint);
 		}
+	}
+
+	public void exportAllTimetables(@NotNull HashSet<ExportData> exportData, HashSet<ExportFormat> exportFormat,
+	                                String directory) {
+		HashMap<String, Timetable> timetables = new HashMap<>();
+
+		if (exportData.contains(ExportData.CLASSES)) {
+			schoolClasses.forEach((schoolClass -> timetables.put(schoolClass.getName(), schoolClass.getTimetable())));
+		}
+
+		if (exportData.contains(ExportData.TEACHERS)) {
+			teachers.forEach(teacher -> timetables.put(teacher.getName(), teacher.getTimetable()));
+		}
+
+		if (exportFormat.contains(ExportFormat.CSV)) {
+			CSVExporter.exportTimetablesToSingleFile(timetables, directory + this.name + ".csv");
+		}
+
+		if (exportFormat.contains(ExportFormat.CSV_MULTIPLE)) {
+			CSVExporter.exportTimetablesToMultipleFiles(timetables, directory + this.name);
+		}
+
+		if (exportFormat.contains(ExportFormat.EXCEL)) {
+			ExcelExporter.exportToWorkbook(timetables, directory + this.name + ".xlsx");
+		}
+	}
+
+	public void addSchoolClass(SchoolClass schoolClass) {
+		schoolClasses.add(schoolClass);
+		updateConstraints();
+	}
+
+	public void removeSchoolClass(SchoolClass schoolClass) {
+		schoolClasses.remove(schoolClass);
+	}
+
+	public void updateConstraints() {
+		for (Constraint constraint : constraints) {
+			addConstraint(constraint);
+		}
+	}
+
+	public void addTeacher(Teacher teacher) {
+		teachers.add(teacher);
+	}
+
+	public void removeTeacher(Teacher teacher) {
+		teachers.remove(teacher);
 	}
 }

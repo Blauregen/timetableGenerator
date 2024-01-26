@@ -100,4 +100,12 @@ public class Teacher {
 	public String toString() {
 		return this.name;
 	}
+
+	public void addSubject(Subject subject) {
+		subjects.add(subject);
+	}
+
+	public void removeSubject(Subject subject) {
+		subjects.remove(subject);
+	}
 }

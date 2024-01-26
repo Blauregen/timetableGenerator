@@ -70,8 +70,8 @@ public class SchoolClass {
 
 		for (WeeklySubjects weeklySubject : weeklySubjects) {
 			for (int i = 0; i < weeklySubject.getNoPerWeek(); i++) {
-				TimeSlot bestAvailableSlot = getBestAvailableSlot(timetable, weeklySubject.getSubject(), teachers);
-				this.setLesson(new Lesson(weeklySubject.getSubject(), bestAvailableSlot));
+				Lesson bestAvailableLesson = getBestAvailableLesson(timetable, weeklySubject.getSubject(), teachers);
+				this.setLesson(bestAvailableLesson);
 			}
 		}
 
@@ -99,15 +99,16 @@ public class SchoolClass {
 	 *
 	 * @return the best available time slot
 	 */
-	private @NotNull TimeSlot getBestAvailableSlot(@NotNull Timetable timetable, Subject toAdd,
+	private @NotNull Lesson getBestAvailableLesson(@NotNull Timetable timetable, Subject toAdd,
 	                                               Set<Teacher> teachers) {
 		for (int i = 0; i < timetable.getMaxNoOfHoursPerDay(); i++) {
 			for (int j = 0; j < timetable.getNoOfDayPerWeek(); j++) {
 				TimeSlot currentSlot = new TimeSlot(DayOfWeek.of(j + 1), i);
+				Lesson lesson = new Lesson(toAdd, currentSlot);
 
-				if (checkConstraints(timetable, currentSlot, toAdd, teachers)) {
-					updateConstraints(timetable, currentSlot, toAdd, teachers);
-					return currentSlot;
+				if (checkConstraints(timetable, lesson, teachers)) {
+					updateConstraints(timetable, lesson, teachers);
+					return lesson;
 				}
 			}
 		}
@@ -116,32 +117,30 @@ public class SchoolClass {
 	}
 
 	/**
-	 * Updates the constraints for a given time slot and course.
+	 * Updates the constraints for a given lesson.
 	 *
 	 * @param timetable the timetable
-	 * @param timeSlot  the time slot
-	 * @param subject   the course
+	 * @param lesson    the lesson
 	 * @param teachers  the set of teachers
 	 */
-	private void updateConstraints(Timetable timetable, TimeSlot timeSlot, Subject subject, Set<Teacher> teachers) {
+	private void updateConstraints(Timetable timetable, Lesson lesson, Set<Teacher> teachers) {
 		for (Constraint constraint : constraints) {
-			constraint.updateOnSuccess(timetable, timeSlot, subject, teachers);
+			constraint.updateOnSuccess(timetable, lesson, teachers);
 		}
 	}
 
 	/**
-	 * Checks the constraints for a given time slot and course.
+	 * Checks the constraints for a given lesson.
 	 *
 	 * @param timetable the timetable
-	 * @param timeSlot  the time slot
-	 * @param course    the course
+	 * @param lesson    the lesson
 	 * @param teachers  the set of teachers
 	 *
 	 * @return true if the constraints are met, false otherwise
 	 */
-	private boolean checkConstraints(Timetable timetable, TimeSlot timeSlot, Subject course, Set<Teacher> teachers) {
+	private boolean checkConstraints(Timetable timetable, Lesson lesson, Set<Teacher> teachers) {
 		for (Constraint constraint : constraints) {
-			if (!constraint.check(timetable, timeSlot, course, teachers)) {
+			if (!constraint.check(timetable, lesson, teachers)) {
 				return false;
 			}
 		}

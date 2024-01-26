@@ -11,7 +11,7 @@ import org.ini4j.Ini;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.DayOfWeek;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -94,32 +94,60 @@ public class App {
 
 		Subject math = new Subject("MATH", "AM");
 		Subject ITP = new Subject("ITP", "ITP");
+		Subject German = new Subject("German", "D");
 
 		WeeklySubjects maths = new WeeklySubjects(math, 3);
 		WeeklySubjects itps = new WeeklySubjects(ITP, 5);
+		WeeklySubjects Germans = new WeeklySubjects(German, 3);
 
-		HashSet<Subject> subjects = new HashSet<>();
-		subjects.add(math);
-		subjects.add(ITP);
+		HashSet<Subject> mathSubject = new HashSet<>();
+		mathSubject.add(math);
 
-		HashSet<WeeklySubjects> weeklySubjects = new HashSet<>();
-		weeklySubjects.add(maths);
-		weeklySubjects.add(itps);
+		HashSet<Subject> itpSubject = new HashSet<>();
+		itpSubject.add(ITP);
 
+		HashSet<Subject> germanSubject = new HashSet<>();
+		germanSubject.add(German);
 
-		Teacher kerschi = new Teacher("Kerschi", subjects, new Timetable(5, 5));
+		HashSet<WeeklySubjects> weeklySubjectsBhitm = new HashSet<>();
+		weeklySubjectsBhitm.add(maths);
+		weeklySubjectsBhitm.add(itps);
+
+		HashSet<WeeklySubjects> weeklySubjectsAhitm = new HashSet<>();
+		weeklySubjectsAhitm.add(Germans);
+		weeklySubjectsAhitm.add(itps);
+
+		Teacher kerschi = new Teacher("Kerschi", mathSubject, new Timetable(5, 5));
+		Teacher aberger = new Teacher("Aberger", itpSubject, new Timetable(5, 5));
+		Teacher luger = new Teacher("Luger", germanSubject, new Timetable(5, 5));
+
 		HashSet<Teacher> teachers = new HashSet<>();
 		teachers.add(kerschi);
+		teachers.add(aberger);
+		teachers.add(luger);
 
-		SchoolClass bhitm3 = new SchoolClass("3bhitm", weeklySubjects);
+		SchoolClass bhitm3 = new SchoolClass("3bhitm", weeklySubjectsBhitm);
 		bhitm3.addConstraint(new DoubleHourConstraint());
 		bhitm3.addConstraint(new NoMoreThanThreeInRowConstraint());
 		bhitm3.addConstraint(new TeacherConstraint());
 		bhitm3.generateTimetable(5, 5, teachers);
-		System.out.println(bhitm3.getLesson(new TimeSlot(DayOfWeek.MONDAY, 1)).getTeacher());
-		System.out.println(bhitm3.getLesson(new TimeSlot(DayOfWeek.MONDAY, 1)).getSchoolClass());
-		CSVExporter.exportTimetableToFile(bhitm3.getTimetable(), "./output/bhitm.csv");
-		CSVExporter.exportTimetableToFile(kerschi.getTimetable(), "./output/kerschi.csv");
+
+		SchoolClass ahitm3 = new SchoolClass("3ahitm", weeklySubjectsAhitm);
+		ahitm3.addConstraint(new DoubleHourConstraint());
+		ahitm3.addConstraint(new NoMoreThanThreeInRowConstraint());
+		ahitm3.addConstraint(new TeacherConstraint());
+		ahitm3.generateTimetable(5, 5, teachers);
+
+		HashMap<String, Timetable> timetables = new HashMap<>();
+		timetables.put("3bhitm", bhitm3.getTimetable());
+		timetables.put("3ahitm", ahitm3.getTimetable());
+		timetables.put("Kerschi", kerschi.getTimetable());
+		timetables.put("Aberger", aberger.getTimetable());
+		timetables.put("Luger", luger.getTimetable());
+
+		CSVExporter.exportTimetablesToMultipleFiles(timetables, "./output/");
+
 		System.out.println(bhitm3.getTimetable());
+		System.out.println(ahitm3.getTimetable());
 	}
 }

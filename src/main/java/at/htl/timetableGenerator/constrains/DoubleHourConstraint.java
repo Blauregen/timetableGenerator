@@ -1,6 +1,9 @@
 package at.htl.timetableGenerator.constrains;
 
-import at.htl.timetableGenerator.*;
+import at.htl.timetableGenerator.Constraint;
+import at.htl.timetableGenerator.Lesson;
+import at.htl.timetableGenerator.Teacher;
+import at.htl.timetableGenerator.Timetable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -17,26 +20,25 @@ public class DoubleHourConstraint implements Constraint {
 	 * The constraint is met if the course is scheduled for two consecutive hours.
 	 *
 	 * @param timetable the timetable to check
-	 * @param timeSlot  the time slot to check
-	 * @param course    the course to check
+	 * @param lesson    the lesson to check
 	 * @param teachers  the set of teachers to check
 	 *
 	 * @return true if the constraint is met, false otherwise
 	 */
 	@Override
-	public boolean check(@NotNull Timetable timetable, TimeSlot timeSlot, Subject course, Set<Teacher> teachers) {
-		try {
-			if (timetable.hasAvailableDoubleHourSpot(course)) {
-				if (timeSlot.getHour() != 0) {
-					return timetable.getLesson(timeSlot.prevHour()).getSubject() == course;
-				} else {
-					return false;
-				}
-			} else {
-				return true;
-			}
-		} catch (ArrayIndexOutOfBoundsException e) {
+	public boolean check(@NotNull Timetable timetable, @NotNull Lesson lesson, Set<Teacher> teachers) {
+		//If there is no spot for a Double Hour available, return true for this constraint
+		if (!timetable.hasAvailableDoubleHourSpot(lesson.getSubject())) {
+			return true;
+		}
+
+		//If there is a spot for a Double Hour available, and the current Lesson is in the first hour, return
+		//false, since it can't be the double hour spot
+		if (lesson.getTimeSlot().getHour() == 0) {
 			return false;
 		}
+
+		//Otherwise return true if the previous lesson is the same subject as this lesson
+		return timetable.getLesson(lesson.getTimeSlot().prevHour()).getSubject() == lesson.getSubject();
 	}
 }

@@ -184,7 +184,7 @@ public class Timetable {
 	 */
 	private boolean checkConstraints(TimeSlot timeSlot, Subject subject) {
 		for (Constraint constraint : constraints) {
-			if (!constraint.check(this, timeSlot, subject, new HashSet<>())) {
+			if (!constraint.check(this, new Lesson(subject, timeSlot), new HashSet<>())) {
 				return false;
 			}
 		}

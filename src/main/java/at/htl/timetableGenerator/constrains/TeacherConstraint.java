@@ -19,19 +19,20 @@ public class TeacherConstraint implements Constraint {
 	 * The constraint is met if there is a teacher who can teach the course and is available at the given time slot.
 	 *
 	 * @param timetable the timetable to check
-	 * @param timeSlot  the time slot to check
-	 * @param subject   the course to check
+	 * @param lesson  the lesson to check
 	 * @param teachers  the set of teachers to check
 	 *
 	 * @return true if the constraint is met, false otherwise
 	 */
 	@Override
-	public boolean check(Timetable timetable, TimeSlot timeSlot, Subject subject, @NotNull Set<Teacher> teachers) {
+	public boolean check(Timetable timetable, Lesson lesson, @NotNull Set<Teacher> teachers) {
 		for (Teacher teacher : teachers) {
-			if (teacher.getSubjects().contains(subject) && teacher.getLesson(timeSlot).getSubject() == FREISTUNDE) {
+			if (teacher.getSubjects().contains(lesson.getSubject()) &&
+			    teacher.getLesson(lesson.getTimeSlot()).getSubject() == FREISTUNDE) {
 				return true;
 			}
 		}
+
 		return false;
 	}
 
@@ -41,16 +42,18 @@ public class TeacherConstraint implements Constraint {
 	 * the course and is available.
 	 *
 	 * @param timetable the timetable that met the constraint
-	 * @param timeSlot  the time slot that met the constraint
-	 * @param subject   the course that met the constraint
+	 * @param lesson  the lesson to check
+
 	 * @param teachers  the set of teachers that met the constraint
 	 */
 	@Override
-	public void updateOnSuccess(Timetable timetable, TimeSlot timeSlot, Subject subject,
-	                            @NotNull Set<Teacher> teachers) {
+	public void updateOnSuccess(Timetable timetable, @NotNull Lesson lesson, @NotNull Set<Teacher> teachers) {
+		Subject subject = lesson.getSubject();
+		TimeSlot timeSlot = lesson.getTimeSlot();
+
 		for (Teacher teacher : teachers) {
 			if (teacher.getSubjects().contains(subject) && teacher.getLesson(timeSlot).getSubject() == FREISTUNDE) {
-				teacher.setLesson(new Lesson(subject, timeSlot));
+				teacher.setLesson(lesson);
 				return;
 			}
 		}

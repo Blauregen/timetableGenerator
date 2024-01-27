@@ -3,6 +3,8 @@ package at.htl.timetableGenerator;
 import at.htl.timetableGenerator.constrains.DoubleHourConstraint;
 import at.htl.timetableGenerator.constrains.NoMoreThanThreeInRowConstraint;
 import at.htl.timetableGenerator.constrains.TeacherConstraint;
+import at.htl.timetableGenerator.factory.SubjectFactory;
+import at.htl.timetableGenerator.factory.TeacherFactory;
 import at.htl.timetableGenerator.output.ExportData;
 import at.htl.timetableGenerator.output.ExportFormat;
 import org.apache.commons.cli.*;
@@ -82,10 +84,13 @@ public class App {
 			exportData.forEach(System.out::println);
 			constraints.forEach(System.out::println);
 
-			System.out.println(subjectsPath);
+			Set<Subject> subjects = SubjectFactory.createFromFile(subjectsPath);
 			System.out.println(weeklySubjectsPath);
 			System.out.println(classesPath);
-			System.out.println(teachersPath);
+			Set<Teacher> teachers = TeacherFactory.createFromFile(teachersPath, subjects);
+
+			subjects.forEach((System.out::println));
+			teachers.forEach((System.out::println));
 		} catch (ParseException | IOException e) {
 			throw new IllegalArgumentException("No valid config file passed");
 		}
@@ -115,9 +120,9 @@ public class App {
 		weeklySubjectsAhitm.add(Germans);
 		weeklySubjectsAhitm.add(itps);
 
-		Teacher kerschi = new Teacher("Kerschi", mathSubject, new Timetable(5, 5));
-		Teacher aberger = new Teacher("Aberger", itpSubject, new Timetable(5, 5));
-		Teacher luger = new Teacher("Luger", germanSubject, new Timetable(5, 5));
+		Teacher kerschi = new Teacher("Kerschi", mathSubject,5,5);
+		Teacher aberger = new Teacher("Aberger", itpSubject, 5,5);
+		Teacher luger = new Teacher("Luger", germanSubject, 5, 5);
 
 		HashSet<Teacher> teachers = new HashSet<>();
 		teachers.add(kerschi);

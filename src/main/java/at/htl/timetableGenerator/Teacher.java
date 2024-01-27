@@ -14,16 +14,15 @@ public class Teacher {
 	/**
 	 * Constructs a new Teacher with the specified name and subjects.
 	 *
-	 * @param name            the name of the teacher
-	 * @param subjects        the set of subjects this teacher can teach
-	 * @param occupiedLessons a timetable with lessons that the teacher has assigned. Also determines the no of days
-	 *                        and
-	 *                        hours they can be assigned. Can be overwritten later.
+	 * @param name        the name of the teacher
+	 * @param subjects    the set of subjects this teacher can teach
+	 * @param hoursPerDay number of hours per day that the teacher teaches
+	 * @param daysPerWeek number of days that the teacher teaches
 	 */
-	public Teacher(String name, Set<Subject> subjects, Timetable occupiedLessons) {
+	public Teacher(String name, Set<Subject> subjects, int hoursPerDay, int daysPerWeek) {
 		this.name = name;
 		this.subjects = subjects;
-		this.occupiedLessons = occupiedLessons;
+		this.occupiedLessons = new Timetable(hoursPerDay, daysPerWeek);
 	}
 
 	/**

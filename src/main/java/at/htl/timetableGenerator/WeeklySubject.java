@@ -6,7 +6,7 @@ import java.util.Objects;
  * This class represents a subject that is taught a certain number of times per week.
  * A WeeklySubjects object is defined by a subject and the number of times it is taught per week.
  */
-public class WeeklySubjects {
+public class WeeklySubject {
 	private Subject subject;  // The subject that is taught
 	private int noPerWeek;  // The number of times the subject is taught per week
 
@@ -16,7 +16,7 @@ public class WeeklySubjects {
 	 * @param subject   The subject that is taught.
 	 * @param noPerWeek The number of times the subject is taught per week.
 	 */
-	public WeeklySubjects(Subject subject, int noPerWeek) {
+	public WeeklySubject(Subject subject, int noPerWeek) {
 		this.subject = subject;
 		this.noPerWeek = noPerWeek;
 	}
@@ -38,8 +38,8 @@ public class WeeklySubjects {
 		if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
-		WeeklySubjects that = (WeeklySubjects) o;
-		return Objects.equals(subject, that.subject) && this.noPerWeek == ((WeeklySubjects) o).noPerWeek;
+		WeeklySubject that = (WeeklySubject) o;
+		return Objects.equals(subject, that.subject) && this.noPerWeek == ((WeeklySubject) o).noPerWeek;
 	}
 
 	/**

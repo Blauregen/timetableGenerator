@@ -22,7 +22,7 @@ public class SubjectFactory {
 
 		// Throws IllegalArgumentException if the array is longer or shorter then expected
 		if (field.length != VALID_SUBJECT_ARRAY_LENGTH) {
-			throw new IllegalArgumentException();
+			throw new ImportException("Line is not valid: \"" + line + "\"");
 		}
 
 		String name = field[0].strip(); // Name of subject is expected to be here

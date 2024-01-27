@@ -14,7 +14,7 @@ import java.util.Set;
 public class SchoolClass {
 	private final String name;  // The name of the school class
 	private final Set<Constraint> constraints = new HashSet<>();  // The set of constraints for this school class
-	private HashSet<WeeklySubjects> weeklySubjects;  // The list of weekly courses for this school class
+	private HashSet<WeeklySubject> weeklySubjects;  // The list of weekly courses for this school class
 	private Timetable timetable;
 	private Teacher formTeacher;
 
@@ -24,7 +24,7 @@ public class SchoolClass {
 	 * @param name           the name of the school class
 	 * @param weeklySubjects the list of weekly courses for this school class
 	 */
-	public SchoolClass(String name, HashSet<WeeklySubjects> weeklySubjects) {
+	public SchoolClass(String name, HashSet<WeeklySubject> weeklySubjects) {
 		this.name = name;
 		constraints.add(new NonePlacedBeforeConstraint());
 		setWeeklySubjects(weeklySubjects);
@@ -68,7 +68,7 @@ public class SchoolClass {
 	public Timetable generateTimetable(int daysPerWeek, int maxHoursPerDay, Set<Teacher> teachers) {
 		this.timetable = new Timetable(daysPerWeek, maxHoursPerDay, constraints);
 
-		for (WeeklySubjects weeklySubject : weeklySubjects) {
+		for (WeeklySubject weeklySubject : weeklySubjects) {
 			for (int i = 0; i < weeklySubject.getNoPerWeek(); i++) {
 				Lesson bestAvailableLesson = getBestAvailableLesson(timetable, weeklySubject.getSubject(), teachers);
 				this.setLesson(bestAvailableLesson);
@@ -162,7 +162,7 @@ public class SchoolClass {
 	 *
 	 * @return the set of weekly courses for this school class
 	 */
-	public HashSet<WeeklySubjects> getWeeklySubjects() {
+	public HashSet<WeeklySubject> getWeeklySubjects() {
 		return weeklySubjects;
 	}
 
@@ -171,7 +171,7 @@ public class SchoolClass {
 	 *
 	 * @param weeklySubjects the list of weekly courses to set
 	 */
-	public void setWeeklySubjects(HashSet<WeeklySubjects> weeklySubjects) {
+	public void setWeeklySubjects(HashSet<WeeklySubject> weeklySubjects) {
 		if (weeklySubjects == null || weeklySubjects.isEmpty()) {
 			throw new IllegalArgumentException("weeklySubjects was null or empty");
 		}

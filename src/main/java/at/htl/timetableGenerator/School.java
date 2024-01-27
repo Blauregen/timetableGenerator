@@ -15,8 +15,8 @@ import java.util.Set;
  * A school is defined by a set of school classes and a set of teachers.
  */
 public class School {
-	private final Set<Constraint> constraints = new HashSet<>();
 	private final String name;
+	private Set<Constraint> constraints = new HashSet<>();
 	private Set<SchoolClass> schoolClasses = new HashSet<>();  // The set of school classes in this school
 	private Set<Teacher> teachers = new HashSet<>();  // The set of teachers in this school
 
@@ -37,17 +37,21 @@ public class School {
 		this.name = name;
 	}
 
-	/**
-	 * Sets the teachers in this school.
-	 *
-	 * @param teachers the set of teachers to set
-	 */
-	public void setTeachers(Set<Teacher> teachers) {
-		if (teachers == null || teachers.isEmpty()) {
-			throw new IllegalArgumentException("teachers was null or empty");
-		}
+	public String getName() {
+		return name;
+	}
 
-		this.teachers = teachers;
+	public Set<Constraint> getConstraints() {
+		return constraints;
+	}
+
+	public void setConstraints(Set<Constraint> constraints) {
+		this.constraints = constraints;
+		updateConstraints();
+	}
+
+	public Set<SchoolClass> getSchoolClasses() {
+		return schoolClasses;
 	}
 
 	/**
@@ -61,6 +65,23 @@ public class School {
 		}
 
 		this.schoolClasses = schoolClasses;
+	}
+
+	public Set<Teacher> getTeachers() {
+		return teachers;
+	}
+
+	/**
+	 * Sets the teachers in this school.
+	 *
+	 * @param teachers the set of teachers to set
+	 */
+	public void setTeachers(Set<Teacher> teachers) {
+		if (teachers == null || teachers.isEmpty()) {
+			throw new IllegalArgumentException("teachers was null or empty");
+		}
+
+		this.teachers = teachers;
 	}
 
 	/**
@@ -111,7 +132,7 @@ public class School {
 		}
 	}
 
-	public void exportAllTimetables(@NotNull HashSet<ExportData> exportData, HashSet<ExportFormat> exportFormat,
+	public void exportAllTimetables(@NotNull Set<ExportData> exportData, Set<ExportFormat> exportFormat,
 	                                String directory) {
 		HashMap<String, Timetable> timetables = new HashMap<>();
 
@@ -150,6 +171,7 @@ public class School {
 			addConstraint(constraint);
 		}
 	}
+
 
 	public void addTeacher(Teacher teacher) {
 		teachers.add(teacher);

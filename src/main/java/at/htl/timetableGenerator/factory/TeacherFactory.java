@@ -24,19 +24,20 @@ public class TeacherFactory {
 
 		// Throws IllegalArgumentException if the array is longer or shorter then expected
 		if (field.length != VALID_TEACHER_ARRAY_LENGTH) {
-			throw new IllegalArgumentException();
+			throw new ImportException("Line is not valid: \"" + line + "\"");
 		}
 
 		String name = field[0].strip();
 		int hoursPerDay = Integer.parseInt(field[1].strip());
 		int daysPerWeek = Integer.parseInt(field[2].strip());
-		String[] subjectsString = field[3].split(",");
+		String[] subjectsString = field[3].strip().split(",");
 		HashSet<Subject> subjects = new HashSet<>();
 
 		for (String currentSubjectName : subjectsString) {
-			Subject subject = new Subject(currentSubjectName, "");
-			if (possibleSubjects.contains(subject)) {
-				subjects.add(subject);
+			for (Subject currentSubject : possibleSubjects) {
+				if (currentSubject.name().equals(currentSubjectName)) {
+					subjects.add(currentSubject);
+				}
 			}
 		}
 

@@ -1,17 +1,20 @@
 package at.htl.timetableGenerator;
 
-import at.htl.timetableGenerator.constrains.DoubleHourConstraint;
-import at.htl.timetableGenerator.constrains.NoMoreThanThreeInRowConstraint;
-import at.htl.timetableGenerator.constrains.TeacherConstraint;
+import at.htl.timetableGenerator.factory.SchoolClassesFactory;
 import at.htl.timetableGenerator.factory.SubjectFactory;
 import at.htl.timetableGenerator.factory.TeacherFactory;
+import at.htl.timetableGenerator.factory.WeeklySubjectsFactory;
 import at.htl.timetableGenerator.output.ExportData;
 import at.htl.timetableGenerator.output.ExportFormat;
 import org.apache.commons.cli.*;
 import org.ini4j.Ini;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -74,85 +77,26 @@ public class App {
 			String classesPath = ini.get("input", "classes");
 			String teachersPath = ini.get("input", "teachers");
 
-			System.out.println(noOfDaysPerWeek);
-			System.out.println(noOfHoursPerDay);
-			System.out.println(schoolName);
-			System.out.println(delimiter);
+			Set<Subject> subjects = SubjectFactory.createFromFile(getRelativePath(configFile, subjectsPath));
+			HashMap<String, HashSet<WeeklySubject>> weeklySubjects =
+					WeeklySubjectsFactory.createFromFile(getRelativePath(configFile, weeklySubjectsPath), subjects);
+			Set<Teacher> teachers = TeacherFactory.createFromFile(getRelativePath(configFile, teachersPath), subjects);
+			Set<SchoolClass> schoolClasses =
+					SchoolClassesFactory.createFromFile(getRelativePath(configFile, classesPath), teachers,
+							weeklySubjects);
 
-			exportFormats.forEach(System.out::println);
-			System.out.println(outputPath);
-			exportData.forEach(System.out::println);
-			constraints.forEach(System.out::println);
-
-			Set<Subject> subjects = SubjectFactory.createFromFile(subjectsPath);
-			System.out.println(weeklySubjectsPath);
-			System.out.println(classesPath);
-			Set<Teacher> teachers = TeacherFactory.createFromFile(teachersPath, subjects);
-
-			subjects.forEach((System.out::println));
-			teachers.forEach((System.out::println));
+			School school = new School(schoolName, schoolClasses, teachers);
+			school.setConstraints(constraints);
+			school.generateTimetables(noOfDaysPerWeek, noOfHoursPerDay);
+			school.exportAllTimetables(exportData, exportFormats, outputPath);
+			school.getSchoolClasses().forEach((schoolClass -> System.out.println(schoolClass.getTimetable())));
 		} catch (ParseException | IOException e) {
 			throw new IllegalArgumentException("No valid config file passed");
 		}
+	}
 
-		Subject math = new Subject("MATH", "AM");
-		Subject ITP = new Subject("ITP", "ITP");
-		Subject German = new Subject("German", "D");
-
-		WeeklySubjects maths = new WeeklySubjects(math, 3);
-		WeeklySubjects itps = new WeeklySubjects(ITP, 5);
-		WeeklySubjects Germans = new WeeklySubjects(German, 3);
-
-		HashSet<Subject> mathSubject = new HashSet<>();
-		mathSubject.add(math);
-
-		HashSet<Subject> itpSubject = new HashSet<>();
-		itpSubject.add(ITP);
-
-		HashSet<Subject> germanSubject = new HashSet<>();
-		germanSubject.add(German);
-
-		HashSet<WeeklySubjects> weeklySubjectsBhitm = new HashSet<>();
-		weeklySubjectsBhitm.add(maths);
-		weeklySubjectsBhitm.add(itps);
-
-		HashSet<WeeklySubjects> weeklySubjectsAhitm = new HashSet<>();
-		weeklySubjectsAhitm.add(Germans);
-		weeklySubjectsAhitm.add(itps);
-
-		Teacher kerschi = new Teacher("Kerschi", mathSubject,5,5);
-		Teacher aberger = new Teacher("Aberger", itpSubject, 5,5);
-		Teacher luger = new Teacher("Luger", germanSubject, 5, 5);
-
-		HashSet<Teacher> teachers = new HashSet<>();
-		teachers.add(kerschi);
-		teachers.add(aberger);
-		teachers.add(luger);
-
-		SchoolClass bhitm3 = new SchoolClass("3bhitm", weeklySubjectsBhitm);
-		SchoolClass ahitm3 = new SchoolClass("3ahitm", weeklySubjectsAhitm);
-
-		School htl = new School("HTL Leonding");
-		htl.addSchoolClass(bhitm3);
-		htl.addSchoolClass(ahitm3);
-		htl.addTeacher(kerschi);
-		htl.addTeacher(aberger);
-		htl.addTeacher(luger);
-		htl.addConstraint(new DoubleHourConstraint());
-		htl.addConstraint(new NoMoreThanThreeInRowConstraint());
-		htl.addConstraint(new TeacherConstraint());
-
-		htl.generateTimetables(5, 5);
-
-		HashSet<ExportData> exportData = new HashSet<>();
-		exportData.add(ExportData.TEACHERS);
-		exportData.add(ExportData.CLASSES);
-
-		HashSet<ExportFormat> exportFormat = new HashSet<>();
-		exportFormat.add(ExportFormat.EXCEL);
-		exportFormat.add(ExportFormat.CSV);
-		exportFormat.add(ExportFormat.CSV_MULTIPLE);
-
-		htl.exportAllTimetables(exportData, exportFormat, "./outputs/");
+	@NotNull
+	private static String getRelativePath(String configFile, String classesPath) {
+		return Paths.get(configFile).getParent() + FileSystems.getDefault().getSeparator() + classesPath;
 	}
 }

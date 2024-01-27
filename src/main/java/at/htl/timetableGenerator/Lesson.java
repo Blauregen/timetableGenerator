@@ -13,6 +13,7 @@ public class Lesson {
 	private TimeSlot timeSlot;
 	private Teacher teacher;
 	private SchoolClass schoolClass;
+
 	/**
 	 * Constructs a new Lesson with the specified subject and time slot.
 	 *

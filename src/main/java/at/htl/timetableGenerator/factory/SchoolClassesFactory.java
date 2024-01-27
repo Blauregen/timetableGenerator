@@ -17,9 +17,10 @@ import java.util.stream.Stream;
 
 public class SchoolClassesFactory {
 	public static @NotNull SchoolClass createFromString(@NotNull String line, @NotNull Set<Teacher> teachers,
-	                                                    @NotNull HashMap<String, HashSet<WeeklySubject>> possibleWeeklySubjects) {
+	                                                    @NotNull HashMap<String, HashSet<WeeklySubject>> possibleWeeklySubjects,
+	                                                    String delimiter) {
 		// Splitting the line (csv) and storing it in an array for later access
-		String[] field = line.split(";");
+		String[] field = line.split(delimiter);
 
 		// Throws IllegalArgumentException if the array is longer or shorter then expected
 		if (field.length != 2) {
@@ -52,11 +53,12 @@ public class SchoolClassesFactory {
 	}
 
 	public static @NotNull Set<SchoolClass> createFromFile(String path, @NotNull Set<Teacher> teachers,
-	                                                       @NotNull HashMap<String, HashSet<WeeklySubject>> possibleWeeklySubjects) {
+	                                                       @NotNull HashMap<String, HashSet<WeeklySubject>> possibleWeeklySubjects,
+	                                                       String delimiter) {
 		try (Stream<String> lines = Files.lines(Paths.get(path))) {
 			return lines.skip(1)
-			            .map(line -> SchoolClassesFactory.createFromString(line, teachers, possibleWeeklySubjects))
-			            .collect(Collectors.toSet());
+			            .map(line -> SchoolClassesFactory.createFromString(line, teachers, possibleWeeklySubjects,
+					            delimiter)).collect(Collectors.toSet());
 		} catch (IOException e) {
 			throw new ImportException("Error reading File!", e);
 		}

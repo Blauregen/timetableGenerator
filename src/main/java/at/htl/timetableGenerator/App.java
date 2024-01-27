@@ -44,7 +44,13 @@ public class App {
 			int noOfDaysPerWeek = Integer.parseInt(ini.get("general", "noOfDaysPerWeek").strip());
 			int noOfHoursPerDay = Integer.parseInt(ini.get("general", "noOfHoursPerDay").strip());
 			String schoolName = ini.get("general", "schoolName").strip();
-			String delimiter = ini.get("general", "delimiter").strip();
+			String delimiter = ini.get("general", "delimiter");
+
+			if (delimiter == null) {
+				delimiter = ";";
+			} else {
+				delimiter = delimiter.strip();
+			}
 
 			String exportFormatString = ini.get("output", "outputFormat").strip();
 			exportFormatString = exportFormatString.substring(1, exportFormatString.length() - 1);
@@ -77,13 +83,16 @@ public class App {
 			String classesPath = ini.get("input", "classes");
 			String teachersPath = ini.get("input", "teachers");
 
-			Set<Subject> subjects = SubjectFactory.createFromFile(getRelativePath(configFile, subjectsPath));
+			Set<Subject> subjects = SubjectFactory.createFromFile(getRelativePath(configFile, subjectsPath),
+					delimiter);
 			HashMap<String, HashSet<WeeklySubject>> weeklySubjects =
-					WeeklySubjectsFactory.createFromFile(getRelativePath(configFile, weeklySubjectsPath), subjects);
-			Set<Teacher> teachers = TeacherFactory.createFromFile(getRelativePath(configFile, teachersPath), subjects);
+					WeeklySubjectsFactory.createFromFile(getRelativePath(configFile, weeklySubjectsPath), subjects,
+							delimiter);
+			Set<Teacher> teachers =
+					TeacherFactory.createFromFile(getRelativePath(configFile, teachersPath), subjects, delimiter);
 			Set<SchoolClass> schoolClasses =
 					SchoolClassesFactory.createFromFile(getRelativePath(configFile, classesPath), teachers,
-							weeklySubjects);
+							weeklySubjects, delimiter);
 
 			School school = new School(schoolName, schoolClasses, teachers);
 			school.setConstraints(constraints);

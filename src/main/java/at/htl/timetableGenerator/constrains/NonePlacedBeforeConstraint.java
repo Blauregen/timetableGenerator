@@ -21,8 +21,7 @@ public class NonePlacedBeforeConstraint implements Constraint {
 	 * The constraint is met if there is no course placed before the current one in the timetable.
 	 *
 	 * @param timetable the timetable to check
-	 * @param lesson  the lesson to check
-
+	 * @param lesson    the lesson to check
 	 * @param teachers  the set of teachers to check
 	 *
 	 * @return true if the constraint is met, false otherwise

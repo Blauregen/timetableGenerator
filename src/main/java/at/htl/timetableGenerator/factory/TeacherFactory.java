@@ -3,7 +3,6 @@ package at.htl.timetableGenerator.factory;
 import at.htl.timetableGenerator.Subject;
 import at.htl.timetableGenerator.Teacher;
 import at.htl.timetableGenerator.exceptions.ImportException;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -17,10 +16,10 @@ import java.util.stream.Stream;
 public class TeacherFactory {
 	private static final int VALID_TEACHER_ARRAY_LENGTH = 4;
 
-	@Contract("_, _ -> new")
-	public static @NotNull Teacher createFromString(@NotNull String line, @NotNull Set<Subject> possibleSubjects) {
+	public static @NotNull Teacher createFromString(@NotNull String line, @NotNull Set<Subject> possibleSubjects,
+	                                                String delimiter) {
 		// Splitting the line (csv) and storing it in an array for later access
-		String[] field = line.split(";");
+		String[] field = line.split(delimiter);
 
 		// Throws IllegalArgumentException if the array is longer or shorter then expected
 		if (field.length != VALID_TEACHER_ARRAY_LENGTH) {
@@ -44,9 +43,9 @@ public class TeacherFactory {
 		return new Teacher(name, subjects, hoursPerDay, daysPerWeek);
 	}
 
-	public static @NotNull Set<Teacher> createFromFile(String path, Set<Subject> possibleSubjects) {
+	public static @NotNull Set<Teacher> createFromFile(String path, Set<Subject> possibleSubjects, String delimiter) {
 		try (Stream<String> lines = Files.lines(Paths.get(path))) {
-			return lines.skip(1).map(line -> TeacherFactory.createFromString(line, possibleSubjects))
+			return lines.skip(1).map(line -> TeacherFactory.createFromString(line, possibleSubjects, delimiter))
 			            .collect(Collectors.toSet());
 		} catch (IOException e) {
 			throw new ImportException("Error reading File!", e);

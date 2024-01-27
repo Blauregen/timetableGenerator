@@ -19,7 +19,7 @@ public class TeacherConstraint implements Constraint {
 	 * The constraint is met if there is a teacher who can teach the course and is available at the given time slot.
 	 *
 	 * @param timetable the timetable to check
-	 * @param lesson  the lesson to check
+	 * @param lesson    the lesson to check
 	 * @param teachers  the set of teachers to check
 	 *
 	 * @return true if the constraint is met, false otherwise
@@ -42,8 +42,7 @@ public class TeacherConstraint implements Constraint {
 	 * the course and is available.
 	 *
 	 * @param timetable the timetable that met the constraint
-	 * @param lesson  the lesson to check
-
+	 * @param lesson    the lesson to check
 	 * @param teachers  the set of teachers that met the constraint
 	 */
 	@Override

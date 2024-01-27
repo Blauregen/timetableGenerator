@@ -2,7 +2,6 @@ package at.htl.timetableGenerator.factory;
 
 import at.htl.timetableGenerator.Subject;
 import at.htl.timetableGenerator.exceptions.ImportException;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -15,10 +14,9 @@ import java.util.stream.Stream;
 public class SubjectFactory {
 	private static final int VALID_SUBJECT_ARRAY_LENGTH = 2;
 
-	@Contract("_ -> new")
-	public static @NotNull Subject createFromString(@NotNull String line) {
+	public static @NotNull Subject createFromString(@NotNull String line, String delimiter) {
 		// Splitting the line (csv) and storing it in an array for later access
-		String[] field = line.split(";");
+		String[] field = line.split(delimiter);
 
 		// Throws IllegalArgumentException if the array is longer or shorter then expected
 		if (field.length != VALID_SUBJECT_ARRAY_LENGTH) {
@@ -31,9 +29,9 @@ public class SubjectFactory {
 		return new Subject(name, shortName);
 	}
 
-	public static @NotNull Set<Subject> createFromFile(String path) {
+	public static @NotNull Set<Subject> createFromFile(String path, String delimiter) {
 		try (Stream<String> lines = Files.lines(Paths.get(path))) {
-			return lines.skip(1).map(SubjectFactory::createFromString).collect(Collectors.toSet());
+			return lines.skip(1).map((String line) -> createFromString(line, delimiter)).collect(Collectors.toSet());
 		} catch (IOException e) {
 			throw new ImportException("Error reading File!", e);
 		}

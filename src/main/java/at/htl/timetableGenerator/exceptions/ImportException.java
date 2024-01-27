@@ -1,6 +1,6 @@
 package at.htl.timetableGenerator.exceptions;
 
-public class ImportException extends RuntimeException{
+public class ImportException extends RuntimeException {
 	/**
 	 * Constructs a new ImportException with the specified detail message.
 	 *

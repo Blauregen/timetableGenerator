@@ -85,7 +85,7 @@ class LessonTest {
 		subjects.add(minnegesang);
 		TimeSlot timeSlot = new TimeSlot(DayOfWeek.THURSDAY, 7);
 
-		Teacher derKuerenberger = new Teacher("Der Kürenberger", subjects, 5,10);
+		Teacher derKuerenberger = new Teacher("Der Kürenberger", subjects, 5, 10);
 
 		Lesson lesson = new Lesson(minnegesang, timeSlot);
 		lesson.setTeacher(derKuerenberger);

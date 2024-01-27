@@ -4,7 +4,6 @@ import at.htl.timetableGenerator.Subject;
 import at.htl.timetableGenerator.WeeklySubject;
 import at.htl.timetableGenerator.exceptions.ImportException;
 import org.apache.commons.math3.util.Pair;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -16,11 +15,11 @@ import java.util.List;
 import java.util.Set;
 
 public class WeeklySubjectsFactory {
-	@Contract("_, _ -> new")
 	public static @NotNull Pair<String, WeeklySubject> createFromString(@NotNull String line,
-	                                                                    @NotNull Set<Subject> possibleSubjects) {
+	                                                                    @NotNull Set<Subject> possibleSubjects,
+	                                                                    String delimiter) {
 		// Splitting the line (csv) and storing it in an array for later access
-		String[] field = line.split(";");
+		String[] field = line.split(delimiter);
 
 		// Throws IllegalArgumentException if the array is longer or shorter then expected
 		if (field.length != 3) {
@@ -46,13 +45,14 @@ public class WeeklySubjectsFactory {
 	}
 
 	public static @NotNull HashMap<String, HashSet<WeeklySubject>> createFromFile(String path,
-	                                                                              Set<Subject> possibleSubjects) {
+	                                                                              Set<Subject> possibleSubjects,
+	                                                                              String delimiter) {
 		try {
 			HashMap<String, HashSet<WeeklySubject>> weeklySubjects = new HashMap<>();
 			List<String> lines = Files.readAllLines(Paths.get(path));
 
 			for (int i = 1; i < lines.size(); i++) {
-				Pair<String, WeeklySubject> subject = createFromString(lines.get(i), possibleSubjects);
+				Pair<String, WeeklySubject> subject = createFromString(lines.get(i), possibleSubjects, delimiter);
 				HashSet<WeeklySubject> weeklySubject = weeklySubjects.getOrDefault(subject.getKey(), new HashSet<>());
 				weeklySubject.add(subject.getValue());
 				weeklySubjects.put(subject.getKey(), weeklySubject);

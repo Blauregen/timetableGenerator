@@ -68,7 +68,14 @@ public class App {
 				exportData.add(ExportData.valueOf(format.strip()));
 			}
 
-			String outputPath = ini.get("output", "outputPath").strip();
+			String outputPath = ini.get("output", "outputPath");
+
+			if (outputPath == null) {
+				outputPath = Paths.get(configFile).getParent().toString() + FileSystems.getDefault().getSeparator() +
+				             "output" + FileSystems.getDefault().getSeparator();
+			} else {
+				outputPath = outputPath.strip();
+			}
 
 			String constraintString = ini.get("constraints", "constraints").strip();
 			constraintString = constraintString.substring(1, constraintString.length() - 1);

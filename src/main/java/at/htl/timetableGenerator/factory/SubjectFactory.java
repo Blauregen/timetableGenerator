@@ -1,13 +1,13 @@
 package at.htl.timetableGenerator;
 public class SubjectFactory {
-	private static final int VALID_RECORD_ARRAY_LENGTH = 2;
+	private static final int VALID_SUBJECT_ARRAY_LENGTH = 2;
 
 	public Subject createFromString(String line){
 		// Splitting the line (csv) and soring it in an array for later access
 		String[] field = line.split(";");
 
 		// Throws IllegalArgumentException if the array is longer or shorter then expected
-		if(field.length != VALID_RECORD_ARRAY_LENGTH) {
+		if (field.length != VALID_SUBJECT_ARRAY_LENGTH) {
 			throw new IllegalArgumentException();
 		}
 

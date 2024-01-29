@@ -27,7 +27,8 @@ public class DoubleHourConstraint implements Constraint {
 	 */
 	@Override
 	public boolean check(@NotNull Timetable timetable, @NotNull Lesson lesson, Set<Teacher> teachers) {
-		//If there is no spot for a Double Hour available, return true for this constraint
+		//If there is no spot for a Double Hour available, return true for this constraint, since this restraint
+		// becomes irrelevant in that case
 		if (!timetable.hasAvailableDoubleHourSpot(lesson.getSubject())) {
 			return true;
 		}
@@ -38,7 +39,8 @@ public class DoubleHourConstraint implements Constraint {
 			return false;
 		}
 
-		//Otherwise return true if the previous lesson is the same subject as this lesson
+		//Otherwise return true if the previous lesson is the same subject as this lesson (i.e. it would form a double
+		//hour)
 		return timetable.getLesson(lesson.getTimeSlot().prevHour()).getSubject() == lesson.getSubject();
 	}
 }

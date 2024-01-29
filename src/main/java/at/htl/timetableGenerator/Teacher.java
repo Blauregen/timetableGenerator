@@ -23,7 +23,7 @@ public class Teacher {
 	public Teacher(String name, Set<Subject> subjects, int hoursPerDay, int daysPerWeek) {
 		this.name = name;
 		this.subjects = subjects;
-		this.occupiedLessons = new Timetable(hoursPerDay, daysPerWeek);
+		this.occupiedLessons = new Timetable(daysPerWeek, hoursPerDay);
 	}
 
 	/**

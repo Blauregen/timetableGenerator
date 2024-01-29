@@ -15,7 +15,7 @@ public class TeacherTest {
 		Set<Subject> subjects = new HashSet<>();
 		subjects.add(new Subject("German", "GE"));
 		subjects.add(new Subject("Music", "MU"));
-		Teacher walter = new Teacher(name, subjects, 5, 10);
+		Teacher walter = new Teacher(name, subjects, 10, 5);
 
 		assertEquals(name, walter.getName());
 		assertEquals(subjects, walter.getSubjects());
@@ -26,7 +26,7 @@ public class TeacherTest {
 		Set<Subject> subjects = new HashSet<>();
 		subjects.add(new Subject("German", "GE"));
 		subjects.add(new Subject("Medicine", "ME"));
-		Teacher hildegard = new Teacher("Hildegard von Bingen", subjects, 5, 10);
+		Teacher hildegard = new Teacher("Hildegard von Bingen", subjects, 10, 5);
 
 		Set<Subject> newSubjects = new HashSet<>();
 		Timetable timetable = new Timetable(5, 8);
@@ -45,7 +45,7 @@ public class TeacherTest {
 		TimeSlot monday0 = new TimeSlot(DayOfWeek.MONDAY, 0);
 		subjects.add(german);
 		subjects.add(new Subject("Lyrik", "LY"));
-		Teacher ludwig = new Teacher("Carl Joachim Friedrich Ludwig „Achim“ von Arnim", subjects, 5, 10);
+		Teacher ludwig = new Teacher("Carl Joachim Friedrich Ludwig „Achim“ von Arnim", subjects, 10, 5);
 
 		ludwig.setLesson(new Lesson(german, monday0));
 
@@ -58,7 +58,23 @@ public class TeacherTest {
 		Subject dichtung = new Subject("Dichtung", "Dt");
 		Set<Subject> subjects = new HashSet<>();
 		subjects.add(dichtung);
-		Teacher heinrich = new Teacher("Heinrich von Veldeke", subjects, 5, 10);
+		Teacher heinrich = new Teacher("Heinrich von Veldeke", subjects, 10, 5);
 		assertEquals("Heinrich von Veldeke", heinrich.toString());
+	}
+
+	@Test
+	void testAddRemoveSubject(){
+		Teacher hildegard = new Teacher("Hildegard von Bingen", new HashSet<>(), 11, 6);
+		Subject medicine = new Subject("Medizin", "MED");
+
+		assertEquals(0, hildegard.getSubjects().size());
+
+		hildegard.addSubject(medicine);
+
+		assertEquals(1, hildegard.getSubjects().size());
+
+		hildegard.removeSubject(medicine);
+
+		assertEquals(0, hildegard.getSubjects().size());
 	}
 }

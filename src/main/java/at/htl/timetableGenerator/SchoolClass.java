@@ -53,7 +53,7 @@ public class SchoolClass {
 	 * @param constraint the constraint to remove
 	 */
 	public void removeConstraint(Constraint constraint) {
-		constraints.add(constraint);
+		constraints.remove(constraint);
 	}
 
 	/**

@@ -1,11 +1,15 @@
 package at.htl.timetableGenerator;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * This class represents a teacher.
- * A teacher is defined by a name, a set of subjects they can teach, and a timetable of occupied lessons.
+ * A teacher is defined by a name, a set of subjects they can teach, and a timetable of occupied
+ * lessons.
  */
 public class Teacher {
 	private final String name;  // The name of the teacher
@@ -78,7 +82,7 @@ public class Teacher {
 	 *
 	 * @return The lesson at the given time slot.
 	 **/
-	public Lesson getLesson(TimeSlot timeSlot) {
+	public Lesson getLesson(@NotNull TimeSlot timeSlot) {
 		return occupiedLessons.getLesson(timeSlot);
 	}
 
@@ -88,7 +92,7 @@ public class Teacher {
 	 *
 	 * @param lesson The lesson to set
 	 */
-	public void setLesson(Lesson lesson) {
+	public void setLesson(@NotNull Lesson lesson) {
 		this.occupiedLessons.setLesson(lesson);
 
 		if (lesson.getTeacher() != this) {
@@ -110,7 +114,7 @@ public class Teacher {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(@Nullable Object o) {
 		if (this == o) {
 			return true;
 		}

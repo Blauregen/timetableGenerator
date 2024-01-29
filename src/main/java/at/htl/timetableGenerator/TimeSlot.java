@@ -2,6 +2,7 @@ package at.htl.timetableGenerator;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.DayOfWeek;
 import java.util.Objects;
@@ -63,15 +64,17 @@ public final class TimeSlot {
 
 	/**
 	 * Checks if this time slot is equal to the specified object.
-	 * The result is true if and only if the argument is not null and is a TimeSlot object that has the same day and
+	 * The result is true if and only if the argument is not null and is a TimeSlot object that has
+	 * the same day and
 	 * hour as this object.
 	 *
 	 * @param obj the object to compare this TimeSlot against
 	 *
-	 * @return true if the given object represents a TimeSlot with the same day and hour to this time slot, false
+	 * @return true if the given object represents a TimeSlot with the same day and hour to this
+	 * time slot, false
 	 * otherwise
 	 */
-	public boolean equals(Object obj) {
+	public boolean equals(@Nullable Object obj) {
 		if (obj == this) {
 			return true;
 		}

@@ -1,5 +1,7 @@
 package at.htl.timetableGenerator;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Objects;
 
 /**
@@ -11,7 +13,8 @@ public class WeeklySubject {
 	private int noPerWeek;  // The number of times the subject is taught per week
 
 	/**
-	 * Constructs a new WeeklySubjects with the given subject and number of times it is taught per week.
+	 * Constructs a new WeeklySubjects with the given subject and number of times it is taught per
+	 * week.
 	 *
 	 * @param subject   The subject that is taught.
 	 * @param noPerWeek The number of times the subject is taught per week.
@@ -27,11 +30,12 @@ public class WeeklySubject {
 	 *
 	 * @param o The object to compare this WeeklySubjects against.
 	 *
-	 * @return true if the given object represents a WeeklySubjects with the same subject and noPerWeek as this
+	 * @return true if the given object represents a WeeklySubjects with the same subject and
+	 * noPerWeek as this
 	 * WeeklySubjects, false otherwise.
 	 */
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(@Nullable Object o) {
 		if (this == o) {
 			return true;
 		}
@@ -39,7 +43,8 @@ public class WeeklySubject {
 			return false;
 		}
 		WeeklySubject that = (WeeklySubject) o;
-		return Objects.equals(subject, that.subject) && this.noPerWeek == ((WeeklySubject) o).noPerWeek;
+		return Objects.equals(subject, that.subject) &&
+		       this.noPerWeek == ((WeeklySubject) o).noPerWeek;
 	}
 
 	/**

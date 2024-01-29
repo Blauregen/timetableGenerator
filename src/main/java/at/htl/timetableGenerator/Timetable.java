@@ -14,8 +14,10 @@ import java.util.stream.Collectors;
 
 /**
  * This class represents a timetable in a School.
- * A timetable is defined by a number of days per week, a maximum number of hours per day, and a set of constraints.
- * It provides methods to get and set the timetable, check if a subject is in the timetable, check if a double hour spot
+ * A timetable is defined by a number of days per week, a maximum number of hours per day, and a set
+ * of constraints.
+ * It provides methods to get and set the timetable, check if a subject is in the timetable, check
+ * if a double hour spot
  * is available for a subject, and get a lesson at a given time slot.
  */
 public class Timetable {
@@ -25,20 +27,24 @@ public class Timetable {
 	private HashMap<TimeSlot, Lesson> timetable;  // The timetable
 	private int maxNoOfHoursPerDay;  // The maximum number of hours per day
 	private int noOfDayPerWeek;  // The number of days per week
-	private Set<Constraint> constraints = new HashSet<>();  // The set of constraints for this timetable
+	private @NotNull Set<Constraint> constraints = new HashSet<>();
+	// The set of constraints for this timetable
 
 	/**
-	 * Constructs a new Timetable with the specified number of days per week, maximum number of hours per day, and
+	 * Constructs a new Timetable with the specified number of days per week, maximum number of
+	 * hours per day, and
 	 * constraints.
 	 *
 	 * @param noOfDayPerWeek     the number of days per week
 	 * @param maxNoOfHoursPerDay the maximum number of hours per day
 	 * @param constraints        the set of constraints for this timetable
 	 */
-	public Timetable(int noOfDayPerWeek, int maxNoOfHoursPerDay, @NotNull Set<Constraint> constraints) {
+	public Timetable(int noOfDayPerWeek, int maxNoOfHoursPerDay,
+	                 @NotNull Set<Constraint> constraints) {
 		setNoOfDayPerWeek(noOfDayPerWeek);
 		setMaxNoOfHoursPerDay(maxNoOfHoursPerDay);
-		this.constraints = constraints.stream().filter((o) -> !(o instanceof DoubleHourConstraint ||
+		this.constraints =
+				constraints.stream().filter((o) -> !(o instanceof DoubleHourConstraint ||
 		                                                        o instanceof TeacherConstraint))
 		                              .collect(Collectors.toSet());
 
@@ -46,13 +52,18 @@ public class Timetable {
 	}
 
 	/**
-	 * Constructs a new Timetable with the specified number of days per week and maximum number of hours per day.
+	 * Constructs a new Timetable with the specified number of days per week and maximum number of
+	 * hours per day.
 	 *
 	 * @param noOfDayPerWeek     the number of days per week
 	 * @param maxNoOfHoursPerDay the maximum number of hours per day
 	 */
 	public Timetable(int noOfDayPerWeek, int maxNoOfHoursPerDay) {
 		this(noOfDayPerWeek, maxNoOfHoursPerDay, new HashSet<>());
+	}
+
+	public @NotNull Set<Constraint> getConstraints() {
+		return constraints;
 	}
 
 	/**
@@ -126,7 +137,8 @@ public class Timetable {
 	public void setMaxNoOfHoursPerDay(int maxNoOfHoursPerDay) {
 		if (maxNoOfHoursPerDay < MIN_NUMBER_OF_HOURS_PER_DAY) {
 			throw new IllegalArgumentException(
-					"Max number of hours per day can't be smaller than " + MIN_NUMBER_OF_HOURS_PER_DAY + "!");
+					"Max number of hours per day can't be smaller than " +
+					MIN_NUMBER_OF_HOURS_PER_DAY + "!");
 		}
 
 		this.maxNoOfHoursPerDay = maxNoOfHoursPerDay;
@@ -182,7 +194,7 @@ public class Timetable {
 	 *
 	 * @return true if all constraints are met, false otherwise.
 	 */
-	private boolean checkConstraints(TimeSlot timeSlot, Subject subject) {
+	public boolean checkConstraints(TimeSlot timeSlot, Subject subject) {
 		for (Constraint constraint : constraints) {
 			if (!constraint.check(this, new Lesson(subject, timeSlot), new HashSet<>())) {
 				return false;
@@ -232,24 +244,25 @@ public class Timetable {
 	 * @return a string representation of this timetable
 	 */
 	@Override
-	public String toString() {
+	public @NotNull String toString() {
 		return TimetablePrinter.print(this);
 	}
 
 	/**
 	 * Returns the timetable as a 2D array of lessons.
-	 * The first dimension represents the days of the week, and the second dimension represents the hours of the day.
+	 * The first dimension represents the days of the week, and the second dimension represents the
+	 * hours of the day.
 	 * Each element in the array is a lesson at the corresponding day and hour.
 	 *
 	 * @return A 2D array of lessons representing the timetable
 	 */
-	public Lesson[][] getTimetableAsArray() {
+	public Lesson[] @NotNull [] getTimetableAsArray() {
 		Lesson[][] lessonsArray = new Lesson[noOfDayPerWeek][maxNoOfHoursPerDay];
 		Collection<Lesson> lessons = timetable.values();
 
-		lessons.forEach(
-				lesson -> lessonsArray[lesson.getTimeSlot().getDay().ordinal()][lesson.getTimeSlot().getHour()] =
-						lesson);
+		lessons.forEach(lesson ->
+				lessonsArray[lesson.getTimeSlot().getDay().ordinal()][lesson.getTimeSlot()
+				                                                            .getHour()] = lesson);
 
 		return lessonsArray;
 	}

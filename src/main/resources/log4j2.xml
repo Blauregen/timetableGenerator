@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
 	<Appenders>
-		<RollingFile name="RollingFileAppenderWarn" fileName="logs/application-warn-${date:yyyyMMdd}.log"
+		<RollingFile name="RollingFileAppenderWarn"
+		             fileName="logs/application-warn-${date:yyyyMMdd}.log"
 		             filePattern="logs/application-warn-${date:yyyyMMdd}.%i.log">
 			<PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
 			<LevelRangeFilter minLevel="FATAL" maxLevel="WARN" onMatch="ACCEPT" onMismatch="DENY"/>

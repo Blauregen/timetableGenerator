@@ -28,7 +28,7 @@ public class CSVExporter {
 	 * @param timetable the timetable to export
 	 * @param path      the path of the CSV file
 	 */
-	public static void exportTimetableToFile(Timetable timetable, String path) {
+	public static void exportTimetableToFile(Timetable timetable, @NotNull String path) {
 		HashMap<String, Timetable> timetables = new HashMap<>();
 		timetables.put("Timetable", timetable);
 		exportTimetablesToSingleFile(timetables, path);
@@ -42,7 +42,8 @@ public class CSVExporter {
 	 *
 	 * @throws ExportException if there is an error exporting.
 	 */
-	public static void exportTimetablesToSingleFile(Map<String, Timetable> timetables, String stringPath) {
+	public static void exportTimetablesToSingleFile(@NotNull Map<String, Timetable> timetables,
+	                                                @NotNull String stringPath) {
 		Path path = Paths.get(stringPath);
 		if (!Files.exists(path)) {
 			try {
@@ -94,7 +95,8 @@ public class CSVExporter {
 	 *
 	 * @throws ExportException if there is an error exporting.
 	 */
-	public static void exportTimetablesToMultipleFiles(Map<String, Timetable> timetables, String directory) {
+	public static void exportTimetablesToMultipleFiles(@NotNull Map<String, Timetable> timetables,
+	                                                   @NotNull String directory) {
 		Path path = Paths.get(directory);
 		if (!Files.exists(path)) {
 			try {
@@ -119,14 +121,16 @@ public class CSVExporter {
 	/**
 	 * Generates a CSV representation of the given timetable.
 	 * The CSV contains a row for each time slot in the timetable.
-	 * Each row contains the day of the week, the hour of the day, the subject, the teacher, and the class.
+	 * Each row contains the day of the week, the hour of the day, the subject, the teacher, and
+	 * the
+	 * class.
 	 *
 	 * @param timetable  The timetable to generate the CSV for
 	 * @param csvPrinter The CSVPrinter to use for generating the CSV
 	 *
 	 * @throws ExportException if there is an error exporting.
 	 */
-	private static void generateCSV(@NotNull Timetable timetable, CSVPrinter csvPrinter) {
+	private static void generateCSV(@NotNull Timetable timetable, @NotNull CSVPrinter csvPrinter) {
 		timetable.getTimetable().forEach((slot, lesson) -> {
 			try {
 				if (lesson.getSubject() == Timetable.FREISTUNDE) {

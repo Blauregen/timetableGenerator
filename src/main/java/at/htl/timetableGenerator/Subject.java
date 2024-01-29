@@ -1,5 +1,7 @@
 package at.htl.timetableGenerator;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Objects;
 
 /**
@@ -23,10 +25,11 @@ public record Subject(String name, String shortName) {
 	 *
 	 * @param o The object to compare this subject against.
 	 *
-	 * @return true if the given object represents a subject with the same name as this subject, false otherwise.
+	 * @return true if the given object represents a subject with the same name as this subject,
+	 * false otherwise.
 	 */
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(@Nullable Object o) {
 		if (this == o) {
 			return true;
 		}

@@ -25,7 +25,8 @@ import java.util.Set;
 public class App {
 	/**
 	 * The main method of the application.
-	 * It creates a timetable with 5 days and 10 periods per day, a subject named "Mathe" with the abbreviation "AM",
+	 * It creates a timetable with 5 days and 10 periods per day, a subject named "Mathe" with the
+	 * abbreviation "AM",
 	 * and a lesson with the subject and a time slot for the first period on Monday.
 	 * Then it sets the lesson in the timetable and prints the timetable.
 	 *
@@ -71,7 +72,8 @@ public class App {
 			String outputPath = ini.get("output", "outputPath");
 
 			if (outputPath == null) {
-				outputPath = Paths.get(configFile).getParent().toString() + FileSystems.getDefault().getSeparator() +
+				outputPath = Paths.get(configFile).getParent().toString() +
+				             FileSystems.getDefault().getSeparator() +
 				             "output" + FileSystems.getDefault().getSeparator();
 			} else {
 				outputPath = outputPath.strip();
@@ -90,29 +92,35 @@ public class App {
 			String classesPath = ini.get("input", "classes");
 			String teachersPath = ini.get("input", "teachers");
 
-			Set<Subject> subjects = SubjectFactory.createFromFile(getRelativePath(configFile, subjectsPath),
-					delimiter);
+			Set<Subject> subjects =
+					SubjectFactory.createFromFile(getRelativePath(configFile, subjectsPath),
+							delimiter);
 			HashMap<String, HashSet<WeeklySubject>> weeklySubjects =
-					WeeklySubjectsFactory.createFromFile(getRelativePath(configFile, weeklySubjectsPath), subjects,
+					WeeklySubjectsFactory.createFromFile(
+							getRelativePath(configFile, weeklySubjectsPath), subjects,
 							delimiter);
 			Set<Teacher> teachers =
-					TeacherFactory.createFromFile(getRelativePath(configFile, teachersPath), subjects, delimiter);
+					TeacherFactory.createFromFile(getRelativePath(configFile, teachersPath),
+							subjects, delimiter);
 			Set<SchoolClass> schoolClasses =
-					SchoolClassesFactory.createFromFile(getRelativePath(configFile, classesPath), teachers,
+					SchoolClassesFactory.createFromFile(getRelativePath(configFile, classesPath),
+							teachers,
 							weeklySubjects, delimiter);
 
 			School school = new School(schoolName, schoolClasses, teachers);
 			school.setConstraints(constraints);
 			school.generateTimetables(noOfDaysPerWeek, noOfHoursPerDay);
 			school.exportAllTimetables(exportData, exportFormats, outputPath);
-			school.getSchoolClasses().forEach((schoolClass -> System.out.println(schoolClass.getTimetable())));
+			school.getSchoolClasses()
+			      .forEach((schoolClass -> System.out.println(schoolClass.getTimetable())));
 		} catch (ParseException | IOException e) {
 			throw new IllegalArgumentException("No valid config file passed");
 		}
 	}
 
 	@NotNull
-	private static String getRelativePath(String configFile, String classesPath) {
-		return Paths.get(configFile).getParent() + FileSystems.getDefault().getSeparator() + classesPath;
+	private static String getRelativePath(@NotNull String configFile, String classesPath) {
+		return Paths.get(configFile).getParent() + FileSystems.getDefault().getSeparator() +
+		       classesPath;
 	}
 }

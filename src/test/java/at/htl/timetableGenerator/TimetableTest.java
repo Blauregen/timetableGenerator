@@ -1,11 +1,15 @@
 package at.htl.timetableGenerator;
 
+import at.htl.timetableGenerator.constrains.DoubleHourConstraint;
+import at.htl.timetableGenerator.constrains.NoMoreThanThreeInRowConstraint;
+import at.htl.timetableGenerator.constrains.TeacherConstraint;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,6 +24,22 @@ class TimetableTest {
 	@AfterEach
 	void tearDown() {
 		timetable = null;
+	}
+
+	@Test
+	void testConstructor() {
+		HashSet<Constraint> constraints = new HashSet<>();
+		constraints.add(new NoMoreThanThreeInRowConstraint());
+		DoubleHourConstraint doubleHourConstraint = new DoubleHourConstraint();
+		TeacherConstraint teacherConstraint = new TeacherConstraint();
+		constraints.add(doubleHourConstraint);
+		constraints.add(teacherConstraint);
+
+		timetable = new Timetable(5, 10, constraints);
+
+		constraints.remove(doubleHourConstraint);
+		constraints.remove(teacherConstraint);
+		assertEquals(constraints, timetable.getConstraints());
 	}
 
 	@Test
@@ -42,7 +62,8 @@ class TimetableTest {
 	void setTimetable() {
 		Subject am = new Subject("Mathe", "AM");
 		HashMap<TimeSlot, Lesson> lessons = new HashMap<>();
-		lessons.put(new TimeSlot(DayOfWeek.MONDAY, 0), new Lesson(am, new TimeSlot(DayOfWeek.MONDAY, 0)));
+		lessons.put(new TimeSlot(DayOfWeek.MONDAY, 0),
+				new Lesson(am, new TimeSlot(DayOfWeek.MONDAY, 0)));
 		timetable.setTimetable(lessons);
 		assertEquals(lessons, timetable.getTimetable());
 
@@ -73,13 +94,14 @@ class TimetableTest {
 		TimeSlot thirdSlot = new TimeSlot(DayOfWeek.MONDAY, -1);
 		TimeSlot fourthSlot = new TimeSlot(DayOfWeek.MONDAY, 11);
 
-		assertThrows(IllegalArgumentException.class, () -> timetable.setLesson(new Lesson(am, slot)),
-				"Day is " + "invalid");
-		assertThrows(IllegalArgumentException.class, () -> timetable.setLesson(new Lesson(am, secondSlot)),
-				"Time is invalid");
-		assertThrows(IllegalArgumentException.class, () -> timetable.setLesson(new Lesson(am, thirdSlot)),
-				"Time is invalid");
-		assertEquals(new Lesson(Timetable.FREISTUNDE, fourthSlot), timetable.getLesson(fourthSlot));
+		assertThrows(IllegalArgumentException.class,
+				() -> timetable.setLesson(new Lesson(am, slot)), "Day is " + "invalid");
+		assertThrows(IllegalArgumentException.class,
+				() -> timetable.setLesson(new Lesson(am, secondSlot)), "Time is invalid");
+		assertThrows(IllegalArgumentException.class,
+				() -> timetable.setLesson(new Lesson(am, thirdSlot)), "Time is invalid");
+		assertEquals(new Lesson(Timetable.FREISTUNDE, fourthSlot),
+				timetable.getLesson(fourthSlot));
 	}
 
 	@Test
@@ -96,7 +118,8 @@ class TimetableTest {
 	@Test
 	void setMaxNoOfHoursPerDayInvalid() {
 		assertThrows(IllegalArgumentException.class, () -> timetable.setMaxNoOfHoursPerDay(0),
-				"Max number of hours per day can't be smaller than " + Timetable.MIN_NUMBER_OF_HOURS_PER_DAY + "!");
+				"Max number of hours per day can't be smaller than " +
+				Timetable.MIN_NUMBER_OF_HOURS_PER_DAY + "!");
 	}
 
 	@Test
@@ -113,11 +136,11 @@ class TimetableTest {
 	@Test
 	void setNoOfDayPerWeekInvalid() {
 		assertThrows(IllegalArgumentException.class, () -> timetable.setNoOfDayPerWeek(0),
-				"Number of days per week can't be smaller than " + Timetable.MIN_NUMBER_OF_DAYS_PER_WEEK +
-				" or bigger than 7!");
+				"Number of days per week can't be smaller than " +
+				Timetable.MIN_NUMBER_OF_DAYS_PER_WEEK + " or bigger than 7!");
 		assertThrows(IllegalArgumentException.class, () -> timetable.setNoOfDayPerWeek(8),
-				"Number of days per week can't be smaller than " + Timetable.MIN_NUMBER_OF_DAYS_PER_WEEK +
-				" or bigger than 7!");
+				"Number of days per week can't be smaller than " +
+				Timetable.MIN_NUMBER_OF_DAYS_PER_WEEK + " or bigger than 7!");
 	}
 
 	@Test
@@ -128,6 +151,57 @@ class TimetableTest {
 		timetable.setLesson(new Lesson(am, slot));
 		assertTrue(timetable.contains(am));
 		assertFalse(timetable.contains(d));
+	}
+
+	@Test
+	void testAvailableDoubleHourSpot() {
+		Subject math = new Subject("Math", "AM");
+
+		HashSet<Constraint> constraints = new HashSet<>();
+		constraints.add(new NoMoreThanThreeInRowConstraint());
+		timetable = new Timetable(5, 10, constraints);
+
+		assertFalse(timetable.hasAvailableDoubleHourSpot(math));
+		timetable.setLesson(new Lesson(math, new TimeSlot(DayOfWeek.MONDAY, 0)));
+		timetable.setLesson(new Lesson(math, new TimeSlot(DayOfWeek.MONDAY, 1)));
+		timetable.setLesson(new Lesson(math, new TimeSlot(DayOfWeek.MONDAY, 2)));
+
+		assertTrue(timetable.hasAvailableDoubleHourSpot(math));
+	}
+
+	@Test
+	void hasAvailableDoubleHourSpotReturnsTrueWhenDoubleHourSpotIsAvailable() {
+		Subject subject = new Subject("Math", "M");
+		timetable.setLesson(new Lesson(subject, new TimeSlot(DayOfWeek.MONDAY, 0)));
+		assertTrue(timetable.hasAvailableDoubleHourSpot(subject));
+	}
+
+	@Test
+	void hasAvailableDoubleHourSpotReturnsFalseWhenDoubleHourSpotIsNotAvailable() {
+		Subject subject = new Subject("Math", "M");
+		assertFalse(timetable.hasAvailableDoubleHourSpot(subject));
+	}
+
+	@Test
+	void hasAvailableDoubleHourSpotReturnsFalseWhenConstraintsAreNotMet() {
+		Subject subject = new Subject("Math", "M");
+		timetable.setLesson(new Lesson(subject, new TimeSlot(DayOfWeek.MONDAY, 0)));
+		timetable.getConstraints().add((timetable, lesson, lessons) -> false);
+		assertFalse(timetable.hasAvailableDoubleHourSpot(subject));
+	}
+
+	@Test
+	void testCheckConstraints() {
+		HashSet<Constraint> constraints = new HashSet<>();
+		constraints.add(new NoMoreThanThreeInRowConstraint());
+		timetable = new Timetable(5, 10, constraints);
+		Subject math = new Subject("Math", "AM");
+		assertTrue(timetable.checkConstraints(new TimeSlot(DayOfWeek.MONDAY, 0), math));
+
+		timetable.setLesson(new Lesson(math, new TimeSlot(DayOfWeek.MONDAY, 0)));
+		timetable.setLesson(new Lesson(math, new TimeSlot(DayOfWeek.MONDAY, 1)));
+		timetable.setLesson(new Lesson(math, new TimeSlot(DayOfWeek.MONDAY, 2)));
+		assertFalse(timetable.checkConstraints(new TimeSlot(DayOfWeek.MONDAY, 3), math));
 	}
 
 	@Test

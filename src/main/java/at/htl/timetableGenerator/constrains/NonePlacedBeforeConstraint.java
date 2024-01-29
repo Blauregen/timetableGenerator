@@ -11,7 +11,8 @@ import java.util.Set;
 import static at.htl.timetableGenerator.Timetable.FREISTUNDE;
 
 /**
- * This class represents a constraint in a timetable where no course is placed before the current one.
+ * This class represents a constraint in a timetable where no course is placed before the current
+ * one.
  * It implements the Constraint interface and overrides the check method.
  */
 public class NonePlacedBeforeConstraint implements Constraint {
@@ -27,7 +28,8 @@ public class NonePlacedBeforeConstraint implements Constraint {
 	 * @return true if the constraint is met, false otherwise
 	 */
 	@Override
-	public boolean check(@NotNull Timetable timetable, @NotNull Lesson lesson, Set<Teacher> teachers) {
+	public boolean check(@NotNull Timetable timetable, @NotNull Lesson lesson,
+	                     Set<Teacher> teachers) {
 		return timetable.getLesson(lesson.getTimeSlot()).getSubject() == FREISTUNDE;
 	}
 }

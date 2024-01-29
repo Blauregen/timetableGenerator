@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class TeacherTest {
 	@Test
@@ -45,7 +46,8 @@ public class TeacherTest {
 		TimeSlot monday0 = new TimeSlot(DayOfWeek.MONDAY, 0);
 		subjects.add(german);
 		subjects.add(new Subject("Lyrik", "LY"));
-		Teacher ludwig = new Teacher("Carl Joachim Friedrich Ludwig „Achim“ von Arnim", subjects, 10, 5);
+		Teacher ludwig =
+				new Teacher("Carl Joachim Friedrich Ludwig „Achim“ von Arnim", subjects, 10, 5);
 
 		ludwig.setLesson(new Lesson(german, monday0));
 
@@ -63,7 +65,7 @@ public class TeacherTest {
 	}
 
 	@Test
-	void testAddRemoveSubject(){
+	void testAddRemoveSubject() {
 		Teacher hildegard = new Teacher("Hildegard von Bingen", new HashSet<>(), 11, 6);
 		Subject medicine = new Subject("Medizin", "MED");
 
@@ -76,5 +78,17 @@ public class TeacherTest {
 		hildegard.removeSubject(medicine);
 
 		assertEquals(0, hildegard.getSubjects().size());
+	}
+
+	@Test
+	void testEquality() {
+		Teacher moench = new Teacher("Der Mönch von Salzburg", new HashSet<>(), 2, 2);
+		Teacher alsoMoench = new Teacher("Der Mönch von Salzburg", new HashSet<>(), 2, 2);
+		Teacher otto = new Teacher("Otto von Botenlauben", new HashSet<>(), 2, 2);
+		assertEquals(moench, moench);
+		assertEquals(moench, alsoMoench);
+		assertNotEquals(moench, new Object());
+		assertNotEquals(moench, null);
+		assertNotEquals(moench, otto);
 	}
 }

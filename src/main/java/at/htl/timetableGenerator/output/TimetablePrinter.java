@@ -27,7 +27,8 @@ public final class TimetablePrinter {
 	 * @param columnWidth The width of each column in the timetable.
 	 * @param formattedTT The StringBuilder to append the separator to.
 	 */
-	public static void printThickSeparator(@NotNull Timetable tt, int columnWidth, StringBuilder formattedTT) {
+	public static void printThickSeparator(@NotNull Timetable tt, int columnWidth,
+	                                       @NotNull StringBuilder formattedTT) {
 		for (int i = 0; i < tt.getNoOfDayPerWeek(); i++) {
 			formattedTT.append("|".repeat(columnWidth));
 
@@ -67,7 +68,8 @@ public final class TimetablePrinter {
 	 * @param columnWidth The width of the widest column in the timetable.
 	 * @param formattedTT The StringBuilder to append the row to.
 	 */
-	public static void printRow(@NotNull Timetable tt, int time, int columnWidth, StringBuilder formattedTT) {
+	public static void printRow(@NotNull Timetable tt, int time, int columnWidth,
+	                            @NotNull StringBuilder formattedTT) {
 		for (int i = 0; i < tt.getNoOfDayPerWeek(); i++) {
 			try {
 				Subject currentSubject = tt.getTimetableAsArray()[i][time].getSubject();
@@ -75,8 +77,9 @@ public final class TimetablePrinter {
 				int noOfPaddingSpaces = getPadding(columnWidth, currentSubject.shortName());
 				String paddingString = " ".repeat(noOfPaddingSpaces);
 				formattedTT.append(paddingString);
-				formattedTT.append(String.format("%1$-" + (columnWidth - paddingString.length()) + "s",
-						currentSubject));
+				formattedTT.append(
+						String.format("%1$-" + (columnWidth - paddingString.length()) + "s",
+								currentSubject));
 			} catch (ArrayIndexOutOfBoundsException e) {
 				formattedTT.append(" ".repeat(columnWidth));
 			}
@@ -109,7 +112,8 @@ public final class TimetablePrinter {
 	 * @param columnWidth The width of the widest column in the timetable.
 	 * @param formattedTT The StringBuilder to append the separator to.
 	 */
-	public static void printSeparator(@NotNull Timetable tt, int columnWidth, StringBuilder formattedTT) {
+	public static void printSeparator(@NotNull Timetable tt, int columnWidth,
+	                                  @NotNull StringBuilder formattedTT) {
 		for (int i = 0; i < tt.getNoOfDayPerWeek(); i++) {
 			formattedTT.append("-".repeat(columnWidth));
 
@@ -128,7 +132,8 @@ public final class TimetablePrinter {
 	 * @param columnWidth The width of the widest column in the timetable.
 	 * @param formattedTT The StringBuilder to append the header to.
 	 */
-	public static void printHeader(@NotNull Timetable tt, int columnWidth, StringBuilder formattedTT) {
+	public static void printHeader(@NotNull Timetable tt, int columnWidth,
+	                               @NotNull StringBuilder formattedTT) {
 		for (int i = 0; i < tt.getNoOfDayPerWeek(); i++) {
 			String currentDay = DayOfWeek.values()[i].toString();
 			currentDay = currentDay.charAt(0) + currentDay.substring(1, 2).toLowerCase();
@@ -136,7 +141,8 @@ public final class TimetablePrinter {
 			int noOfPaddingSpaces = getPadding(columnWidth, currentDay);
 			String paddingString = " ".repeat(noOfPaddingSpaces);
 			formattedTT.append(paddingString);
-			formattedTT.append(String.format("%1$-" + (columnWidth - paddingString.length()) + "s", currentDay));
+			formattedTT.append(String.format("%1$-" + (columnWidth - paddingString.length()) + "s",
+					currentDay));
 
 			if (i < tt.getNoOfDayPerWeek() - 1) {
 				formattedTT.append('|');
@@ -153,7 +159,7 @@ public final class TimetablePrinter {
 	 *
 	 * @return A string representation of the formatted timetable.
 	 */
-	public static @NotNull String print(Timetable tt) {
+	public static @NotNull String print(@NotNull Timetable tt) {
 		StringBuilder formattedTT = new StringBuilder();
 
 		int columnWidth = calculateColumnWidth(tt);

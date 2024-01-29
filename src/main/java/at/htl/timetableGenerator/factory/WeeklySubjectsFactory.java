@@ -17,7 +17,7 @@ import java.util.Set;
 public class WeeklySubjectsFactory {
 	public static @NotNull Pair<String, WeeklySubject> createFromString(@NotNull String line,
 	                                                                    @NotNull Set<Subject> possibleSubjects,
-	                                                                    String delimiter) {
+	                                                                    @NotNull String delimiter) {
 		// Splitting the line (csv) and storing it in an array for later access
 		String[] field = line.split(delimiter);
 
@@ -44,16 +44,19 @@ public class WeeklySubjectsFactory {
 		return new Pair<>(schoolClass, new WeeklySubject(subject, timesPerWeek));
 	}
 
-	public static @NotNull HashMap<String, HashSet<WeeklySubject>> createFromFile(String path,
-	                                                                              Set<Subject> possibleSubjects,
-	                                                                              String delimiter) {
+	public static @NotNull HashMap<String, HashSet<WeeklySubject>> createFromFile(
+			@NotNull String path,
+			@NotNull Set<Subject> possibleSubjects,
+			@NotNull String delimiter) {
 		try {
 			HashMap<String, HashSet<WeeklySubject>> weeklySubjects = new HashMap<>();
 			List<String> lines = Files.readAllLines(Paths.get(path));
 
 			for (int i = 1; i < lines.size(); i++) {
-				Pair<String, WeeklySubject> subject = createFromString(lines.get(i), possibleSubjects, delimiter);
-				HashSet<WeeklySubject> weeklySubject = weeklySubjects.getOrDefault(subject.getKey(), new HashSet<>());
+				Pair<String, WeeklySubject> subject =
+						createFromString(lines.get(i), possibleSubjects, delimiter);
+				HashSet<WeeklySubject> weeklySubject =
+						weeklySubjects.getOrDefault(subject.getKey(), new HashSet<>());
 				weeklySubject.add(subject.getValue());
 				weeklySubjects.put(subject.getKey(), weeklySubject);
 			}

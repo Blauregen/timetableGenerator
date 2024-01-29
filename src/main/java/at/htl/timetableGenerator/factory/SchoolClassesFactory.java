@@ -16,9 +16,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class SchoolClassesFactory {
-	public static @NotNull SchoolClass createFromString(@NotNull String line, @NotNull Set<Teacher> teachers,
-	                                                    @NotNull HashMap<String, HashSet<WeeklySubject>> possibleWeeklySubjects,
-	                                                    String delimiter) {
+	public static @NotNull SchoolClass createFromString(@NotNull String line,
+	                                                    @NotNull Set<Teacher> teachers,
+	                                                    @NotNull HashMap<String,
+			                                                    HashSet<WeeklySubject>> possibleWeeklySubjects,
+	                                                    @NotNull String delimiter) {
 		// Splitting the line (csv) and storing it in an array for later access
 		String[] field = line.split(delimiter);
 
@@ -52,12 +54,15 @@ public class SchoolClassesFactory {
 		return schoolClass;
 	}
 
-	public static @NotNull Set<SchoolClass> createFromFile(String path, @NotNull Set<Teacher> teachers,
-	                                                       @NotNull HashMap<String, HashSet<WeeklySubject>> possibleWeeklySubjects,
-	                                                       String delimiter) {
+	public static @NotNull Set<SchoolClass> createFromFile(@NotNull String path,
+	                                                       @NotNull Set<Teacher> teachers,
+	                                                       @NotNull HashMap<String,
+			                                                       HashSet<WeeklySubject>> possibleWeeklySubjects,
+	                                                       @NotNull String delimiter) {
 		try (Stream<String> lines = Files.lines(Paths.get(path))) {
 			return lines.skip(1)
-			            .map(line -> SchoolClassesFactory.createFromString(line, teachers, possibleWeeklySubjects,
+			            .map(line -> SchoolClassesFactory.createFromString(line, teachers,
+					            possibleWeeklySubjects,
 					            delimiter)).collect(Collectors.toSet());
 		} catch (IOException e) {
 			throw new ImportException("Error reading File!", e);

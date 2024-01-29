@@ -1,6 +1,7 @@
 package at.htl.timetableGenerator;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
@@ -87,10 +88,11 @@ public class Lesson {
 	 *
 	 * @param o The reference object with which to compare
 	 *
-	 * @return True if this object has the same subject and timeSlot as the obj argument; false otherwise
+	 * @return True if this object has the same subject and timeSlot as the obj argument; false
+	 * otherwise
 	 */
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(@Nullable Object o) {
 		if (this == o) {
 			return true;
 		}
@@ -98,7 +100,8 @@ public class Lesson {
 			return false;
 		}
 		Lesson lesson = (Lesson) o;
-		return Objects.equals(subject, lesson.subject) && Objects.equals(timeSlot, lesson.timeSlot);
+		return Objects.equals(subject, lesson.subject) && Objects.equals(timeSlot,
+				lesson.timeSlot);
 	}
 
 	/**
@@ -122,7 +125,9 @@ public class Lesson {
 
 	/**
 	 * Sets the teacher of the lesson.
-	 * If the teacher's occupied lessons do not contain this lesson, it also sets this lesson to the teacher.
+	 * If the teacher's occupied lessons do not contain this lesson, it also sets this lesson to
+	 * the
+	 * teacher.
 	 *
 	 * @param teacher The teacher to set
 	 */

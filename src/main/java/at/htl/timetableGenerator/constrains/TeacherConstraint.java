@@ -15,8 +15,10 @@ import static at.htl.timetableGenerator.Timetable.FREISTUNDE;
 public class TeacherConstraint implements Constraint {
 
 	/**
-	 * Checks if the given timetable, time slot, course, and set of teachers meet this teacher constraint.
-	 * The constraint is met if there is a teacher who can teach the course and is available at the given time slot.
+	 * Checks if the given timetable, time slot, course, and set of teachers meet this teacher
+	 * constraint.
+	 * The constraint is met if there is a teacher who can teach the course and is available at the
+	 * given time slot.
 	 *
 	 * @param timetable the timetable to check
 	 * @param lesson    the lesson to check
@@ -25,7 +27,8 @@ public class TeacherConstraint implements Constraint {
 	 * @return true if the constraint is met, false otherwise
 	 */
 	@Override
-	public boolean check(Timetable timetable, Lesson lesson, @NotNull Set<Teacher> teachers) {
+	public boolean check(Timetable timetable, @NotNull Lesson lesson,
+	                     @NotNull Set<Teacher> teachers) {
 		for (Teacher teacher : teachers) {
 			if (teacher.getSubjects().contains(lesson.getSubject()) &&
 			    teacher.getLesson(lesson.getTimeSlot()).getSubject() == FREISTUNDE) {
@@ -38,7 +41,8 @@ public class TeacherConstraint implements Constraint {
 
 	/**
 	 * Updates the state of this constraint when the check is successful.
-	 * The state is updated by setting the course at the given time slot in the timetable of the teacher who can teach
+	 * The state is updated by setting the course at the given time slot in the timetable of the
+	 * teacher who can teach
 	 * the course and is available.
 	 *
 	 * @param timetable the timetable that met the constraint
@@ -46,12 +50,14 @@ public class TeacherConstraint implements Constraint {
 	 * @param teachers  the set of teachers that met the constraint
 	 */
 	@Override
-	public void updateOnSuccess(Timetable timetable, @NotNull Lesson lesson, @NotNull Set<Teacher> teachers) {
+	public void updateOnSuccess(Timetable timetable, @NotNull Lesson lesson,
+	                            @NotNull Set<Teacher> teachers) {
 		Subject subject = lesson.getSubject();
 		TimeSlot timeSlot = lesson.getTimeSlot();
 
 		for (Teacher teacher : teachers) {
-			if (teacher.getSubjects().contains(subject) && teacher.getLesson(timeSlot).getSubject() == FREISTUNDE) {
+			if (teacher.getSubjects().contains(subject) &&
+			    teacher.getLesson(timeSlot).getSubject() == FREISTUNDE) {
 				teacher.setLesson(lesson);
 				return;
 			}

@@ -29,22 +29,27 @@ class DoubleHourConstraintTest {
 		assertTrue(constraint.check(timetable, maths, new HashSet<>()));
 		timetable.setLesson(maths);
 
-		//If the first lesson is maths, then checking the second lesson for maths would create a double hour, and
+		//If the first lesson is maths, then checking the second lesson for maths would create a
+		// double hour, and
 		//would therefore be the best possible spot
 		assertTrue(constraint.check(timetable, secondMath, new HashSet<>()));
 
-		//If the first lesson is maths, then checking the second lesson for german would not create a double hour, but
-		//would still be the best available slot, since there is no other german lesson available, that would create a
+		//If the first lesson is maths, then checking the second lesson for german would not
+		// create a double hour, but
+		//would still be the best available slot, since there is no other german lesson available,
+		// that would create a
 		//double hour
 		assertTrue(constraint.check(timetable, germans, new HashSet<>()));
 
 		timetable.setLesson(germans);
 
-		//If the first lesson is maths, and we check for it again, it would not create a double hour even though a
+		//If the first lesson is maths, and we check for it again, it would not create a double
+		// hour even though a
 		//double hour is possible, and would therefore not be the best slot
 		assertFalse(constraint.check(timetable, maths, new HashSet<>()));
 
-		//If we check german for Monday 2nd lesson, while already having a german lesson on Tuesday 1st, it would not
+		//If we check german for Monday 2nd lesson, while already having a german lesson on
+		// Tuesday 1st, it would not
 		//be the best available slot, and would therefore return false
 		assertFalse(constraint.check(timetable, secondGermans, new HashSet<>()));
 	}

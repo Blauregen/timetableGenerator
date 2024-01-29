@@ -1,7 +1,6 @@
 package at.htl.timetableGenerator;
 
 import at.htl.timetableGenerator.constrains.DoubleHourConstraint;
-import at.htl.timetableGenerator.constrains.NonePlacedBeforeConstraint;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +15,7 @@ class SchoolClassTest {
 	SchoolClass schoolClass;
 
 	@BeforeEach
-	void setup(){
+	void setup() {
 		Subject subject1 = new Subject("Angewandte Mathematik", "AM");
 		Subject subject2 = new Subject("Englisch", "E");
 		Subject subject3 = new Subject("Software Entwicklung", "SEW");
@@ -48,9 +47,9 @@ class SchoolClassTest {
 
 	@Test
 	void generateTimetable() {
-		/**
+		/*
 		 * CREATE TEACHERS BEFORE CREATING TIMETABLE
-		 **/
+		 */
 		Subject subject1 = new Subject("Angewandte Mathematik", "AM");
 		HashSet<Subject> subjectsKerschner = new HashSet<>();
 		subjectsKerschner.add(subject1);
@@ -102,14 +101,14 @@ class SchoolClassTest {
 
 		HashSet<WeeklySubject> weeklySubjects = new HashSet<>();
 
-		assertThrows(IllegalArgumentException.class, () -> {
-			schoolClass.setWeeklySubjects(weeklySubjects);
-		});
+		assertThrows(IllegalArgumentException.class,
+				() -> schoolClass.setWeeklySubjects(weeklySubjects));
+
+		assertThrows(IllegalArgumentException.class, () -> schoolClass.setWeeklySubjects(null));
 	}
 
 	@Test
 	void getAndSetLesson() {
-
 		Subject subject3 = new Subject("Software Entwicklung", "SEW");
 		HashSet<Subject> subjectsKarpfen = new HashSet<>();
 		subjectsKarpfen.add(subject3);
@@ -121,14 +120,20 @@ class SchoolClassTest {
 		TimeSlot timeSlot = new TimeSlot(DayOfWeek.MONDAY, 0);
 		Subject subject = new Subject("Englisch", "E");
 		Lesson lesson = new Lesson(subject, timeSlot);
+		Lesson secondLesson = new Lesson(subject, timeSlot);
 
 		schoolClass.setLesson(lesson);
-		assertEquals(null, schoolClass.getLesson(timeSlot));
+		assertNull(schoolClass.getLesson(timeSlot));
 
 		schoolClass.generateTimetable(5, 9, teachers);
 
 		schoolClass.setLesson(lesson);
 		assertEquals(lesson.toString(), schoolClass.getLesson(timeSlot).toString());
+
+		secondLesson.setSchoolClass(schoolClass);
+		schoolClass.setLesson(secondLesson);
+
+		assertEquals(secondLesson, schoolClass.getLesson(timeSlot));
 	}
 
 	@Test
@@ -169,8 +174,7 @@ class SchoolClassTest {
 		Set<Teacher> teachers = new HashSet<>();
 		teachers.add(karpfen);
 
-		assertThrows(IllegalArgumentException.class, () -> {
-			schoolClass.generateTimetable(2, 2, teachers);
-		});
+		assertThrows(IllegalArgumentException.class,
+				() -> schoolClass.generateTimetable(2, 2, teachers));
 	}
 }

@@ -49,8 +49,10 @@ public class WeeklySubjectTest {
 		WeeklySubject weeklySubject = new WeeklySubject(new Subject("Maths", "AM"), 10);
 		WeeklySubject sameWeeklySubject = new WeeklySubject(new Subject("Maths", "D"), 10);
 		WeeklySubject differentWeeklySubject = new WeeklySubject(new Subject("German", "AM"), 10);
-		WeeklySubject alsoDifferentWeeklySubject = new WeeklySubject(new Subject("Maths", "AM"), 5);
-		WeeklySubject stillDifferentWeeklySubject = new WeeklySubject(new Subject("German", "AM"), 5);
+		WeeklySubject alsoDifferentWeeklySubject = new WeeklySubject(new Subject("Maths", "AM"),
+				5);
+		WeeklySubject stillDifferentWeeklySubject =
+				new WeeklySubject(new Subject("German", "AM"), 5);
 
 		assertEquals(weeklySubject, weeklySubject);
 		assertEquals(weeklySubject, sameWeeklySubject);

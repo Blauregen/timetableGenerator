@@ -31,7 +31,8 @@ class NoMoreThanThreeInRowConstraintTest {
 		timetable.setLesson(maths);
 		timetable.setLesson(secondMaths);
 
-		//If the lesson is set for an hour <= 3, returns true, since it can't be more than three in row
+		//If the lesson is set for an hour <= 3, returns true, since it can't be more than three
+		// in row
 		assertTrue(constraint.check(timetable, thirdMaths, new HashSet<>()));
 
 		timetable.setLesson(thirdMaths);
@@ -41,7 +42,8 @@ class NoMoreThanThreeInRowConstraintTest {
 
 		timetable.setLesson(thirdGerman);
 
-		//if the lesson is not the fourth in a row, because we changed the lesson before it, return true
+		//if the lesson is not the fourth in a row, because we changed the lesson before it,
+		// return true
 		assertTrue(constraint.check(timetable, fourthMaths, new HashSet<>()));
 
 		timetable.setLesson(secondGermans);

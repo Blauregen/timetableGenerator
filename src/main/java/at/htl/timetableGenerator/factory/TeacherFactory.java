@@ -16,8 +16,9 @@ import java.util.stream.Stream;
 public class TeacherFactory {
 	private static final int VALID_TEACHER_ARRAY_LENGTH = 4;
 
-	public static @NotNull Teacher createFromString(@NotNull String line, @NotNull Set<Subject> possibleSubjects,
-	                                                String delimiter) {
+	public static @NotNull Teacher createFromString(@NotNull String line,
+	                                                @NotNull Set<Subject> possibleSubjects,
+	                                                @NotNull String delimiter) {
 		// Splitting the line (csv) and storing it in an array for later access
 		String[] field = line.split(delimiter);
 
@@ -43,9 +44,13 @@ public class TeacherFactory {
 		return new Teacher(name, subjects, hoursPerDay, daysPerWeek);
 	}
 
-	public static @NotNull Set<Teacher> createFromFile(String path, Set<Subject> possibleSubjects, String delimiter) {
+	public static @NotNull Set<Teacher> createFromFile(@NotNull String path,
+	                                                   @NotNull Set<Subject> possibleSubjects,
+	                                                   @NotNull String delimiter) {
 		try (Stream<String> lines = Files.lines(Paths.get(path))) {
-			return lines.skip(1).map(line -> TeacherFactory.createFromString(line, possibleSubjects, delimiter))
+			return lines.skip(1).map(line -> TeacherFactory.createFromString(line,
+					            possibleSubjects,
+					            delimiter))
 			            .collect(Collectors.toSet());
 		} catch (IOException e) {
 			throw new ImportException("Error reading File!", e);

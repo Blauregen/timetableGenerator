@@ -7,7 +7,8 @@ import java.util.Set;
 
 public class NoMoreThanThreeInRowConstraint implements Constraint {
 	@Override
-	public boolean check(Timetable timetable, @NotNull Lesson lesson, Set<Teacher> teachers) {
+	public boolean check(@NotNull Timetable timetable, @NotNull Lesson lesson,
+	                     Set<Teacher> teachers) {
 		TimeSlot timeSlot = lesson.getTimeSlot();
 		Subject subject = lesson.getSubject();
 
@@ -17,6 +18,7 @@ public class NoMoreThanThreeInRowConstraint implements Constraint {
 
 		return timetable.getLesson(timeSlot.prevHour()).getSubject() != subject ||
 		       timetable.getLesson(timeSlot.prevHour().prevHour()).getSubject() != subject ||
-		       timetable.getLesson(timeSlot.prevHour().prevHour().prevHour()).getSubject() != subject;
+		       timetable.getLesson(timeSlot.prevHour().prevHour().prevHour()).getSubject() !=
+		       subject;
 	}
 }

@@ -14,7 +14,8 @@ import java.util.stream.Stream;
 public class SubjectFactory {
 	private static final int VALID_SUBJECT_ARRAY_LENGTH = 2;
 
-	public static @NotNull Subject createFromString(@NotNull String line, String delimiter) {
+	public static @NotNull Subject createFromString(@NotNull String line,
+	                                                @NotNull String delimiter) {
 		// Splitting the line (csv) and storing it in an array for later access
 		String[] field = line.split(delimiter);
 
@@ -29,9 +30,11 @@ public class SubjectFactory {
 		return new Subject(name, shortName);
 	}
 
-	public static @NotNull Set<Subject> createFromFile(String path, String delimiter) {
+	public static @NotNull Set<Subject> createFromFile(@NotNull String path,
+	                                                   @NotNull String delimiter) {
 		try (Stream<String> lines = Files.lines(Paths.get(path))) {
-			return lines.skip(1).map((String line) -> createFromString(line, delimiter)).collect(Collectors.toSet());
+			return lines.skip(1).map((String line) -> createFromString(line, delimiter))
+			            .collect(Collectors.toSet());
 		} catch (IOException e) {
 			throw new ImportException("Error reading File!", e);
 		}

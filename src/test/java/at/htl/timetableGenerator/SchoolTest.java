@@ -1,6 +1,9 @@
 package at.htl.timetableGenerator;
 
 import at.htl.timetableGenerator.constrains.NoMoreThanThreeInRowConstraint;
+import at.htl.timetableGenerator.output.ExportData;
+import at.htl.timetableGenerator.output.ExportFormat;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,15 +15,33 @@ class SchoolTest {
 
 	School school;
 
+	@NotNull
+	private static SchoolClass getSchoolClass() {
+		Subject subject1 = new Subject("Angewandte Mathematik", "AM");
+		Subject subject2 = new Subject("Englisch", "E");
+		Subject subject3 = new Subject("Software Entwicklung", "SEW");
+
+		WeeklySubject weeklySubject1 = new WeeklySubject(subject1, 5);
+		WeeklySubject weeklySubject2 = new WeeklySubject(subject2, 2);
+		WeeklySubject weeklySubject3 = new WeeklySubject(subject3, 3);
+
+		HashSet<WeeklySubject> weeklySubjects = new HashSet<>();
+		weeklySubjects.add(weeklySubject1);
+		weeklySubjects.add(weeklySubject2);
+		weeklySubjects.add(weeklySubject3);
+
+		return new SchoolClass("3BHITM", weeklySubjects);
+	}
+
 	@BeforeEach
-	void setup(){
+	void setup() {
 		Subject subjectE = new Subject("Englisch", "E");
 		Subject subjectAM = new Subject("Angewandte Mathematik", "AM");
 		WeeklySubject weeklySubject1 = new WeeklySubject(subjectE, 2);
 		WeeklySubject weeklySubject2 = new WeeklySubject(subjectAM, 2);
 		HashSet<WeeklySubject> weeklySubjects = new HashSet<>();
 		weeklySubjects.add(weeklySubject1);
-        weeklySubjects.add(weeklySubject2);
+		weeklySubjects.add(weeklySubject2);
 		SchoolClass schoolClass = new SchoolClass("5AHIF", weeklySubjects);
 		HashSet<SchoolClass> schoolClasses = new HashSet<>();
 		schoolClasses.add(schoolClass);
@@ -68,12 +89,15 @@ class SchoolTest {
 		school.removeConstraint(constraint);
 		assertEquals(constraints, school.getConstraints());
 	}
+
 	@Test
 	void testSetSchoolClasses() {
 		assertThrows(IllegalArgumentException.class, () -> {
-			HashSet<SchoolClass> schoolClassesNull = new HashSet<>();
-			school.setSchoolClasses(schoolClassesNull);
+			HashSet<SchoolClass> empty = new HashSet<>();
+			school.setSchoolClasses(empty);
 		});
+
+		assertThrows(IllegalArgumentException.class, () -> school.setSchoolClasses(null));
 
 		Subject subjectE = new Subject("Englisch", "E");
 		WeeklySubject weeklySubject = new WeeklySubject(subjectE, 2);
@@ -91,15 +115,17 @@ class SchoolTest {
 
 	@Test
 	void testAddingRemovingAndSettingTeachers() {
-		/**
+		/*
 		 * Test if teachers are null
 		 */
 		assertThrows(IllegalArgumentException.class, () -> {
-			HashSet<Teacher> teachersNull = new HashSet<>();
-			school.setTeachers(teachersNull);
+			HashSet<Teacher> empty = new HashSet<>();
+			school.setTeachers(empty);
 		});
 
-		/**
+		assertThrows(IllegalArgumentException.class, () -> school.setTeachers(null));
+
+		/*
 		 * Test if teacher is Wellisch when setting teachers to Wellisch
 		 */
 		HashSet<Subject> wellischSubjects = new HashSet<>();
@@ -114,7 +140,7 @@ class SchoolTest {
 
 		assertEquals("Wellisch", school.getTeachers().iterator().next().getName());
 
-		/**
+		/*
 		 * Test if teachers are empty
 		 */
 		assertThrows(IllegalArgumentException.class, () -> {
@@ -122,7 +148,7 @@ class SchoolTest {
 			school.setTeachers(teachers);
 		});
 
-		/**
+		/*
 		 * Test if teachers contains Kerschner when adding Kerschner
 		 */
 		HashSet<Subject> kerschnerSubjects = new HashSet<>();
@@ -133,7 +159,7 @@ class SchoolTest {
 		school.addTeacher(kerschner);
 		assertTrue(school.getTeachers().contains(kerschner));
 
-		/**
+		/*
 		 * Test if teachers doesn't contain kerschner when removing Kerschner
 		 */
 
@@ -160,12 +186,32 @@ class SchoolTest {
 	}
 
 	@Test
-	void generateTimetables() {
+	void testGenerateTimetables() {
 		school.generateTimetables(5, 10);
 	}
 
 	@Test
 	void exportAllTimetables() {
+		SchoolClass bhitm3 = getSchoolClass();
 
+		HashSet<ExportData> exportData = new HashSet<>();
+		exportData.add(ExportData.CLASSES);
+		exportData.add(ExportData.TEACHERS);
+
+		HashSet<ExportFormat> exportFormats = new HashSet<>();
+		exportFormats.add(ExportFormat.EXCEL);
+		exportFormats.add(ExportFormat.CSV);
+		exportFormats.add(ExportFormat.CSV_MULTIPLE);
+
+		school.addSchoolClass(bhitm3);
+		school.generateTimetables(5, 10);
+		school.exportAllTimetables(exportData, exportFormats, "./output/");
+
+		exportData.remove(ExportData.CLASSES);
+		exportData.remove(ExportData.TEACHERS);
+		exportFormats.remove(ExportFormat.EXCEL);
+		exportFormats.remove(ExportFormat.CSV);
+		exportFormats.remove(ExportFormat.CSV_MULTIPLE);
+		school.exportAllTimetables(exportData, exportFormats, "./output/");
 	}
 }

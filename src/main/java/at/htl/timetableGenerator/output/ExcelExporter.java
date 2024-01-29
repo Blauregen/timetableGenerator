@@ -7,6 +7,7 @@ import at.htl.timetableGenerator.Timetable;
 import at.htl.timetableGenerator.exceptions.ExportException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -26,7 +27,8 @@ public class ExcelExporter {
 	 * Each timetable is exported to a separate sheet in the workbook.
 	 * The name of the sheet is the name of the timetable.
 	 * The first row of each sheet contains the days of the week.
-	 * Each subsequent row represents a time slot and contains the short name of the subject scheduled at that time
+	 * Each subsequent row represents a time slot and contains the short name of the subject
+	 * scheduled at that time
 	 * slot.
 	 *
 	 * @param timetables the map of timetable names to timetables
@@ -34,7 +36,8 @@ public class ExcelExporter {
 	 *
 	 * @throws ExportException if an error occurs during the export process
 	 */
-	public static void exportToWorkbook(Map<String, Timetable> timetables, String stringPath) {
+	public static void exportToWorkbook(@NotNull Map<String, Timetable> timetables,
+	                                    @NotNull String stringPath) {
 		Path path = Paths.get(stringPath);
 		if (!Files.exists(path)) {
 			try {
@@ -72,7 +75,9 @@ public class ExcelExporter {
 
 							Cell cell = row.createCell(i);
 							if (teacher != null) {
-								cell.setCellValue(lesson.getSubject().toString() + System.lineSeparator() + teacher);
+								cell.setCellValue(
+										lesson.getSubject().toString() + System.lineSeparator() +
+										teacher);
 							} else {
 								cell.setCellValue(lesson.getSubject().toString());
 							}

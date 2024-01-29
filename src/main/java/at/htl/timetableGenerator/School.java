@@ -17,8 +17,10 @@ import java.util.Set;
 public class School {
 	private final String name;
 	private Set<Constraint> constraints = new HashSet<>();
-	private Set<SchoolClass> schoolClasses = new HashSet<>();  // The set of school classes in this school
-	private Set<Teacher> teachers = new HashSet<>();  // The set of teachers in this school
+	private @NotNull Set<SchoolClass> schoolClasses = new HashSet<>();
+	// The set of school classes in this school
+	private @NotNull Set<Teacher> teachers = new HashSet<>();  // The set of teachers in this
+	// school
 
 	/**
 	 * Constructs a new School with the specified school classes and teachers.
@@ -27,7 +29,8 @@ public class School {
 	 * @param schoolClasses the set of school classes in this school
 	 * @param teachers      the set of teachers in this school
 	 */
-	public School(String name, Set<SchoolClass> schoolClasses, Set<Teacher> teachers) {
+	public School(String name, @NotNull Set<SchoolClass> schoolClasses,
+	              @NotNull Set<Teacher> teachers) {
 		this.name = name;
 		setSchoolClasses(schoolClasses);
 		setTeachers(teachers);
@@ -50,7 +53,7 @@ public class School {
 		updateConstraints();
 	}
 
-	public Set<SchoolClass> getSchoolClasses() {
+	public @NotNull Set<SchoolClass> getSchoolClasses() {
 		return schoolClasses;
 	}
 
@@ -59,7 +62,7 @@ public class School {
 	 *
 	 * @param schoolClasses the set of school classes to set
 	 */
-	public void setSchoolClasses(Set<SchoolClass> schoolClasses) {
+	public void setSchoolClasses(@NotNull Set<SchoolClass> schoolClasses) {
 		if (schoolClasses == null || schoolClasses.isEmpty()) {
 			throw new IllegalArgumentException("schoolClasses was null or empty");
 		}
@@ -67,7 +70,7 @@ public class School {
 		this.schoolClasses = schoolClasses;
 	}
 
-	public Set<Teacher> getTeachers() {
+	public @NotNull Set<Teacher> getTeachers() {
 		return teachers;
 	}
 
@@ -76,7 +79,7 @@ public class School {
 	 *
 	 * @param teachers the set of teachers to set
 	 */
-	public void setTeachers(Set<Teacher> teachers) {
+	public void setTeachers(@NotNull Set<Teacher> teachers) {
 		if (teachers == null || teachers.isEmpty()) {
 			throw new IllegalArgumentException("teachers was null or empty");
 		}
@@ -92,14 +95,16 @@ public class School {
 	 *
 	 * @return a map of school class names to their respective timetables
 	 */
-	public HashMap<String, Timetable> generateTimetables(int daysPerWeek, int maxHoursPerDay) {
+	public @NotNull HashMap<String, Timetable> generateTimetables(int daysPerWeek,
+	                                                              int maxHoursPerDay) {
 		HashMap<String, Timetable> timetables = new HashMap<>();
 		for (Teacher teacher : teachers) {
 			teacher.setOccupiedLessons(new Timetable(daysPerWeek, maxHoursPerDay));
 		}
 
 		for (SchoolClass schoolClass : schoolClasses) {
-			Timetable timetable = schoolClass.generateTimetable(daysPerWeek, maxHoursPerDay, teachers);
+			Timetable timetable =
+					schoolClass.generateTimetable(daysPerWeek, maxHoursPerDay, teachers);
 			timetables.put(schoolClass.getName(), timetable);
 		}
 
@@ -132,12 +137,14 @@ public class School {
 		}
 	}
 
-	public void exportAllTimetables(@NotNull Set<ExportData> exportData, Set<ExportFormat> exportFormat,
+	public void exportAllTimetables(@NotNull Set<ExportData> exportData,
+	                                @NotNull Set<ExportFormat> exportFormat,
 	                                String directory) {
 		HashMap<String, Timetable> timetables = new HashMap<>();
 
 		if (exportData.contains(ExportData.CLASSES)) {
-			schoolClasses.forEach((schoolClass -> timetables.put(schoolClass.getName(), schoolClass.getTimetable())));
+			schoolClasses.forEach((schoolClass -> timetables.put(schoolClass.getName(),
+					schoolClass.getTimetable())));
 		}
 
 		if (exportData.contains(ExportData.TEACHERS)) {

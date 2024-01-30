@@ -1,5 +1,10 @@
 package at.htl.timetableGenerator.exceptions;
 
+/**
+ * This class represents a custom exception that is thrown when an error occurs during the import
+ * process.
+ * It extends the RuntimeException class, meaning it is an unchecked exception.
+ */
 public class ImportException extends RuntimeException {
 	/**
 	 * Constructs a new ImportException with the specified detail message.

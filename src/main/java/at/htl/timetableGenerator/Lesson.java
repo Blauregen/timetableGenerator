@@ -27,10 +27,22 @@ public class Lesson {
 		this.timeSlot = timeSlot;
 	}
 
+	/**
+	 * Returns the room of the lesson.
+	 *
+	 * @return The room of the lesson
+	 */
 	public Room getRoom() {
 		return room;
 	}
 
+	/**
+	 * Sets the room of the lesson.
+	 * If the room's current lesson at this time slot is not this lesson, it also sets this lesson
+	 * to the room.
+	 *
+	 * @param room The room to set
+	 */
 	public void setRoom(@NotNull Room room) {
 		this.room = room;
 
@@ -39,10 +51,22 @@ public class Lesson {
 		}
 	}
 
+	/**
+	 * Returns the school class of the lesson.
+	 *
+	 * @return The school class of the lesson
+	 */
 	public SchoolClass getSchoolClass() {
 		return schoolClass;
 	}
 
+	/**
+	 * Sets the school class of the lesson.
+	 * If the school class's current lesson at this time slot is not this lesson, it also sets this
+	 * lesson to the school class.
+	 *
+	 * @param schoolClass The school class to set
+	 */
 	public void setSchoolClass(@NotNull SchoolClass schoolClass) {
 		this.schoolClass = schoolClass;
 		if (schoolClass.getLesson(this.timeSlot) != this) {
@@ -68,6 +92,16 @@ public class Lesson {
 		this.subject = subject;
 	}
 
+	/**
+	 * Checks if this lesson is equal to another object.
+	 * The comparison is based on the subject, time slot, teacher, school class, and room of the
+	 * lesson.
+	 *
+	 * @param o The object to compare this lesson to
+	 *
+	 * @return true if the object is a lesson and has the same subject, time slot, teacher, school
+	 * class, and room as this lesson; false otherwise
+	 */
 	@Override
 	public boolean equals(@Nullable Object o) {
 		if (this == o) {

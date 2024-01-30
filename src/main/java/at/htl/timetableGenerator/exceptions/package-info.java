@@ -1,4 +1,7 @@
 /**
- * at.htl.timetableGenerator.exceptions are a collection of various exceptions related to timetables
+ * This package contains custom exceptions that are used throughout the timetable generator
+ * application.
+ * These exceptions are thrown when certain conditions are not met during the timetable
+ * generation process.
  */
 package at.htl.timetableGenerator.exceptions;

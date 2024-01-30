@@ -23,11 +23,6 @@ import java.util.Set;
 public class App {
 	/**
 	 * The main method of the application.
-	 * It creates a timetable with 5 days and 10 periods per day, a subject named "Mathe" with the
-	 * abbreviation "AM",
-	 * and a lesson with the subject and a time slot for the first period on Monday.
-	 * Then it sets the lesson in the timetable and prints the timetable.
-	 *
 	 * @param args The command-line arguments
 	 */
 	public static void main(String[] args) {

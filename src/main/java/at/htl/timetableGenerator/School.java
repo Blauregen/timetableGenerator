@@ -38,39 +38,86 @@ public class School {
 		setTeachers(teachers);
 	}
 
+	/**
+	 * Constructs a new School with the specified name.
+	 *
+	 * @param name the name of the school
+	 */
 	public School(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Returns the rooms of the school.
+	 *
+	 * @return the rooms of the school
+	 */
 	public @NotNull Map<String, Room> getRooms() {
 		return rooms;
 	}
 
+	/**
+	 * Sets the rooms of the school.
+	 *
+	 * @param rooms the rooms to set
+	 */
 	public void setRooms(@NotNull Map<String, Room> rooms) {
 		this.rooms = rooms;
 	}
 
+	/**
+	 * Adds a room to the school.
+	 *
+	 * @param room the room to add
+	 */
 	public void addRoom(@NotNull Room room) {
 		rooms.put(room.getName(), room);
 	}
 
-	public void getRoom(String name) {
-		rooms.get(name);
+	/**
+	 * Returns the room with the specified name.
+	 *
+	 * @param name the name of the room
+	 *
+	 * @return the room with the specified name
+	 */
+	public Room getRoom(String name) {
+		return rooms.get(name);
 	}
 
+	/**
+	 * Returns the name of the school.
+	 *
+	 * @return the name of the school
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Returns the constraints of the school.
+	 *
+	 * @return the constraints of the school
+	 */
 	public Set<Constraint> getConstraints() {
 		return constraints;
 	}
 
+	/**
+	 * Sets the constraints of the school.
+	 *
+	 * @param constraints the constraints to set
+	 */
 	public void setConstraints(Set<Constraint> constraints) {
 		this.constraints = constraints;
 		updateConstraints();
 	}
 
+	/**
+	 * Returns the school classes of the school.
+	 *
+	 * @return the school classes of the school
+	 */
 	public @NotNull Set<SchoolClass> getSchoolClasses() {
 		return schoolClasses;
 	}
@@ -88,6 +135,11 @@ public class School {
 		this.schoolClasses = schoolClasses;
 	}
 
+	/**
+	 * Returns the teachers of the school.
+	 *
+	 * @return the teachers of the school
+	 */
 	public @NotNull Set<Teacher> getTeachers() {
 		return teachers;
 	}
@@ -155,6 +207,13 @@ public class School {
 		}
 	}
 
+	/**
+	 * Exports all timetables of the school to the specified directory in the specified formats.
+	 *
+	 * @param exportData  the data to export
+	 * @param exportFormat the formats to export in
+	 * @param directory the directory to export to
+	 */
 	public void exportAllTimetables(@NotNull Set<ExportData> exportData,
 	                                @NotNull Set<ExportFormat> exportFormat, String directory) {
 		HashMap<String, Timetable> timetables = new HashMap<>();
@@ -185,26 +244,48 @@ public class School {
 		}
 	}
 
+	/**
+	 * Adds a school class to the school.
+	 *
+	 * @param schoolClass the school class to add
+	 */
 	public void addSchoolClass(SchoolClass schoolClass) {
 		schoolClasses.add(schoolClass);
 		updateConstraints();
 	}
 
+	/**
+	 * Removes a school class from the school.
+	 *
+	 * @param schoolClass the school class to remove
+	 */
 	public void removeSchoolClass(SchoolClass schoolClass) {
 		schoolClasses.remove(schoolClass);
 	}
 
+	/**
+	 * Updates the constraints of the school.
+	 */
 	public void updateConstraints() {
 		for (Constraint constraint : constraints) {
 			addConstraint(constraint);
 		}
 	}
 
-
+	/**
+	 * Adds a teacher to the school.
+	 *
+	 * @param teacher the teacher to add
+	 */
 	public void addTeacher(Teacher teacher) {
 		teachers.add(teacher);
 	}
 
+	/**
+	 * Removes a teacher from the school.
+	 *
+	 * @param teacher the teacher to remove
+	 */
 	public void removeTeacher(Teacher teacher) {
 		teachers.remove(teacher);
 	}

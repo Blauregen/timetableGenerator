@@ -15,7 +15,28 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * This class provides factory methods for creating SchoolClass objects.
+ * It includes methods for creating a SchoolClass from a string and from a file.
+ */
 public class SchoolClassesFactory {
+
+	/**
+	 * Creates a SchoolClass object from a string.
+	 * The string is expected to be a line from a CSV file, with fields separated by the specified
+	 * delimiter.
+	 * The method also requires a set of teachers and a map of possible weekly subjects for the
+	 * school class.
+	 *
+	 * @param line                   the line from the CSV file.
+	 * @param teachers               the set of teachers.
+	 * @param possibleWeeklySubjects the map of possible weekly subjects for the school class.
+	 * @param delimiter              the delimiter used to separate fields in the line.
+	 *
+	 * @return a SchoolClass object created from the line.
+	 *
+	 * @throws ImportException if the line is not valid.
+	 */
 	public static @NotNull SchoolClass createFromString(@NotNull String line,
 	                                                    @NotNull Set<Teacher> teachers,
 	                                                    @NotNull HashMap<String,
@@ -54,6 +75,19 @@ public class SchoolClassesFactory {
 		return schoolClass;
 	}
 
+	/**
+	 * Creates a set of SchoolClass objects from a file.
+	 * The file is expected to be a CSV file, with each line representing a SchoolClass.
+	 * The method also requires a set of teachers and a map of possible weekly subjects for the
+	 * school classes.
+	 *
+	 * @param path                  the path to the CSV file.
+	 * @param teachers              the set of teachers.
+	 * @param possibleWeeklySubjects the map of possible weekly subjects for the school classes.
+	 * @param delimiter             the delimiter used to separate fields in the lines of the file.
+	 * @return a set of SchoolClass objects created from the file.
+	 * @throws ImportException if there is an error reading the file.
+	 */
 	public static @NotNull Set<SchoolClass> createFromFile(@NotNull String path,
 	                                                       @NotNull Set<Teacher> teachers,
 	                                                       @NotNull HashMap<String,

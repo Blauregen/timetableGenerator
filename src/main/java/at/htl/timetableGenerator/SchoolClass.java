@@ -35,10 +35,20 @@ public class SchoolClass {
 		setWeeklySubjects(weeklySubjects);
 	}
 
+	/**
+	 * Returns the form teacher of the school class.
+	 *
+	 * @return the form teacher of the school class
+	 */
 	public Teacher getFormTeacher() {
 		return formTeacher;
 	}
 
+	/**
+	 * Sets the form teacher of the school class.
+	 *
+	 * @param formTeacher the form teacher to set
+	 */
 	public void setFormTeacher(Teacher formTeacher) {
 		this.formTeacher = formTeacher;
 	}
@@ -67,6 +77,7 @@ public class SchoolClass {
 	 * @param daysPerWeek    the number of days per week
 	 * @param maxHoursPerDay the maximum number of hours per day
 	 * @param teachers       the set of teachers
+	 * @param rooms          the set of rooms
 	 *
 	 * @return the generated timetable
 	 */
@@ -86,14 +97,29 @@ public class SchoolClass {
 		return this.timetable;
 	}
 
+	/**
+	 * Returns the constraints of the school class.
+	 *
+	 * @return the constraints of the school class
+	 */
 	public @NotNull Set<Constraint> getConstraints() {
 		return constraints;
 	}
 
+	/**
+	 * Returns the timetable of the school class.
+	 *
+	 * @return the timetable of the school class
+	 */
 	public Timetable getTimetable() {
 		return timetable;
 	}
 
+	/**
+	 * Sets the timetable of the school class.
+	 *
+	 * @param timetable the timetable to set
+	 */
 	public void setTimetable(Timetable timetable) {
 		this.timetable = timetable;
 	}
@@ -104,6 +130,7 @@ public class SchoolClass {
 	 * @param timetable the timetable
 	 * @param toAdd     the course to add
 	 * @param teachers  the set of teachers
+	 * @param rooms     the set of rooms
 	 *
 	 * @return the best available time slot
 	 */
@@ -131,6 +158,7 @@ public class SchoolClass {
 	 * @param timetable the timetable
 	 * @param lesson    the lesson
 	 * @param teachers  the set of teachers
+	 * @param rooms     the set of rooms
 	 */
 	private void updateConstraints(Timetable timetable, Lesson lesson, Set<Teacher> teachers,
 	                               Map<String, Room> rooms) {
@@ -145,6 +173,7 @@ public class SchoolClass {
 	 * @param timetable the timetable
 	 * @param lesson    the lesson
 	 * @param teachers  the set of teachers
+	 * @param rooms     the set of rooms
 	 *
 	 * @return true if the constraints are met, false otherwise
 	 */
@@ -190,6 +219,13 @@ public class SchoolClass {
 		this.weeklySubjects = weeklySubjects;
 	}
 
+	/**
+	 * Returns the lesson at the specified time slot.
+	 *
+	 * @param slot the time slot
+	 *
+	 * @return the lesson at the specified time slot
+	 */
 	public @NotNull Lesson getLesson(@NotNull TimeSlot slot) {
 		if (timetable != null) {
 			return timetable.getLesson(slot);
@@ -198,6 +234,11 @@ public class SchoolClass {
 		return new Lesson(FREISTUNDE, slot);
 	}
 
+	/**
+	 * Sets the lesson at the specified time slot.
+	 *
+	 * @param lesson the lesson to set
+	 */
 	public void setLesson(@NotNull Lesson lesson) {
 		if (timetable != null) {
 			timetable.setLesson(lesson);
@@ -208,6 +249,11 @@ public class SchoolClass {
 		}
 	}
 
+	/**
+	 * Returns a string representation of the school class.
+	 *
+	 * @return a string representation of the school class
+	 */
 	@Override
 	public String toString() {
 		return name;

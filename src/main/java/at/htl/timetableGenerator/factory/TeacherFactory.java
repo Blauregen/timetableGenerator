@@ -13,9 +13,27 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * This class provides factory methods for creating Teacher objects.
+ * It includes methods for creating a Teacher from a string and from a file.
+ */
 public class TeacherFactory {
 	private static final int VALID_TEACHER_ARRAY_LENGTH = 4;
 
+	/**
+	 * Creates a Teacher object from a string.
+	 * The string is expected to be a line from a CSV file, with fields separated by the specified
+	 * delimiter.
+	 * The method also requires a set of possible subjects for the teacher.
+	 *
+	 * @param line             the line from the CSV file.
+	 * @param possibleSubjects the set of possible subjects for the teacher.
+	 * @param delimiter        the delimiter used to separate fields in the line.
+	 *
+	 * @return a Teacher object created from the line.
+	 *
+	 * @throws ImportException if the line is not valid.
+	 */
 	public static @NotNull Teacher createFromString(@NotNull String line,
 	                                                @NotNull Set<Subject> possibleSubjects,
 	                                                @NotNull String delimiter) {
@@ -44,14 +62,26 @@ public class TeacherFactory {
 		return new Teacher(name, subjects, hoursPerDay, daysPerWeek);
 	}
 
+	/**
+	 * Creates a set of Teacher objects from a file.
+	 * The file is expected to be a CSV file, with each line representing a Teacher.
+	 * The method also requires a set of possible subjects for the teachers.
+	 *
+	 * @param path             the path to the CSV file.
+	 * @param possibleSubjects the set of possible subjects for the teachers.
+	 * @param delimiter        the delimiter used to separate fields in the lines of the file.
+	 *
+	 * @return a set of Teacher objects created from the file.
+	 *
+	 * @throws ImportException if there is an error reading the file.
+	 */
 	public static @NotNull Set<Teacher> createFromFile(@NotNull String path,
 	                                                   @NotNull Set<Subject> possibleSubjects,
 	                                                   @NotNull String delimiter) {
 		try (Stream<String> lines = Files.lines(Paths.get(path))) {
 			return lines.skip(1).map(line -> TeacherFactory.createFromString(line,
-					            possibleSubjects,
-					            delimiter))
-			            .collect(Collectors.toSet());
+					possibleSubjects,
+					delimiter)).collect(Collectors.toSet());
 		} catch (IOException e) {
 			throw new ImportException("Error reading File!", e);
 		}

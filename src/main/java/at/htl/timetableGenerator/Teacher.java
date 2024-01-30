@@ -100,19 +100,43 @@ public class Teacher {
 		}
 	}
 
+	/**
+	 * Returns a string representation of the teacher.
+	 *
+	 * @return The name of the teacher.
+	 */
 	@Override
 	public String toString() {
 		return this.name;
 	}
 
+	/**
+	 * Adds a subject to the set of subjects this teacher can teach.
+	 *
+	 * @param subject The subject to add.
+	 */
 	public void addSubject(Subject subject) {
 		subjects.add(subject);
 	}
 
+	/**
+	 * Removes a subject from the set of subjects this teacher can teach.
+	 *
+	 * @param subject The subject to remove.
+	 */
 	public void removeSubject(Subject subject) {
 		subjects.remove(subject);
 	}
 
+	/**
+	 * Checks if the given object is equal to this teacher.
+	 * Two teachers are considered equal if their names are equal.
+	 *
+	 * @param o The object to compare this teacher against.
+	 *
+	 * @return true if the given object represents a teacher equivalent to this teacher,
+	 * false otherwise.
+	 */
 	@Override
 	public boolean equals(@Nullable Object o) {
 		if (this == o) {
@@ -125,6 +149,13 @@ public class Teacher {
 		return Objects.equals(name, teacher.name);
 	}
 
+	/**
+	 * Returns a hash code value for this teacher.
+	 * The hash code is computed based on the name of the teacher.
+	 * This method is supported for the benefit of hash tables such as those provided by HashMap.
+	 *
+	 * @return a hash code value for this object.
+	 */
 	@Override
 	public int hashCode() {
 		return Objects.hash(name);

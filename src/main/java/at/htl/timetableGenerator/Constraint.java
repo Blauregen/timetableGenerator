@@ -19,6 +19,7 @@ public interface Constraint {
 	 * @param timetable the timetable to check
 	 * @param lesson    the lesson to check
 	 * @param teachers  the set of teachers to check
+	 * @param rooms     the set of room to check
 	 *
 	 * @return true if the constraint is met, false otherwise
 	 */
@@ -33,6 +34,7 @@ public interface Constraint {
 	 * @param timetable the timetable that met the constraint
 	 * @param lesson    the lesson that met the constraint
 	 * @param teachers  the set of teachers that met the constraint
+	 * @param rooms     the set of rooms that met the constraint
 	 */
 	default void updateOnSuccess(Timetable timetable, Lesson lesson, Set<Teacher> teachers,
 	                             Map<String, Room> rooms) {

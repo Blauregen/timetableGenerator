@@ -1,9 +1,6 @@
 package at.htl.timetableGenerator;
 
-import at.htl.timetableGenerator.factory.SchoolClassesFactory;
-import at.htl.timetableGenerator.factory.SubjectFactory;
-import at.htl.timetableGenerator.factory.TeacherFactory;
-import at.htl.timetableGenerator.factory.WeeklySubjectsFactory;
+import at.htl.timetableGenerator.factory.*;
 import at.htl.timetableGenerator.output.ExportData;
 import at.htl.timetableGenerator.output.ExportFormat;
 import org.apache.commons.cli.*;
@@ -16,6 +13,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -73,8 +71,8 @@ public class App {
 
 			if (outputPath == null) {
 				outputPath = Paths.get(configFile).getParent().toString() +
-				             FileSystems.getDefault().getSeparator() +
-				             "output" + FileSystems.getDefault().getSeparator();
+				             FileSystems.getDefault().getSeparator() + "output" +
+				             FileSystems.getDefault().getSeparator();
 			} else {
 				outputPath = outputPath.strip();
 			}
@@ -91,24 +89,26 @@ public class App {
 			String weeklySubjectsPath = ini.get("input", "weeklySubjects");
 			String classesPath = ini.get("input", "classes");
 			String teachersPath = ini.get("input", "teachers");
+			String roomPath = ini.get("input", "rooms");
 
 			Set<Subject> subjects =
 					SubjectFactory.createFromFile(getRelativePath(configFile, subjectsPath),
 							delimiter);
 			HashMap<String, HashSet<WeeklySubject>> weeklySubjects =
 					WeeklySubjectsFactory.createFromFile(
-							getRelativePath(configFile, weeklySubjectsPath), subjects,
-							delimiter);
+							getRelativePath(configFile, weeklySubjectsPath), subjects, delimiter);
 			Set<Teacher> teachers =
 					TeacherFactory.createFromFile(getRelativePath(configFile, teachersPath),
 							subjects, delimiter);
 			Set<SchoolClass> schoolClasses =
 					SchoolClassesFactory.createFromFile(getRelativePath(configFile, classesPath),
-							teachers,
-							weeklySubjects, delimiter);
+							teachers, weeklySubjects, delimiter);
+			Map<String, Room> rooms =
+					RoomFactory.createFromFile(getRelativePath(configFile, roomPath), delimiter);
 
 			School school = new School(schoolName, schoolClasses, teachers);
 			school.setConstraints(constraints);
+			school.setRooms(rooms);
 			school.generateTimetables(noOfDaysPerWeek, noOfHoursPerDay);
 			school.exportAllTimetables(exportData, exportFormats, outputPath);
 			school.getSchoolClasses()

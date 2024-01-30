@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -16,11 +17,12 @@ import java.util.Set;
  */
 public class School {
 	private final String name;
+	// school
+	private @NotNull Map<String, Room> rooms = new HashMap<>();
 	private Set<Constraint> constraints = new HashSet<>();
 	private @NotNull Set<SchoolClass> schoolClasses = new HashSet<>();
 	// The set of school classes in this school
 	private @NotNull Set<Teacher> teachers = new HashSet<>();  // The set of teachers in this
-	// school
 
 	/**
 	 * Constructs a new School with the specified school classes and teachers.
@@ -38,6 +40,22 @@ public class School {
 
 	public School(String name) {
 		this.name = name;
+	}
+
+	public @NotNull Map<String, Room> getRooms() {
+		return rooms;
+	}
+
+	public void setRooms(@NotNull Map<String, Room> rooms) {
+		this.rooms = rooms;
+	}
+
+	public void addRoom(@NotNull Room room) {
+		rooms.put(room.getName(), room);
+	}
+
+	public void getRoom(String name) {
+		rooms.get(name);
 	}
 
 	public String getName() {
@@ -63,7 +81,7 @@ public class School {
 	 * @param schoolClasses the set of school classes to set
 	 */
 	public void setSchoolClasses(@NotNull Set<SchoolClass> schoolClasses) {
-		if (schoolClasses == null || schoolClasses.isEmpty()) {
+		if (schoolClasses.isEmpty()) {
 			throw new IllegalArgumentException("schoolClasses was null or empty");
 		}
 
@@ -80,7 +98,7 @@ public class School {
 	 * @param teachers the set of teachers to set
 	 */
 	public void setTeachers(@NotNull Set<Teacher> teachers) {
-		if (teachers == null || teachers.isEmpty()) {
+		if (teachers.isEmpty()) {
 			throw new IllegalArgumentException("teachers was null or empty");
 		}
 
@@ -104,7 +122,7 @@ public class School {
 
 		for (SchoolClass schoolClass : schoolClasses) {
 			Timetable timetable =
-					schoolClass.generateTimetable(daysPerWeek, maxHoursPerDay, teachers);
+					schoolClass.generateTimetable(daysPerWeek, maxHoursPerDay, teachers, rooms);
 			timetables.put(schoolClass.getName(), timetable);
 		}
 
@@ -138,8 +156,7 @@ public class School {
 	}
 
 	public void exportAllTimetables(@NotNull Set<ExportData> exportData,
-	                                @NotNull Set<ExportFormat> exportFormat,
-	                                String directory) {
+	                                @NotNull Set<ExportFormat> exportFormat, String directory) {
 		HashMap<String, Timetable> timetables = new HashMap<>();
 
 		if (exportData.contains(ExportData.CLASSES)) {
@@ -149,6 +166,10 @@ public class School {
 
 		if (exportData.contains(ExportData.TEACHERS)) {
 			teachers.forEach(teacher -> timetables.put(teacher.getName(), teacher.getTimetable()));
+		}
+
+		if (exportData.contains(ExportData.ROOMS)) {
+			rooms.values().forEach(room -> timetables.put(room.getName(), room.getTimetable()));
 		}
 
 		if (exportFormat.contains(ExportFormat.CSV)) {

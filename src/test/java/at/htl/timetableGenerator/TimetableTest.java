@@ -186,7 +186,7 @@ class TimetableTest {
 	void hasAvailableDoubleHourSpotReturnsFalseWhenConstraintsAreNotMet() {
 		Subject subject = new Subject("Math", "M");
 		timetable.setLesson(new Lesson(subject, new TimeSlot(DayOfWeek.MONDAY, 0)));
-		timetable.getConstraints().add((timetable, lesson, lessons) -> false);
+		timetable.getConstraints().add((timetable, lesson, lessons, rooms) -> false);
 		assertFalse(timetable.hasAvailableDoubleHourSpot(subject));
 	}
 

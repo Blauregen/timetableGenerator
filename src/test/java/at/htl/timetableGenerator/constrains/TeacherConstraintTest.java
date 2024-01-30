@@ -4,6 +4,7 @@ import at.htl.timetableGenerator.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
+import java.util.HashMap;
 import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,13 +26,19 @@ class TeacherConstraintTest {
 		HashSet<Teacher> teachers = new HashSet<>();
 		teachers.add(kerschi);
 
-		assertTrue(constraint.check(timetable, maths, teachers));
-		assertFalse(constraint.check(timetable, germans, teachers));
+		HashMap<String, Room> rooms = new HashMap<>();
+		rooms.put("123", new Room("123"));
+		rooms.put("456", new Room("456"));
+		rooms.put("789", new Room("789"));
+		rooms.put("101112", new Room("101112"));
+
+		assertTrue(constraint.check(timetable, maths, teachers, rooms));
+		assertFalse(constraint.check(timetable, germans, teachers, rooms));
 
 		maths.setTeacher(kerschi);
 		timetable.setLesson(maths);
 
-		assertFalse(constraint.check(timetable, maths, teachers));
+		assertFalse(constraint.check(timetable, maths, teachers, rooms));
 	}
 
 	@Test
@@ -57,7 +64,13 @@ class TeacherConstraintTest {
 		teachers.add(luger);
 		teachers.add(kerschi);
 
-		constraint.updateOnSuccess(timetable, maths, teachers);
+		HashMap<String, Room> rooms = new HashMap<>();
+		rooms.put("123", new Room("123"));
+		rooms.put("456", new Room("456"));
+		rooms.put("789", new Room("789"));
+		rooms.put("101112", new Room("101112"));
+
+		constraint.updateOnSuccess(timetable, maths, teachers, rooms);
 		timetable.setLesson(maths);
 
 		assertEquals(timetable.getLesson(new TimeSlot(DayOfWeek.MONDAY, 0)),
@@ -66,13 +79,13 @@ class TeacherConstraintTest {
 		assertNotEquals(timetable.getLesson(new TimeSlot(DayOfWeek.MONDAY, 0)),
 				luger.getLesson(new TimeSlot(DayOfWeek.MONDAY, 0)));
 
-		constraint.updateOnSuccess(timetable, germans, teachers);
+		constraint.updateOnSuccess(timetable, germans, teachers, rooms);
 		timetable.setLesson(germans);
 
 		assertEquals(timetable.getLesson(new TimeSlot(DayOfWeek.MONDAY, 0)),
 				luger.getLesson(new TimeSlot(DayOfWeek.MONDAY, 0)));
 
-		constraint.updateOnSuccess(timetable, itps, teachers);
+		constraint.updateOnSuccess(timetable, itps, teachers, rooms);
 		timetable.setLesson(itps);
 
 		assertNotEquals(timetable.getLesson(new TimeSlot(DayOfWeek.MONDAY, 0)),

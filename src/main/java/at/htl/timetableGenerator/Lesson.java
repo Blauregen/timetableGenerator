@@ -14,6 +14,7 @@ public class Lesson {
 	private TimeSlot timeSlot;
 	private Teacher teacher;
 	private SchoolClass schoolClass;
+	private Room room;
 
 	/**
 	 * Constructs a new Lesson with the specified subject and time slot.
@@ -24,6 +25,18 @@ public class Lesson {
 	public Lesson(Subject subject, TimeSlot timeSlot) {
 		this.subject = subject;
 		this.timeSlot = timeSlot;
+	}
+
+	public Room getRoom() {
+		return room;
+	}
+
+	public void setRoom(@NotNull Room room) {
+		this.room = room;
+
+		if (room.getLesson(timeSlot) != this) {
+			room.setLesson(this);
+		}
 	}
 
 	public SchoolClass getSchoolClass() {
@@ -55,6 +68,27 @@ public class Lesson {
 		this.subject = subject;
 	}
 
+	@Override
+	public boolean equals(@Nullable Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		Lesson lesson = (Lesson) o;
+		return Objects.equals(subject, lesson.subject) &&
+		       Objects.equals(timeSlot, lesson.timeSlot) &&
+		       Objects.equals(teacher, lesson.teacher) &&
+		       Objects.equals(schoolClass, lesson.schoolClass) && Objects.equals(room,
+				lesson.room);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(subject, timeSlot, teacher, schoolClass, room);
+	}
+
 	/**
 	 * Returns the time slot of the lesson.
 	 *
@@ -81,37 +115,6 @@ public class Lesson {
 	@Override
 	public String toString() {
 		return String.format("%s: %s", timeSlot, subject);
-	}
-
-	/**
-	 * Indicates whether some other object is "equal to" this one.
-	 *
-	 * @param o The reference object with which to compare
-	 *
-	 * @return True if this object has the same subject and timeSlot as the obj argument; false
-	 * otherwise
-	 */
-	@Override
-	public boolean equals(@Nullable Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
-		Lesson lesson = (Lesson) o;
-		return Objects.equals(subject, lesson.subject) && Objects.equals(timeSlot,
-				lesson.timeSlot);
-	}
-
-	/**
-	 * Returns a hash code value for the object.
-	 *
-	 * @return A hash code value for this object
-	 */
-	@Override
-	public int hashCode() {
-		return Objects.hash(subject, timeSlot);
 	}
 
 	/**

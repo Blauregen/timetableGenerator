@@ -13,7 +13,7 @@ import static at.htl.timetableGenerator.Timetable.FREISTUNDE;
  * A teacher constraint checks if a teacher is available for a given course at a given time slot.
  * It implements the Constraint interface and overrides the check and updateOnSuccess methods.
  */
-public class TeacherConstraint implements Constraint {
+public class RoomConstraint implements Constraint {
 
 	/**
 	 * Checks if the given timetable, time slot, course, and set of teachers meet this teacher
@@ -29,10 +29,9 @@ public class TeacherConstraint implements Constraint {
 	 */
 	@Override
 	public boolean check(Timetable timetable, @NotNull Lesson lesson,
-	                     @NotNull Set<Teacher> teachers, Map<String, Room> rooms) {
-		for (Teacher teacher : teachers) {
-			if (teacher.getSubjects().contains(lesson.getSubject()) &&
-			    teacher.getLesson(lesson.getTimeSlot()).getSubject() == FREISTUNDE) {
+	                     @NotNull Set<Teacher> teachers, @NotNull Map<String, Room> rooms) {
+		for (Room room : rooms.values()) {
+			if (room.getLesson(lesson.getTimeSlot()).getSubject() == FREISTUNDE) {
 				return true;
 			}
 		}
@@ -52,14 +51,13 @@ public class TeacherConstraint implements Constraint {
 	 */
 	@Override
 	public void updateOnSuccess(Timetable timetable, @NotNull Lesson lesson,
-	                            @NotNull Set<Teacher> teachers, Map<String, Room> rooms) {
+	                            @NotNull Set<Teacher> teachers, @NotNull Map<String, Room> rooms) {
 		Subject subject = lesson.getSubject();
 		TimeSlot timeSlot = lesson.getTimeSlot();
 
-		for (Teacher teacher : teachers) {
-			if (teacher.getSubjects().contains(subject) &&
-			    teacher.getLesson(timeSlot).getSubject() == FREISTUNDE) {
-				teacher.setLesson(lesson);
+		for (Room room : rooms.values()) {
+			if (room.getLesson(timeSlot).getSubject() == FREISTUNDE) {
+				room.setLesson(lesson);
 				return;
 			}
 		}

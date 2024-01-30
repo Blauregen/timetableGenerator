@@ -1,11 +1,9 @@
 package at.htl.timetableGenerator.constrains;
 
-import at.htl.timetableGenerator.Constraint;
-import at.htl.timetableGenerator.Lesson;
-import at.htl.timetableGenerator.Teacher;
-import at.htl.timetableGenerator.Timetable;
+import at.htl.timetableGenerator.*;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
 import java.util.Set;
 
 import static at.htl.timetableGenerator.Timetable.FREISTUNDE;
@@ -29,7 +27,7 @@ public class NonePlacedBeforeConstraint implements Constraint {
 	 */
 	@Override
 	public boolean check(@NotNull Timetable timetable, @NotNull Lesson lesson,
-	                     Set<Teacher> teachers) {
+	                     Set<Teacher> teachers, Map<String, Room> rooms) {
 		return timetable.getLesson(lesson.getTimeSlot()).getSubject() == FREISTUNDE;
 	}
 }

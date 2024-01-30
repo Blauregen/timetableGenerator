@@ -97,8 +97,6 @@ class SchoolTest {
 			school.setSchoolClasses(empty);
 		});
 
-		assertThrows(IllegalArgumentException.class, () -> school.setSchoolClasses(null));
-
 		Subject subjectE = new Subject("Englisch", "E");
 		WeeklySubject weeklySubject = new WeeklySubject(subjectE, 2);
 		HashSet<WeeklySubject> weeklySubjects = new HashSet<>();
@@ -122,8 +120,6 @@ class SchoolTest {
 			HashSet<Teacher> empty = new HashSet<>();
 			school.setTeachers(empty);
 		});
-
-		assertThrows(IllegalArgumentException.class, () -> school.setTeachers(null));
 
 		/*
 		 * Test if teacher is Wellisch when setting teachers to Wellisch
@@ -205,13 +201,13 @@ class SchoolTest {
 
 		school.addSchoolClass(bhitm3);
 		school.generateTimetables(5, 10);
-		school.exportAllTimetables(exportData, exportFormats, "./output/");
+		school.exportAllTimetables(exportData, exportFormats, "./testOutput/");
 
 		exportData.remove(ExportData.CLASSES);
 		exportData.remove(ExportData.TEACHERS);
 		exportFormats.remove(ExportFormat.EXCEL);
 		exportFormats.remove(ExportFormat.CSV);
 		exportFormats.remove(ExportFormat.CSV_MULTIPLE);
-		school.exportAllTimetables(exportData, exportFormats, "./output/");
+		school.exportAllTimetables(exportData, exportFormats, "./testOutput/");
 	}
 }

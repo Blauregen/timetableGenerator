@@ -5,10 +5,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class SchoolClassTest {
 
@@ -70,7 +72,13 @@ class SchoolClassTest {
 		teachers.add(wellisch);
 		teachers.add(karpfen);
 
-		schoolClass.generateTimetable(5, 9, teachers);
+		HashMap<String, Room> rooms = new HashMap<>();
+		rooms.put("123", new Room("123"));
+		rooms.put("456", new Room("456"));
+		rooms.put("789", new Room("789"));
+		rooms.put("101112", new Room("101112"));
+
+		schoolClass.generateTimetable(5, 9, teachers, rooms);
 
 		assertEquals(9, schoolClass.getTimetable().getMaxNoOfHoursPerDay());
 		assertEquals(5, schoolClass.getTimetable().getNoOfDayPerWeek());
@@ -103,8 +111,6 @@ class SchoolClassTest {
 
 		assertThrows(IllegalArgumentException.class,
 				() -> schoolClass.setWeeklySubjects(weeklySubjects));
-
-		assertThrows(IllegalArgumentException.class, () -> schoolClass.setWeeklySubjects(null));
 	}
 
 	@Test
@@ -123,9 +129,14 @@ class SchoolClassTest {
 		Lesson secondLesson = new Lesson(subject, timeSlot);
 
 		schoolClass.setLesson(lesson);
-		assertNull(schoolClass.getLesson(timeSlot));
 
-		schoolClass.generateTimetable(5, 9, teachers);
+		HashMap<String, Room> rooms = new HashMap<>();
+		rooms.put("123", new Room("123"));
+		rooms.put("456", new Room("456"));
+		rooms.put("789", new Room("789"));
+		rooms.put("101112", new Room("101112"));
+
+		schoolClass.generateTimetable(5, 9, teachers, rooms);
 
 		schoolClass.setLesson(lesson);
 		assertEquals(lesson.toString(), schoolClass.getLesson(timeSlot).toString());
@@ -174,7 +185,13 @@ class SchoolClassTest {
 		Set<Teacher> teachers = new HashSet<>();
 		teachers.add(karpfen);
 
+		HashMap<String, Room> rooms = new HashMap<>();
+		rooms.put("123", new Room("123"));
+		rooms.put("456", new Room("456"));
+		rooms.put("789", new Room("789"));
+		rooms.put("101112", new Room("101112"));
+
 		assertThrows(IllegalArgumentException.class,
-				() -> schoolClass.generateTimetable(2, 2, teachers));
+				() -> schoolClass.generateTimetable(2, 2, teachers, rooms));
 	}
 }

@@ -74,13 +74,17 @@ public class ExcelExporter {
 							Teacher teacher = lesson.getTeacher();
 
 							Cell cell = row.createCell(i);
+							String output = lesson.getSubject().toString();
+
 							if (teacher != null) {
-								cell.setCellValue(
-										lesson.getSubject().toString() + System.lineSeparator() +
-										teacher);
-							} else {
-								cell.setCellValue(lesson.getSubject().toString());
+								output += System.lineSeparator() + teacher;
 							}
+
+							if (lesson.getRoom() != null) {
+								output += System.lineSeparator() + lesson.getRoom();
+							}
+
+							cell.setCellValue(output);
 
 							cell.setCellStyle(cs);
 							sheet.autoSizeColumn(i);

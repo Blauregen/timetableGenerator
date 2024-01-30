@@ -2,11 +2,13 @@ package at.htl.timetableGenerator;
 
 import at.htl.timetableGenerator.constrains.NonePlacedBeforeConstraint;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.time.DayOfWeek;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+
+import static at.htl.timetableGenerator.Timetable.FREISTUNDE;
 
 /**
  * This class represents a school class in a school.
@@ -68,14 +70,15 @@ public class SchoolClass {
 	 *
 	 * @return the generated timetable
 	 */
-	public Timetable generateTimetable(int daysPerWeek, int maxHoursPerDay,
-	                                   Set<Teacher> teachers) {
+	public Timetable generateTimetable(int daysPerWeek, int maxHoursPerDay, Set<Teacher> teachers,
+	                                   Map<String, Room> rooms) {
 		this.timetable = new Timetable(daysPerWeek, maxHoursPerDay, constraints);
 
 		for (WeeklySubject weeklySubject : weeklySubjects) {
 			for (int i = 0; i < weeklySubject.getNoPerWeek(); i++) {
 				Lesson bestAvailableLesson =
-						getBestAvailableLesson(timetable, weeklySubject.getSubject(), teachers);
+						getBestAvailableLesson(timetable, weeklySubject.getSubject(), teachers,
+								rooms);
 				this.setLesson(bestAvailableLesson);
 			}
 		}
@@ -105,14 +108,15 @@ public class SchoolClass {
 	 * @return the best available time slot
 	 */
 	private @NotNull Lesson getBestAvailableLesson(@NotNull Timetable timetable, Subject toAdd,
-	                                               Set<Teacher> teachers) {
+	                                               Set<Teacher> teachers,
+	                                               Map<String, Room> rooms) {
 		for (int i = 0; i < timetable.getMaxNoOfHoursPerDay(); i++) {
 			for (int j = 0; j < timetable.getNoOfDayPerWeek(); j++) {
 				TimeSlot currentSlot = new TimeSlot(DayOfWeek.of(j + 1), i);
 				Lesson lesson = new Lesson(toAdd, currentSlot);
 
-				if (checkConstraints(timetable, lesson, teachers)) {
-					updateConstraints(timetable, lesson, teachers);
+				if (checkConstraints(timetable, lesson, teachers, rooms)) {
+					updateConstraints(timetable, lesson, teachers, rooms);
 					return lesson;
 				}
 			}
@@ -128,9 +132,10 @@ public class SchoolClass {
 	 * @param lesson    the lesson
 	 * @param teachers  the set of teachers
 	 */
-	private void updateConstraints(Timetable timetable, Lesson lesson, Set<Teacher> teachers) {
+	private void updateConstraints(Timetable timetable, Lesson lesson, Set<Teacher> teachers,
+	                               Map<String, Room> rooms) {
 		for (Constraint constraint : constraints) {
-			constraint.updateOnSuccess(timetable, lesson, teachers);
+			constraint.updateOnSuccess(timetable, lesson, teachers, rooms);
 		}
 	}
 
@@ -143,9 +148,10 @@ public class SchoolClass {
 	 *
 	 * @return true if the constraints are met, false otherwise
 	 */
-	private boolean checkConstraints(Timetable timetable, Lesson lesson, Set<Teacher> teachers) {
+	private boolean checkConstraints(Timetable timetable, Lesson lesson, Set<Teacher> teachers,
+	                                 Map<String, Room> rooms) {
 		for (Constraint constraint : constraints) {
-			if (!constraint.check(timetable, lesson, teachers)) {
+			if (!constraint.check(timetable, lesson, teachers, rooms)) {
 				return false;
 			}
 		}
@@ -177,19 +183,19 @@ public class SchoolClass {
 	 * @param weeklySubjects the list of weekly courses to set
 	 */
 	public void setWeeklySubjects(@NotNull HashSet<WeeklySubject> weeklySubjects) {
-		if (weeklySubjects == null || weeklySubjects.isEmpty()) {
+		if (weeklySubjects.isEmpty()) {
 			throw new IllegalArgumentException("weeklySubjects was null or empty");
 		}
 
 		this.weeklySubjects = weeklySubjects;
 	}
 
-	public @Nullable Lesson getLesson(@NotNull TimeSlot slot) {
+	public @NotNull Lesson getLesson(@NotNull TimeSlot slot) {
 		if (timetable != null) {
 			return timetable.getLesson(slot);
 		}
 
-		return null;
+		return new Lesson(FREISTUNDE, slot);
 	}
 
 	public void setLesson(@NotNull Lesson lesson) {

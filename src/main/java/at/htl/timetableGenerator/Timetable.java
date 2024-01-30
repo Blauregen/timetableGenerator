@@ -1,6 +1,7 @@
 package at.htl.timetableGenerator;
 
 import at.htl.timetableGenerator.constrains.DoubleHourConstraint;
+import at.htl.timetableGenerator.constrains.RoomConstraint;
 import at.htl.timetableGenerator.constrains.TeacherConstraint;
 import at.htl.timetableGenerator.output.TimetablePrinter;
 import org.jetbrains.annotations.NotNull;
@@ -45,7 +46,8 @@ public class Timetable {
 		setMaxNoOfHoursPerDay(maxNoOfHoursPerDay);
 		this.constraints =
 				constraints.stream().filter((o) -> !(o instanceof DoubleHourConstraint ||
-		                                                        o instanceof TeacherConstraint))
+				                                     o instanceof TeacherConstraint ||
+				                                     o instanceof RoomConstraint))
 		                              .collect(Collectors.toSet());
 
 		setTimetable(FREISTUNDE);
@@ -196,7 +198,8 @@ public class Timetable {
 	 */
 	public boolean checkConstraints(TimeSlot timeSlot, Subject subject) {
 		for (Constraint constraint : constraints) {
-			if (!constraint.check(this, new Lesson(subject, timeSlot), new HashSet<>())) {
+			if (!constraint.check(this, new Lesson(subject, timeSlot), new HashSet<>(),
+					new HashMap<>())) {
 				return false;
 			}
 		}

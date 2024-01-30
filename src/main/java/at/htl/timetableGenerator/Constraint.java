@@ -1,5 +1,6 @@
 package at.htl.timetableGenerator;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -21,7 +22,8 @@ public interface Constraint {
 	 *
 	 * @return true if the constraint is met, false otherwise
 	 */
-	boolean check(Timetable timetable, Lesson lesson, Set<Teacher> teachers);
+	boolean check(Timetable timetable, Lesson lesson, Set<Teacher> teachers,
+	              Map<String, Room> rooms);
 
 	/**
 	 * Updates the state of this constraint when the check is successful.
@@ -32,6 +34,7 @@ public interface Constraint {
 	 * @param lesson    the lesson that met the constraint
 	 * @param teachers  the set of teachers that met the constraint
 	 */
-	default void updateOnSuccess(Timetable timetable, Lesson lesson, Set<Teacher> teachers) {
+	default void updateOnSuccess(Timetable timetable, Lesson lesson, Set<Teacher> teachers,
+	                             Map<String, Room> rooms) {
 	}
 }

@@ -79,6 +79,7 @@ public class CSVExporter {
 		headers.add("subject");
 		headers.add("teacher");
 		headers.add("class");
+		headers.add("room");
 
 		try {
 			csvPrinter.printRecord(headers);
@@ -150,6 +151,12 @@ public class CSVExporter {
 
 				if (lesson.getSchoolClass() != null) {
 					row.add(lesson.getSchoolClass().toString());
+				} else {
+					row.add("");
+				}
+
+				if (lesson.getRoom() != null) {
+					row.add(lesson.getRoom().toString());
 				} else {
 					row.add("");
 				}

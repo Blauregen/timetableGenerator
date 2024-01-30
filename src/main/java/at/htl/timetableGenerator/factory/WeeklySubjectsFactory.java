@@ -45,8 +45,7 @@ public class WeeklySubjectsFactory {
 	}
 
 	public static @NotNull HashMap<String, HashSet<WeeklySubject>> createFromFile(
-			@NotNull String path,
-			@NotNull Set<Subject> possibleSubjects,
+			@NotNull String path, @NotNull Set<Subject> possibleSubjects,
 			@NotNull String delimiter) {
 		try {
 			HashMap<String, HashSet<WeeklySubject>> weeklySubjects = new HashMap<>();

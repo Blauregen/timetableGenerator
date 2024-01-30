@@ -73,7 +73,7 @@ class LessonTest {
 		TimeSlot timeslot = new TimeSlot(DayOfWeek.SATURDAY, 9);
 		Lesson lesson = new Lesson(subject, timeslot);
 
-		assertEquals(Objects.hash(subject, timeslot), lesson.hashCode());
+		assertEquals(Objects.hash(subject, timeslot, null, null, null), lesson.hashCode());
 	}
 
 	@Test

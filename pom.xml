@@ -125,7 +125,6 @@
 				<configuration>
 					<excludes>
 						<exclude>at/htl/timetableGenerator/App.class</exclude>
-						<exclude>at/htl/timetableGenerator/output/*</exclude>
 					</excludes>
 				</configuration>
 				<executions>

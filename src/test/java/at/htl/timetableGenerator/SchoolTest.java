@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -179,6 +180,21 @@ class SchoolTest {
 
 		school.removeSchoolClass(newSchoolClass);
 		assertFalse(school.getSchoolClasses().contains(newSchoolClass));
+	}
+
+	@Test
+	void testAddAndRemoveRooms() {
+		School htl = new School("HTBLA Leonding");
+		Room diningHall = new Room("Dining Hall");
+		htl.addRoom(diningHall);
+		HashMap<String, Room> rooms = new HashMap<>();
+		rooms.put("Dining Hall", diningHall);
+
+		assertEquals(diningHall, htl.getRoom("Dining Hall"));
+		assertEquals(diningHall, htl.getRooms().get("Dining Hall"));
+
+		htl.setRooms(rooms);
+		assertEquals(diningHall, htl.getRoom("Dining Hall"));
 	}
 
 	@Test

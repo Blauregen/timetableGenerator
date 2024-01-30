@@ -29,12 +29,15 @@ class LessonTest {
 		Lesson lesson = new Lesson(subject, timeslot);
 		Subject newSubject = new Subject("English", "E");
 		TimeSlot newTimeSlot = new TimeSlot(DayOfWeek.MONDAY, 7);
+		Room lazarett = new Room("Hildegards Lazarett");
 
 		lesson.setSubject(newSubject);
 		lesson.setTimeSlot(newTimeSlot);
+		lesson.setRoom(lazarett);
 
 		assertEquals(newSubject, lesson.getSubject());
 		assertEquals(newTimeSlot, lesson.getTimeSlot());
+		assertEquals(lazarett, lesson.getRoom());
 	}
 
 	@Test

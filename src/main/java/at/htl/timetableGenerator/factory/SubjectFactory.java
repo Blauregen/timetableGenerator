@@ -16,6 +16,9 @@ import java.util.stream.Stream;
  * It includes methods for creating a Subject from a string and from a file.
  */
 public class SubjectFactory {
+	public SubjectFactory() {
+	}
+
 	private static final int VALID_SUBJECT_ARRAY_LENGTH = 2;
 
 	/**

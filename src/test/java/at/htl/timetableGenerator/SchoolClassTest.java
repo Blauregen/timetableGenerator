@@ -136,6 +136,7 @@ class SchoolClassTest {
 		rooms.put("789", new Room("789"));
 		rooms.put("101112", new Room("101112"));
 
+
 		schoolClass.generateTimetable(5, 9, teachers, rooms);
 
 		schoolClass.setLesson(lesson);

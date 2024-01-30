@@ -20,6 +20,8 @@ import java.util.Set;
  * It includes methods for creating a WeeklySubject from a string and from a file.
  */
 public class WeeklySubjectsFactory {
+	public WeeklySubjectsFactory() {
+	}
 
 	/**
 	 * Creates a Pair object from a string, where the key is the name of the school class and the

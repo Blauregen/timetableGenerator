@@ -18,6 +18,9 @@ import java.util.stream.Stream;
  * It includes methods for creating a Teacher from a string and from a file.
  */
 public class TeacherFactory {
+	public TeacherFactory() {
+	}
+
 	private static final int VALID_TEACHER_ARRAY_LENGTH = 4;
 
 	/**

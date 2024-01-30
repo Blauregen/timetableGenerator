@@ -16,6 +16,9 @@ import java.util.Map;
  * It includes methods for creating a Room from a string and from a file.
  */
 public class RoomFactory {
+	public RoomFactory() {
+	}
+
 	/**
 	 * Creates a Room object from a string.
 	 * The string is expected to be a line from a CSV file, with fields separated by the specified

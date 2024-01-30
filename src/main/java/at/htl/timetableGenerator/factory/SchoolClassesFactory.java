@@ -21,6 +21,9 @@ import java.util.stream.Stream;
  */
 public class SchoolClassesFactory {
 
+	public SchoolClassesFactory() {
+	}
+
 	/**
 	 * Creates a SchoolClass object from a string.
 	 * The string is expected to be a line from a CSV file, with fields separated by the specified
@@ -66,8 +69,14 @@ public class SchoolClassesFactory {
 				weeklySubjects.addAll(weeklySubject);
 			}
 		});
+		SchoolClass schoolClass;
 
-		SchoolClass schoolClass = new SchoolClass(name, weeklySubjects);
+		try{
+			schoolClass = new SchoolClass(name, weeklySubjects);
+		} catch (IllegalArgumentException e){
+			throw new ImportException(e.getMessage(), e);
+		}
+
 		if (formTeacher != null) {
 			schoolClass.setFormTeacher(formTeacher);
 		}

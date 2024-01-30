@@ -2,6 +2,7 @@ package at.htl.timetableGenerator;
 
 import at.htl.timetableGenerator.constrains.DoubleHourConstraint;
 import at.htl.timetableGenerator.constrains.NoMoreThanThreeInRowConstraint;
+import at.htl.timetableGenerator.constrains.RoomConstraint;
 import at.htl.timetableGenerator.constrains.TeacherConstraint;
 import org.junit.jupiter.api.Test;
 
@@ -22,6 +23,8 @@ class ConstraintUtilsTest {
 				               .getClass());
 		assertEquals(TeacherConstraint.class,
 				ConstraintUtils.getConstraintFromString("TeacherConstraint").getClass());
+		assertEquals(RoomConstraint.class,
+				ConstraintUtils.getConstraintFromString("RoomConstraint").getClass());
 
 		assertThrows(IllegalArgumentException.class,
 				() -> ConstraintUtils.getConstraintFromString("No Constraint"),

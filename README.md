@@ -4,7 +4,7 @@ A tool for schools, to automaticly generate a timetable for each class, teacher 
 ## DOCUMENTATION
 https://blauregen.github.io/timetableGenerator/ 
 
-Download jar and execute on cmd with "java -jar <pathToJar> -c <pathToConfig>"
+Download jar and execute on cmd with "java -jar {pathToJar} -c {pathToConfig}"
 
 # Example Config:
 ```

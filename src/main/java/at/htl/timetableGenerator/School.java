@@ -210,9 +210,9 @@ public class School {
 	/**
 	 * Exports all timetables of the school to the specified directory in the specified formats.
 	 *
-	 * @param exportData  the data to export
+	 * @param exportData   the data to export
 	 * @param exportFormat the formats to export in
-	 * @param directory the directory to export to
+	 * @param directory    the directory to export to
 	 */
 	public void exportAllTimetables(@NotNull Set<ExportData> exportData,
 	                                @NotNull Set<ExportFormat> exportFormat, String directory) {

@@ -48,7 +48,7 @@ public class Timetable {
 				constraints.stream().filter((o) -> !(o instanceof DoubleHourConstraint ||
 				                                     o instanceof TeacherConstraint ||
 				                                     o instanceof RoomConstraint))
-		                              .collect(Collectors.toSet());
+				           .collect(Collectors.toSet());
 
 		setTimetable(FREISTUNDE);
 	}

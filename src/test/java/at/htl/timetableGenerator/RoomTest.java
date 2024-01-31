@@ -3,16 +3,18 @@ package at.htl.timetableGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
-import java.util.HashSet;
 import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class RoomTest {
-	@Test public void testConstructorAndSetters(){
+	@Test
+	public void testConstructorAndSetters() {
 		String roomName = "Hildegards Lazarett";
 		Room lazarett = new Room(roomName);
-		Lesson lesson = new Lesson(new Subject("Medizine", "MED"), new TimeSlot(DayOfWeek.MONDAY, 0));
+		Lesson lesson =
+				new Lesson(new Subject("Medizine", "MED"), new TimeSlot(DayOfWeek.MONDAY, 0));
 
 		assertEquals(roomName, lazarett.getName());
 
@@ -25,25 +27,29 @@ class RoomTest {
 
 	}
 
-	@Test public void testHashCode(){
+	@Test
+	public void testHashCode() {
 		String roomName = "Hildegards Lazarett";
 		Room lazarett = new Room(roomName);
 		assertEquals(Objects.hash(roomName), lazarett.hashCode());
 	}
 
-	@Test public void testToString(){
+	@Test
+	public void testToString() {
 		String roomName = "Hildegards Lazarett";
 		Room lazarett = new Room(roomName);
 		assertEquals(roomName, lazarett.toString());
 	}
 
-	@Test public void testEquals(){
+	@Test
+	public void testEquals() {
 		Room lazarett = new Room("Hildegards Lazarett");
 		Room modernClassroom = new Room("Hightech, Modern Classroom");
 
-        assertEquals(lazarett, lazarett);
+		assertEquals(lazarett, lazarett);
 
-        assertNotEquals(lazarett, modernClassroom);
+		assertNotEquals(lazarett, modernClassroom);
+		assertNotEquals(lazarett, new Object());
 
 		assertNotEquals(lazarett, null);
 	}

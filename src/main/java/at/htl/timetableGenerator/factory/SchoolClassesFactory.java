@@ -71,9 +71,9 @@ public class SchoolClassesFactory {
 		});
 		SchoolClass schoolClass;
 
-		try{
+		try {
 			schoolClass = new SchoolClass(name, weeklySubjects);
-		} catch (IllegalArgumentException e){
+		} catch (IllegalArgumentException e) {
 			throw new ImportException(e.getMessage(), e);
 		}
 
@@ -90,11 +90,14 @@ public class SchoolClassesFactory {
 	 * The method also requires a set of teachers and a map of possible weekly subjects for the
 	 * school classes.
 	 *
-	 * @param path                  the path to the CSV file.
-	 * @param teachers              the set of teachers.
+	 * @param path                   the path to the CSV file.
+	 * @param teachers               the set of teachers.
 	 * @param possibleWeeklySubjects the map of possible weekly subjects for the school classes.
-	 * @param delimiter             the delimiter used to separate fields in the lines of the file.
+	 * @param delimiter              the delimiter used to separate fields in the lines of the
+	 *                                  file.
+	 *
 	 * @return a set of SchoolClass objects created from the file.
+	 *
 	 * @throws ImportException if there is an error reading the file.
 	 */
 	public static @NotNull Set<SchoolClass> createFromFile(@NotNull String path,

@@ -44,6 +44,7 @@ public class Room {
 	 * Returns the lesson at the specified time slot in the room's timetable.
 	 *
 	 * @param timeSlot The time slot of the lesson
+	 *
 	 * @return The lesson at the specified time slot
 	 */
 	public Lesson getLesson(@NotNull TimeSlot timeSlot) {
@@ -70,6 +71,7 @@ public class Room {
 	 * The comparison is based on the name of the room.
 	 *
 	 * @param o The object to compare this room to
+	 *
 	 * @return true if the object is a room and has the same name as this room; false otherwise
 	 */
 	@Override

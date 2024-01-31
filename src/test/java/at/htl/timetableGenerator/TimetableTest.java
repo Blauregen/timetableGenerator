@@ -2,6 +2,7 @@ package at.htl.timetableGenerator;
 
 import at.htl.timetableGenerator.constrains.DoubleHourConstraint;
 import at.htl.timetableGenerator.constrains.NoMoreThanThreeInRowConstraint;
+import at.htl.timetableGenerator.constrains.RoomConstraint;
 import at.htl.timetableGenerator.constrains.TeacherConstraint;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,13 +33,16 @@ class TimetableTest {
 		constraints.add(new NoMoreThanThreeInRowConstraint());
 		DoubleHourConstraint doubleHourConstraint = new DoubleHourConstraint();
 		TeacherConstraint teacherConstraint = new TeacherConstraint();
+		RoomConstraint roomConstraint = new RoomConstraint();
 		constraints.add(doubleHourConstraint);
 		constraints.add(teacherConstraint);
+		constraints.add(roomConstraint);
 
 		timetable = new Timetable(5, 10, constraints);
 
 		constraints.remove(doubleHourConstraint);
 		constraints.remove(teacherConstraint);
+		constraints.remove(roomConstraint);
 		assertEquals(constraints, timetable.getConstraints());
 	}
 

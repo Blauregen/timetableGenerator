@@ -25,7 +25,7 @@ public class ConstraintUtils {
 	 * @return a new instance of the constraint class
 	 *
 	 * @throws IllegalArgumentException if the input string does not match any constraint class
-	 * name
+	 *                                  name
 	 */
 	public static @NotNull Constraint getConstraintFromString(@NotNull String constraintString) {
 		return switch (constraintString) {

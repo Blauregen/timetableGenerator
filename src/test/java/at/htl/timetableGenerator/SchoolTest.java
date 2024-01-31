@@ -209,18 +209,20 @@ class SchoolTest {
 		HashSet<ExportData> exportData = new HashSet<>();
 		exportData.add(ExportData.CLASSES);
 		exportData.add(ExportData.TEACHERS);
+		exportData.add(ExportData.ROOMS);
 
 		HashSet<ExportFormat> exportFormats = new HashSet<>();
 		exportFormats.add(ExportFormat.EXCEL);
 		exportFormats.add(ExportFormat.CSV);
 		exportFormats.add(ExportFormat.CSV_MULTIPLE);
-
 		school.addSchoolClass(bhitm3);
+		school.addRoom(new Room("101"));
 		school.generateTimetables(5, 10);
 		school.exportAllTimetables(exportData, exportFormats, "./testOutput/");
 
 		exportData.remove(ExportData.CLASSES);
 		exportData.remove(ExportData.TEACHERS);
+		exportData.remove(ExportData.ROOMS);
 		exportFormats.remove(ExportFormat.EXCEL);
 		exportFormats.remove(ExportFormat.CSV);
 		exportFormats.remove(ExportFormat.CSV_MULTIPLE);

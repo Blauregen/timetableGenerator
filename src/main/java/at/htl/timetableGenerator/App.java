@@ -23,6 +23,7 @@ import java.util.Set;
 public class App {
 	/**
 	 * The main method of the application.
+	 *
 	 * @param args The command-line arguments
 	 */
 	public static void main(String[] args) {

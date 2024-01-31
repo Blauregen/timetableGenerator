@@ -52,7 +52,6 @@ public class RoomConstraint implements Constraint {
 	@Override
 	public void updateOnSuccess(Timetable timetable, @NotNull Lesson lesson,
 	                            @NotNull Set<Teacher> teachers, @NotNull Map<String, Room> rooms) {
-		Subject subject = lesson.getSubject();
 		TimeSlot timeSlot = lesson.getTimeSlot();
 
 		for (Room room : rooms.values()) {

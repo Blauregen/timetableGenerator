@@ -16,10 +16,10 @@ import java.util.stream.Stream;
  * It includes methods for creating a Subject from a string and from a file.
  */
 public class SubjectFactory {
+	private static final int VALID_SUBJECT_ARRAY_LENGTH = 2;
+
 	public SubjectFactory() {
 	}
-
-	private static final int VALID_SUBJECT_ARRAY_LENGTH = 2;
 
 	/**
 	 * Creates a Subject object from a string.

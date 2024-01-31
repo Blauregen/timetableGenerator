@@ -52,7 +52,9 @@ public class RoomFactory {
 	 *
 	 * @param path      the path to the CSV file.
 	 * @param delimiter the delimiter used to separate fields in the lines of the file.
+	 *
 	 * @return a map of Room objects created from the file.
+	 *
 	 * @throws ImportException if there is an error reading the file.
 	 */
 	public static @NotNull Map<String, Room> createFromFile(@NotNull String path,

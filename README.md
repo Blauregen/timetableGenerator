@@ -7,7 +7,7 @@ https://blauregen.github.io/timetableGenerator/
 Download jar and execute on cmd with "java -jar <pathToJar> -c <pathToConfig>"
 
 # Example Config:
-
+'''
 [general]
 noOfDaysPerWeek = 5
 noOfHoursPerDay = 10
@@ -22,13 +22,13 @@ outputPath = output/
 [constraints]
 constraints = [TeacherConstraint, DoubleHourConstraint, NoMoreThanThreeInRowConstraint, RoomConstraint]
 
->[input]
->subjects = subjects.csv
->weeklySubjects = weeklySubjects.csv
->classes = classes.csv
->teachers = teachers.csv
->rooms = rooms.csv
-
+[input]
+subjects = subjects.csv
+weeklySubjects = weeklySubjects.csv
+classes = classes.csv
+teachers = teachers.csv
+rooms = rooms.csv
+'''
 
 # Example CSV Input Files:
 

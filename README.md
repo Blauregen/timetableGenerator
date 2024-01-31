@@ -1,7 +1,7 @@
 # timetableGenerator
 A tool for schools, to automaticly generate a timetable for each class, teacher and rooms
 
-# DOCUMENTATION
+## DOCUMENTATION
 https://blauregen.github.io/timetableGenerator/ 
 
 Download jar and execute on cmd with "java -jar <pathToJar> -c <pathToConfig>"
@@ -9,20 +9,20 @@ Download jar and execute on cmd with "java -jar <pathToJar> -c <pathToConfig>"
 # Example Config:
 ```
 [general]
-noOfDaysPerWeek = 5
-noOfHoursPerDay = 10
+noOfDaysPerWeek = 5 ; number of days per week that can be used
+noOfHoursPerDay = 10 ; number of hours that can be taught each day
 schoolName = HTL Leonding
-delimiter = ; //Delimiter for the input file
+delimiter = ; Delimiter for the input file
 
 [output]
-outputData = [CLASSES, TEACHERS, ROOMS]
-outputFormat = [EXCEL, CSV, CSV_MULTIPLE]
-outputPath = output/
+outputData = [CLASSES, TEACHERS, ROOMS] ; Timetables that should be included in the export
+outputFormat = [EXCEL, CSV, CSV_MULTIPLE] ; Formats that should be exported to
+outputPath = output/ ; path that will be exported to relative to the execution directory
 
 [constraints]
-constraints = [TeacherConstraint, DoubleHourConstraint, NoMoreThanThreeInRowConstraint, RoomConstraint]
+constraints = [TeacherConstraint, DoubleHourConstraint, NoMoreThanThreeInRowConstraint, RoomConstraint] ; Constraints that will be applied to the timetables that get generated
 
-[input]
+[input] ; csv files for data relative to config file
 subjects = subjects.csv
 weeklySubjects = weeklySubjects.csv
 classes = classes.csv

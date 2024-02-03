@@ -8,6 +8,7 @@ on:
 jobs:
   notify_discord:
     runs-on: ubuntu-latest
+    steps:
       - name: Notify discord
         uses: th0th/notify-discord@v0.4.1
         if: ${{ always() }}

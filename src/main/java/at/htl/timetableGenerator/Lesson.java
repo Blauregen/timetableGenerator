@@ -115,7 +115,7 @@ public class Lesson {
 		       Objects.equals(timeSlot, lesson.timeSlot) &&
 		       Objects.equals(teacher, lesson.teacher) &&
 		       Objects.equals(schoolClass, lesson.schoolClass) && Objects.equals(room,
-				lesson.room);
+		                                                                         lesson.room);
 	}
 
 	@Override

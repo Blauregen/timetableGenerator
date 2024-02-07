@@ -11,16 +11,15 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * The main class of the application.
  * It creates a timetable, a subject, and a lesson, and then prints the timetable.
  */
 public class App {
+	public static Random random;
+
 	/**
 	 * The main method of the application.
 	 *
@@ -52,15 +51,19 @@ public class App {
 
 			Set<ExportFormat> exportFormats = new HashSet<>();
 			for (String format : exportFormatString.split(",")) {
-				exportFormats.add(ExportFormat.valueOf(format.strip()));
+				if (!format.isBlank()) {
+					exportFormats.add(ExportFormat.valueOf(format.strip()));
+				}
 			}
 
 			String exportDataString = ini.get("output", "outputData").strip();
 			exportDataString = exportDataString.substring(1, exportDataString.length() - 1);
 
 			Set<ExportData> exportData = new HashSet<>();
-			for (String format : exportDataString.split(",")) {
-				exportData.add(ExportData.valueOf(format.strip()));
+			for (String data : exportDataString.split(",")) {
+				if (!data.isBlank()) {
+					exportData.add(ExportData.valueOf(data.strip()));
+				}
 			}
 
 			String outputPath = ini.get("output", "outputPath");
@@ -78,7 +81,9 @@ public class App {
 
 			Set<Constraint> constraints = new HashSet<>();
 			for (String constraint : constraintString.split(",")) {
-				constraints.add(ConstraintUtils.getConstraintFromString(constraint.strip()));
+				if (!constraint.isBlank()) {
+					constraints.add(ConstraintUtils.getConstraintFromString(constraint.strip()));
+				}
 			}
 
 			String subjectsPath = ini.get("input", "subjects");
@@ -87,18 +92,27 @@ public class App {
 			String teachersPath = ini.get("input", "teachers");
 			String roomPath = ini.get("input", "rooms");
 
+			String seedString = ini.get("general", "seed");
+			long seed;
+			try {
+				seed = Long.parseLong(seedString.strip());
+			} catch (Exception e) {
+				seed = System.currentTimeMillis();
+			}
+
+			App.random = new Random(seed);
+
 			Set<Subject> subjects =
-					SubjectFactory.createFromFile(getRelativePath(configFile, subjectsPath),
-							delimiter);
+					SubjectFactory.createFromFile(getRelativePath(configFile, subjectsPath), delimiter);
 			HashMap<String, HashSet<WeeklySubject>> weeklySubjects =
-					WeeklySubjectsFactory.createFromFile(
-							getRelativePath(configFile, weeklySubjectsPath), subjects, delimiter);
+					WeeklySubjectsFactory.createFromFile(getRelativePath(configFile, weeklySubjectsPath),
+					                                     subjects, delimiter);
 			Set<Teacher> teachers =
-					TeacherFactory.createFromFile(getRelativePath(configFile, teachersPath),
-							subjects, delimiter);
+					TeacherFactory.createFromFile(getRelativePath(configFile, teachersPath), subjects,
+					                              delimiter);
 			Set<SchoolClass> schoolClasses =
-					SchoolClassesFactory.createFromFile(getRelativePath(configFile, classesPath),
-							teachers, weeklySubjects, delimiter);
+					SchoolClassesFactory.createFromFile(getRelativePath(configFile, classesPath), teachers,
+					                                    weeklySubjects, delimiter);
 			Map<String, Room> rooms =
 					RoomFactory.createFromFile(getRelativePath(configFile, roomPath), delimiter);
 
@@ -109,6 +123,8 @@ public class App {
 			school.exportAllTimetables(exportData, exportFormats, outputPath);
 			school.getSchoolClasses()
 			      .forEach((schoolClass -> System.out.println(schoolClass.getTimetable())));
+
+			System.out.println("Generation seed: " + seed);
 		} catch (ParseException | IOException e) {
 			throw new IllegalArgumentException("No valid config file passed");
 		}
@@ -116,7 +132,6 @@ public class App {
 
 	@NotNull
 	private static String getRelativePath(@NotNull String configFile, String classesPath) {
-		return Paths.get(configFile).getParent() + FileSystems.getDefault().getSeparator() +
-		       classesPath;
+		return Paths.get(configFile).getParent() + FileSystems.getDefault().getSeparator() + classesPath;
 	}
 }

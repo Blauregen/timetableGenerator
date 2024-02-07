@@ -110,7 +110,7 @@ class SchoolClassTest {
 		HashSet<WeeklySubject> weeklySubjects = new HashSet<>();
 
 		assertThrows(IllegalArgumentException.class,
-				() -> schoolClass.setWeeklySubjects(weeklySubjects));
+		             () -> schoolClass.setWeeklySubjects(weeklySubjects));
 	}
 
 	@Test
@@ -193,6 +193,6 @@ class SchoolClassTest {
 		rooms.put("101112", new Room("101112"));
 
 		assertThrows(IllegalArgumentException.class,
-				() -> schoolClass.generateTimetable(2, 2, teachers, rooms));
+		             () -> schoolClass.generateTimetable(2, 2, teachers, rooms));
 	}
 }

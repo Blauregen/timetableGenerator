@@ -32,8 +32,8 @@ class SchoolClassesFactoryTest {
 						"src/test/testFiles/correctWeeklySubjectsFactory.csv", subjects, ";");
 
 		assertThrows(ImportException.class,
-				() -> SchoolClassesFactory.createFromString("arg; arg; arg", teachers,
-						possibleWeeklySubjects, ";"));
+		             () -> SchoolClassesFactory.createFromString("arg; arg; arg", teachers,
+		                                                         possibleWeeklySubjects, ";"));
 
 		assertDoesNotThrow(() -> {
 			SchoolClassesFactory.createFromFile(

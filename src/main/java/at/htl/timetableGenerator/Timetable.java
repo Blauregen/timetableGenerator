@@ -26,7 +26,8 @@ public class Timetable {
 	public static final int MIN_NUMBER_OF_HOURS_PER_DAY = 1;
 	public static final int MIN_NUMBER_OF_DAYS_PER_WEEK = 1;
 	private HashMap<TimeSlot, Lesson> timetable;  // The timetable
-	private int maxNoOfHoursPerDay;  // The maximum number of hours per day
+	private int maxNoOfHoursPerDay;
+	// The maximum number of hours per day
 	private int noOfDayPerWeek;  // The number of days per week
 	private @NotNull Set<Constraint> constraints = new HashSet<>();
 	// The set of constraints for this timetable
@@ -199,7 +200,7 @@ public class Timetable {
 	public boolean checkConstraints(TimeSlot timeSlot, Subject subject) {
 		for (Constraint constraint : constraints) {
 			if (!constraint.check(this, new Lesson(subject, timeSlot), new HashSet<>(),
-					new HashMap<>())) {
+			                      new HashMap<>())) {
 				return false;
 			}
 		}
@@ -263,10 +264,22 @@ public class Timetable {
 		Lesson[][] lessonsArray = new Lesson[noOfDayPerWeek][maxNoOfHoursPerDay];
 		Collection<Lesson> lessons = timetable.values();
 
-		lessons.forEach(lesson ->
-				lessonsArray[lesson.getTimeSlot().getDay().ordinal()][lesson.getTimeSlot()
-				                                                            .getHour()] = lesson);
+		lessons.forEach(lesson -> lessonsArray[lesson.getTimeSlot().getDay()
+		                                             .ordinal()][lesson.getTimeSlot().getHour()] =
+				lesson);
 
 		return lessonsArray;
+	}
+
+	/**
+	 * Gets the number of times a given subject appears in the timetable
+	 *
+	 * @param subject the subject that is counted
+	 *
+	 * @return the number of times the subject appears in the timetable
+	 */
+	public int getNoOfSubject(@NotNull Subject subject) {
+		return (int) timetable.values().stream()
+		                      .filter(lesson -> lesson.getSubject().equals(subject)).count();
 	}
 }

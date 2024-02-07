@@ -18,10 +18,10 @@ class WeeklySubjectsFactoryTest {
 
 		Set<Subject> subjects = new HashSet<>();
 		subjects.add(new Subject("Deutsch",
-				"D")); //Needed, so jacoco recognizes the default constructor as tested
+		                         "D")); //Needed, so jacoco recognizes the default constructor as tested
 
 		assertThrows(ImportException.class,
-				() -> WeeklySubjectsFactory.createFromString("1;2;3;4;5;", subjects, ";"));
+		             () -> WeeklySubjectsFactory.createFromString("1;2;3;4;5;", subjects, ";"));
 
 		assertDoesNotThrow(() -> {
 			WeeklySubjectsFactory.createFromFile(

@@ -5,9 +5,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.DayOfWeek;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
+import static at.htl.timetableGenerator.App.random;
 import static at.htl.timetableGenerator.Timetable.FREISTUNDE;
 
 /**
@@ -85,12 +87,17 @@ public class SchoolClass {
 	                                   Map<String, Room> rooms) {
 		this.timetable = new Timetable(daysPerWeek, maxHoursPerDay, constraints);
 
-		for (WeeklySubject weeklySubject : weeklySubjects) {
-			for (int i = 0; i < weeklySubject.getNoPerWeek(); i++) {
+		LinkedList<WeeklySubject> weeklySubjectsList = new LinkedList<>(weeklySubjects);
+
+		while (!weeklySubjectsList.isEmpty()) {
+			WeeklySubject weeklySubject = weeklySubjectsList.get(random.nextInt(weeklySubjectsList.size()));
+
+			if (timetable.getNoOfSubject(weeklySubject.getSubject()) < weeklySubject.getNoPerWeek()) {
 				Lesson bestAvailableLesson =
-						getBestAvailableLesson(timetable, weeklySubject.getSubject(), teachers,
-								rooms);
+						getBestAvailableLesson(timetable, weeklySubject.getSubject(), teachers, rooms);
 				this.setLesson(bestAvailableLesson);
+			} else {
+				weeklySubjectsList.remove(weeklySubject);
 			}
 		}
 
@@ -135,8 +142,7 @@ public class SchoolClass {
 	 * @return the best available time slot
 	 */
 	private @NotNull Lesson getBestAvailableLesson(@NotNull Timetable timetable, Subject toAdd,
-	                                               Set<Teacher> teachers,
-	                                               Map<String, Room> rooms) {
+	                                               Set<Teacher> teachers, Map<String, Room> rooms) {
 		for (int i = 0; i < timetable.getMaxNoOfHoursPerDay(); i++) {
 			for (int j = 0; j < timetable.getNoOfDayPerWeek(); j++) {
 				TimeSlot currentSlot = new TimeSlot(DayOfWeek.of(j + 1), i);

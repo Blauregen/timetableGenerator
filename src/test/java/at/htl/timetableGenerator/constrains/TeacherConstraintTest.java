@@ -74,21 +74,21 @@ class TeacherConstraintTest {
 		timetable.setLesson(maths);
 
 		assertEquals(timetable.getLesson(new TimeSlot(DayOfWeek.MONDAY, 0)),
-				kerschi.getLesson(new TimeSlot(DayOfWeek.MONDAY, 0)));
+		             kerschi.getLesson(new TimeSlot(DayOfWeek.MONDAY, 0)));
 
 		assertNotEquals(timetable.getLesson(new TimeSlot(DayOfWeek.MONDAY, 0)),
-				luger.getLesson(new TimeSlot(DayOfWeek.MONDAY, 0)));
+		                luger.getLesson(new TimeSlot(DayOfWeek.MONDAY, 0)));
 
 		constraint.updateOnSuccess(timetable, germans, teachers, rooms);
 		timetable.setLesson(germans);
 
 		assertEquals(timetable.getLesson(new TimeSlot(DayOfWeek.MONDAY, 0)),
-				luger.getLesson(new TimeSlot(DayOfWeek.MONDAY, 0)));
+		             luger.getLesson(new TimeSlot(DayOfWeek.MONDAY, 0)));
 
 		constraint.updateOnSuccess(timetable, itps, teachers, rooms);
 		timetable.setLesson(itps);
 
 		assertNotEquals(timetable.getLesson(new TimeSlot(DayOfWeek.MONDAY, 0)),
-				kerschi.getLesson(new TimeSlot(DayOfWeek.MONDAY, 0)));
+		                kerschi.getLesson(new TimeSlot(DayOfWeek.MONDAY, 0)));
 	}
 }

@@ -79,7 +79,7 @@ public final class TimetablePrinter {
 				formattedTT.append(paddingString);
 				formattedTT.append(
 						String.format("%1$-" + (columnWidth - paddingString.length()) + "s",
-								currentSubject));
+						              currentSubject));
 			} catch (ArrayIndexOutOfBoundsException e) {
 				formattedTT.append(" ".repeat(columnWidth));
 			}
@@ -142,7 +142,7 @@ public final class TimetablePrinter {
 			String paddingString = " ".repeat(noOfPaddingSpaces);
 			formattedTT.append(paddingString);
 			formattedTT.append(String.format("%1$-" + (columnWidth - paddingString.length()) + "s",
-					currentDay));
+			                                 currentDay));
 
 			if (i < tt.getNoOfDayPerWeek() - 1) {
 				formattedTT.append('|');

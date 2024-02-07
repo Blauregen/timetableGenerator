@@ -220,7 +220,7 @@ public class School {
 
 		if (exportData.contains(ExportData.CLASSES)) {
 			schoolClasses.forEach((schoolClass -> timetables.put(schoolClass.getName(),
-					schoolClass.getTimetable())));
+			                                                     schoolClass.getTimetable())));
 		}
 
 		if (exportData.contains(ExportData.TEACHERS)) {

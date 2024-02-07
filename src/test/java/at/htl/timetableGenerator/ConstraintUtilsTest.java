@@ -17,17 +17,17 @@ class ConstraintUtilsTest {
 	@Test
 	void getConstraintFromString() {
 		assertEquals(DoubleHourConstraint.class,
-				ConstraintUtils.getConstraintFromString("DoubleHourConstraint").getClass());
+		             ConstraintUtils.getConstraintFromString("DoubleHourConstraint").getClass());
 		assertEquals(NoMoreThanThreeInRowConstraint.class,
-				ConstraintUtils.getConstraintFromString("NoMoreThanThreeInRowConstraint")
-				               .getClass());
+		             ConstraintUtils.getConstraintFromString("NoMoreThanThreeInRowConstraint")
+		                            .getClass());
 		assertEquals(TeacherConstraint.class,
-				ConstraintUtils.getConstraintFromString("TeacherConstraint").getClass());
+		             ConstraintUtils.getConstraintFromString("TeacherConstraint").getClass());
 		assertEquals(RoomConstraint.class,
-				ConstraintUtils.getConstraintFromString("RoomConstraint").getClass());
+		             ConstraintUtils.getConstraintFromString("RoomConstraint").getClass());
 
 		assertThrows(IllegalArgumentException.class,
-				() -> ConstraintUtils.getConstraintFromString("No Constraint"),
-				"No constraint with given name: No Constraint");
+		             () -> ConstraintUtils.getConstraintFromString("No Constraint"),
+		             "No constraint with given name: No Constraint");
 	}
 }

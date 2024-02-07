@@ -17,8 +17,8 @@ class RoomFactoryTest {
 		});
 
 		assertThrows(ImportException.class,
-				() -> RoomFactory.createFromFile("src/test/testFiles/incorrectRoomFactory.csv",
-						";"));
+		             () -> RoomFactory.createFromFile("src/test/testFiles/incorrectRoomFactory.csv",
+		                                              ";"));
 
 		assertThrows(ImportException.class, () -> RoomFactory.createFromFile(
 				"non/existing/path/but/pls/never_add/folders/called/like/this/or/everything" +

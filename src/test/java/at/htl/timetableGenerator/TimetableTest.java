@@ -67,7 +67,7 @@ class TimetableTest {
 		Subject am = new Subject("Mathe", "AM");
 		HashMap<TimeSlot, Lesson> lessons = new HashMap<>();
 		lessons.put(new TimeSlot(DayOfWeek.MONDAY, 0),
-				new Lesson(am, new TimeSlot(DayOfWeek.MONDAY, 0)));
+		            new Lesson(am, new TimeSlot(DayOfWeek.MONDAY, 0)));
 		timetable.setTimetable(lessons);
 		assertEquals(lessons, timetable.getTimetable());
 
@@ -99,13 +99,13 @@ class TimetableTest {
 		TimeSlot fourthSlot = new TimeSlot(DayOfWeek.MONDAY, 11);
 
 		assertThrows(IllegalArgumentException.class,
-				() -> timetable.setLesson(new Lesson(am, slot)), "Day is " + "invalid");
+		             () -> timetable.setLesson(new Lesson(am, slot)), "Day is " + "invalid");
 		assertThrows(IllegalArgumentException.class,
-				() -> timetable.setLesson(new Lesson(am, secondSlot)), "Time is invalid");
+		             () -> timetable.setLesson(new Lesson(am, secondSlot)), "Time is invalid");
 		assertThrows(IllegalArgumentException.class,
-				() -> timetable.setLesson(new Lesson(am, thirdSlot)), "Time is invalid");
+		             () -> timetable.setLesson(new Lesson(am, thirdSlot)), "Time is invalid");
 		assertEquals(new Lesson(Timetable.FREISTUNDE, fourthSlot),
-				timetable.getLesson(fourthSlot));
+		             timetable.getLesson(fourthSlot));
 	}
 
 	@Test
@@ -122,8 +122,8 @@ class TimetableTest {
 	@Test
 	void setMaxNoOfHoursPerDayInvalid() {
 		assertThrows(IllegalArgumentException.class, () -> timetable.setMaxNoOfHoursPerDay(0),
-				"Max number of hours per day can't be smaller than " +
-				Timetable.MIN_NUMBER_OF_HOURS_PER_DAY + "!");
+		             "Max number of hours per day can't be smaller than " +
+		             Timetable.MIN_NUMBER_OF_HOURS_PER_DAY + "!");
 	}
 
 	@Test
@@ -140,11 +140,11 @@ class TimetableTest {
 	@Test
 	void setNoOfDayPerWeekInvalid() {
 		assertThrows(IllegalArgumentException.class, () -> timetable.setNoOfDayPerWeek(0),
-				"Number of days per week can't be smaller than " +
-				Timetable.MIN_NUMBER_OF_DAYS_PER_WEEK + " or bigger than 7!");
+		             "Number of days per week can't be smaller than " +
+		             Timetable.MIN_NUMBER_OF_DAYS_PER_WEEK + " or bigger than 7!");
 		assertThrows(IllegalArgumentException.class, () -> timetable.setNoOfDayPerWeek(8),
-				"Number of days per week can't be smaller than " +
-				Timetable.MIN_NUMBER_OF_DAYS_PER_WEEK + " or bigger than 7!");
+		             "Number of days per week can't be smaller than " +
+		             Timetable.MIN_NUMBER_OF_DAYS_PER_WEEK + " or bigger than 7!");
 	}
 
 	@Test

@@ -78,7 +78,7 @@ class TimeSlotTest {
 	@Test
 	void prevHour() {
 		assertThrows(IllegalArgumentException.class, () -> slot.prevHour(),
-				"Trying to get timeslot for negative " + "time");
+		             "Trying to get timeslot for negative " + "time");
 
 		slot.setHour(2);
 		assertEquals(new TimeSlot(DayOfWeek.MONDAY, 1), slot.prevHour());

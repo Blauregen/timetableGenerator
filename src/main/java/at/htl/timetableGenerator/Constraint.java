@@ -12,6 +12,9 @@ import java.util.Set;
  * successful.
  */
 public interface Constraint {
+	default boolean isRequired() {
+		return false;
+	}
 
 	/**
 	 * Checks if the given timetable, time slot, course, and set of teachers meet this constraint.
@@ -23,8 +26,7 @@ public interface Constraint {
 	 *
 	 * @return true if the constraint is met, false otherwise
 	 */
-	boolean check(Timetable timetable, Lesson lesson, Set<Teacher> teachers,
-	              Map<String, Room> rooms);
+	boolean check(Timetable timetable, Lesson lesson, Set<Teacher> teachers, Map<String, Room> rooms);
 
 	/**
 	 * Updates the state of this constraint when the check is successful.

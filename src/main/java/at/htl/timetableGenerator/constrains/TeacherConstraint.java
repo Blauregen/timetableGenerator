@@ -64,4 +64,9 @@ public class TeacherConstraint implements Constraint {
 			}
 		}
 	}
+
+	@Override
+	public boolean isRequired() {
+		return true;
+	}
 }

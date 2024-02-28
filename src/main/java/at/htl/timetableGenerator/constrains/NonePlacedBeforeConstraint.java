@@ -30,4 +30,9 @@ public class NonePlacedBeforeConstraint implements Constraint {
 	                     Set<Teacher> teachers, Map<String, Room> rooms) {
 		return timetable.getLesson(lesson.getTimeSlot()).getSubject() == FREISTUNDE;
 	}
+
+	@Override
+	public boolean isRequired() {
+		return true;
+	}
 }

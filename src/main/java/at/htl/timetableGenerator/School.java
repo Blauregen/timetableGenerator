@@ -31,8 +31,7 @@ public class School {
 	 * @param schoolClasses the set of school classes in this school
 	 * @param teachers      the set of teachers in this school
 	 */
-	public School(String name, @NotNull Set<SchoolClass> schoolClasses,
-	              @NotNull Set<Teacher> teachers) {
+	public School(String name, @NotNull Set<SchoolClass> schoolClasses, @NotNull Set<Teacher> teachers) {
 		this.name = name;
 		setSchoolClasses(schoolClasses);
 		setTeachers(teachers);
@@ -165,16 +164,15 @@ public class School {
 	 *
 	 * @return a map of school class names to their respective timetables
 	 */
-	public @NotNull HashMap<String, Timetable> generateTimetables(int daysPerWeek,
-	                                                              int maxHoursPerDay) {
+	public @NotNull HashMap<String, Timetable> generateTimetables(int daysPerWeek, int maxHoursPerDay) {
 		HashMap<String, Timetable> timetables = new HashMap<>();
 		for (Teacher teacher : teachers) {
 			teacher.setOccupiedLessons(new Timetable(daysPerWeek, maxHoursPerDay));
 		}
 
 		for (SchoolClass schoolClass : schoolClasses) {
-			Timetable timetable =
-					schoolClass.generateTimetable(daysPerWeek, maxHoursPerDay, teachers, rooms);
+			Timetable timetable = schoolClass.generateTimetable(daysPerWeek, maxHoursPerDay, teachers,
+			                                                    rooms);
 			timetables.put(schoolClass.getName(), timetable);
 		}
 
@@ -219,8 +217,8 @@ public class School {
 		HashMap<String, Timetable> timetables = new HashMap<>();
 
 		if (exportData.contains(ExportData.CLASSES)) {
-			schoolClasses.forEach((schoolClass -> timetables.put(schoolClass.getName(),
-			                                                     schoolClass.getTimetable())));
+			schoolClasses.forEach(
+					(schoolClass -> timetables.put(schoolClass.getName(), schoolClass.getTimetable())));
 		}
 
 		if (exportData.contains(ExportData.TEACHERS)) {

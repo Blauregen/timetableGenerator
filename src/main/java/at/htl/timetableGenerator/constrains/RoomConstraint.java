@@ -61,4 +61,10 @@ public class RoomConstraint implements Constraint {
 			}
 		}
 	}
+
+
+	@Override
+	public boolean isRequired() {
+		return true;
+	}
 }

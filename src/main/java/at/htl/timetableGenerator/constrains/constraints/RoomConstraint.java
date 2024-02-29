@@ -1,6 +1,7 @@
-package at.htl.timetableGenerator.constrains;
+package at.htl.timetableGenerator.constrains.constraints;
 
 import at.htl.timetableGenerator.*;
+import at.htl.timetableGenerator.constrains.Constraint;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;

@@ -1,6 +1,7 @@
 package at.htl.timetableGenerator.constrains;
 
 import at.htl.timetableGenerator.*;
+import at.htl.timetableGenerator.constrains.constraints.TeacherConstraint;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;

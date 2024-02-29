@@ -1,9 +1,10 @@
 package at.htl.timetableGenerator;
 
-import at.htl.timetableGenerator.constrains.DoubleHourConstraint;
-import at.htl.timetableGenerator.constrains.NoMoreThanThreeInRowConstraint;
-import at.htl.timetableGenerator.constrains.RoomConstraint;
-import at.htl.timetableGenerator.constrains.TeacherConstraint;
+import at.htl.timetableGenerator.constrains.ConstraintUtils;
+import at.htl.timetableGenerator.constrains.constraints.DoubleHourConstraint;
+import at.htl.timetableGenerator.constrains.constraints.NoMoreThanThreeInRowConstraint;
+import at.htl.timetableGenerator.constrains.constraints.RoomConstraint;
+import at.htl.timetableGenerator.constrains.constraints.TeacherConstraint;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

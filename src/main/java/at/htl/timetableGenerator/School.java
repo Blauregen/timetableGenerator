@@ -1,5 +1,6 @@
 package at.htl.timetableGenerator;
 
+import at.htl.timetableGenerator.constrains.Constraint;
 import at.htl.timetableGenerator.output.CSVExporter;
 import at.htl.timetableGenerator.output.ExcelExporter;
 import at.htl.timetableGenerator.output.ExportData;
@@ -166,14 +167,25 @@ public class School {
 	 */
 	public @NotNull HashMap<String, Timetable> generateTimetables(int daysPerWeek, int maxHoursPerDay) {
 		HashMap<String, Timetable> timetables = new HashMap<>();
-		for (Teacher teacher : teachers) {
-			teacher.setOccupiedLessons(new Timetable(daysPerWeek, maxHoursPerDay));
-		}
 
-		for (SchoolClass schoolClass : schoolClasses) {
-			Timetable timetable = schoolClass.generateTimetable(daysPerWeek, maxHoursPerDay, teachers,
-			                                                    rooms);
-			timetables.put(schoolClass.getName(), timetable);
+		while (timetables.isEmpty()) {
+			try {
+				for (Teacher teacher : teachers) {
+					teacher.setOccupiedLessons(new Timetable(daysPerWeek, maxHoursPerDay));
+				}
+
+				for (SchoolClass schoolClass : schoolClasses) {
+					Timetable timetable =
+							schoolClass.generateTimetable(daysPerWeek, maxHoursPerDay, teachers, rooms);
+					timetables.put(schoolClass.getName(), timetable);
+				}
+			} catch (Exception ignored) {
+				timetables.forEach((name, timetable) -> timetable.setTimetable(new HashMap<>()));
+				teachers.forEach(
+						teacher -> teacher.setOccupiedLessons(new Timetable(daysPerWeek, maxHoursPerDay)));
+				rooms.forEach((name, room) -> room.getTimetable().setTimetable(new HashMap<>()));
+				timetables = new HashMap<>();
+			}
 		}
 
 		return timetables;

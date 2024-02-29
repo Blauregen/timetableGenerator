@@ -1,5 +1,8 @@
 package at.htl.timetableGenerator;
 
+import at.htl.timetableGenerator.constrains.Constraint;
+import at.htl.timetableGenerator.constrains.ConstraintParser;
+import at.htl.timetableGenerator.constrains.ConstraintUtils;
 import at.htl.timetableGenerator.factory.*;
 import at.htl.timetableGenerator.output.ExportData;
 import at.htl.timetableGenerator.output.ExportFormat;
@@ -19,6 +22,7 @@ import java.util.*;
  */
 public class App {
 	public static Random random;
+	public static long seed;
 
 	/**
 	 * The main method of the application.
@@ -86,6 +90,11 @@ public class App {
 				}
 			}
 
+			String customConstraintsPath = ini.get("constraints", "customConstraints");
+			ConstraintParser constraintParser =
+					new ConstraintParser(getRelativePath(configFile, customConstraintsPath));
+			constraints.addAll(constraintParser.parse());
+
 			String subjectsPath = ini.get("input", "subjects");
 			String weeklySubjectsPath = ini.get("input", "weeklySubjects");
 			String classesPath = ini.get("input", "classes");
@@ -93,14 +102,15 @@ public class App {
 			String roomPath = ini.get("input", "rooms");
 
 			String seedString = ini.get("general", "seed");
-			long seed;
+			long currentSeed;
 			try {
-				seed = Long.parseLong(seedString.strip());
+				currentSeed = Long.parseLong(seedString.strip());
 			} catch (Exception e) {
-				seed = System.currentTimeMillis();
+				currentSeed = System.currentTimeMillis();
 			}
 
-			App.random = new Random(seed);
+			seed = currentSeed;
+			App.random = new Random(currentSeed);
 
 			Set<Subject> subjects =
 					SubjectFactory.createFromFile(getRelativePath(configFile, subjectsPath), delimiter);
@@ -124,7 +134,8 @@ public class App {
 			school.getSchoolClasses()
 			      .forEach((schoolClass -> System.out.println(schoolClass.getTimetable())));
 
-			System.out.println("Generation seed: " + seed);
+
+			System.out.println("Generation seed: " + currentSeed);
 		} catch (ParseException | IOException e) {
 			throw new IllegalArgumentException("No valid config file passed");
 		}

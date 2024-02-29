@@ -1,8 +1,9 @@
 package at.htl.timetableGenerator;
 
-import at.htl.timetableGenerator.constrains.DoubleHourConstraint;
-import at.htl.timetableGenerator.constrains.RoomConstraint;
-import at.htl.timetableGenerator.constrains.TeacherConstraint;
+import at.htl.timetableGenerator.constrains.Constraint;
+import at.htl.timetableGenerator.constrains.constraints.DoubleHourConstraint;
+import at.htl.timetableGenerator.constrains.constraints.RoomConstraint;
+import at.htl.timetableGenerator.constrains.constraints.TeacherConstraint;
 import at.htl.timetableGenerator.output.TimetablePrinter;
 import org.jetbrains.annotations.NotNull;
 

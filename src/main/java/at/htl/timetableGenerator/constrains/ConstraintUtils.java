@@ -1,9 +1,9 @@
-package at.htl.timetableGenerator;
+package at.htl.timetableGenerator.constrains;
 
-import at.htl.timetableGenerator.constrains.DoubleHourConstraint;
-import at.htl.timetableGenerator.constrains.NoMoreThanThreeInRowConstraint;
-import at.htl.timetableGenerator.constrains.RoomConstraint;
-import at.htl.timetableGenerator.constrains.TeacherConstraint;
+import at.htl.timetableGenerator.constrains.constraints.DoubleHourConstraint;
+import at.htl.timetableGenerator.constrains.constraints.NoMoreThanThreeInRowConstraint;
+import at.htl.timetableGenerator.constrains.constraints.RoomConstraint;
+import at.htl.timetableGenerator.constrains.constraints.TeacherConstraint;
 import org.jetbrains.annotations.NotNull;
 
 /**

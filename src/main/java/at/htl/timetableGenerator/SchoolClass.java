@@ -1,6 +1,7 @@
 package at.htl.timetableGenerator;
 
-import at.htl.timetableGenerator.constrains.NonePlacedBeforeConstraint;
+import at.htl.timetableGenerator.constrains.Constraint;
+import at.htl.timetableGenerator.constrains.constraints.NonePlacedBeforeConstraint;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.DayOfWeek;

@@ -21,7 +21,7 @@ import java.util.*;
  * It creates a timetable, a subject, and a lesson, and then prints the timetable.
  */
 public class App {
-	public static Random random;
+	public static Random random = new Random();
 	public static long seed;
 
 	/**

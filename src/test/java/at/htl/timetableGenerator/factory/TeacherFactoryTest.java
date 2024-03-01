@@ -1,7 +1,7 @@
 package at.htl.timetableGenerator.factory;
 
-import at.htl.timetableGenerator.Subject;
-import at.htl.timetableGenerator.Teacher;
+import at.htl.timetableGenerator.Model.Subject;
+import at.htl.timetableGenerator.Model.Teacher;
 import at.htl.timetableGenerator.exceptions.ImportException;
 import org.junit.jupiter.api.Test;
 

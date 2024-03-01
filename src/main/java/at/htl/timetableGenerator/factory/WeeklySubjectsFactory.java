@@ -1,7 +1,7 @@
 package at.htl.timetableGenerator.factory;
 
-import at.htl.timetableGenerator.Subject;
-import at.htl.timetableGenerator.WeeklySubject;
+import at.htl.timetableGenerator.Model.Subject;
+import at.htl.timetableGenerator.Model.WeeklySubject;
 import at.htl.timetableGenerator.exceptions.ImportException;
 import org.apache.commons.math3.util.Pair;
 import org.jetbrains.annotations.NotNull;

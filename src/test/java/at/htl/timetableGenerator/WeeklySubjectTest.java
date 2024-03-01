@@ -1,5 +1,7 @@
 package at.htl.timetableGenerator;
 
+import at.htl.timetableGenerator.Model.Subject;
+import at.htl.timetableGenerator.Model.WeeklySubject;
 import org.junit.jupiter.api.Test;
 
 import java.util.Objects;

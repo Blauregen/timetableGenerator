@@ -1,6 +1,6 @@
 package at.htl.timetableGenerator.factory;
 
-import at.htl.timetableGenerator.Room;
+import at.htl.timetableGenerator.Model.Room;
 import at.htl.timetableGenerator.exceptions.ImportException;
 import org.jetbrains.annotations.NotNull;
 

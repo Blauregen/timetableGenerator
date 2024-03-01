@@ -1,5 +1,9 @@
 package at.htl.timetableGenerator;
 
+import at.htl.timetableGenerator.Model.Lesson;
+import at.htl.timetableGenerator.Model.Room;
+import at.htl.timetableGenerator.Model.Subject;
+import at.htl.timetableGenerator.Model.TimeSlot;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;

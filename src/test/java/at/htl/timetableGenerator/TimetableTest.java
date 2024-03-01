@@ -1,5 +1,9 @@
 package at.htl.timetableGenerator;
 
+import at.htl.timetableGenerator.Model.Lesson;
+import at.htl.timetableGenerator.Model.Subject;
+import at.htl.timetableGenerator.Model.TimeSlot;
+import at.htl.timetableGenerator.Model.Timetable;
 import at.htl.timetableGenerator.constrains.Constraint;
 import at.htl.timetableGenerator.constrains.constraints.DoubleHourConstraint;
 import at.htl.timetableGenerator.constrains.constraints.NoMoreThanThreeInRowConstraint;

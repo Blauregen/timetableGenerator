@@ -1,5 +1,6 @@
 package at.htl.timetableGenerator;
 
+import at.htl.timetableGenerator.Model.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;

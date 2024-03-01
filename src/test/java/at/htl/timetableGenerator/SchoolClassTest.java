@@ -1,5 +1,6 @@
 package at.htl.timetableGenerator;
 
+import at.htl.timetableGenerator.Model.*;
 import at.htl.timetableGenerator.constrains.Constraint;
 import at.htl.timetableGenerator.constrains.constraints.DoubleHourConstraint;
 import org.junit.jupiter.api.BeforeEach;

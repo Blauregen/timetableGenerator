@@ -1,4 +1,4 @@
-package at.htl.timetableGenerator;
+package at.htl.timetableGenerator.Model;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

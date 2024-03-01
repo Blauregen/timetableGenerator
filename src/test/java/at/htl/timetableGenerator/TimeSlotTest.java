@@ -1,5 +1,6 @@
 package at.htl.timetableGenerator;
 
+import at.htl.timetableGenerator.Model.TimeSlot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

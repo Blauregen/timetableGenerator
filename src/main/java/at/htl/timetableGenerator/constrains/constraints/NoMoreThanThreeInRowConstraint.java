@@ -1,6 +1,6 @@
 package at.htl.timetableGenerator.constrains.constraints;
 
-import at.htl.timetableGenerator.*;
+import at.htl.timetableGenerator.Model.*;
 import at.htl.timetableGenerator.constrains.Constraint;
 import org.jetbrains.annotations.NotNull;
 

@@ -1,9 +1,9 @@
 package at.htl.timetableGenerator.output;
 
-import at.htl.timetableGenerator.Lesson;
-import at.htl.timetableGenerator.Teacher;
-import at.htl.timetableGenerator.TimeSlot;
-import at.htl.timetableGenerator.Timetable;
+import at.htl.timetableGenerator.Model.Lesson;
+import at.htl.timetableGenerator.Model.Teacher;
+import at.htl.timetableGenerator.Model.TimeSlot;
+import at.htl.timetableGenerator.Model.Timetable;
 import at.htl.timetableGenerator.exceptions.ExportException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;

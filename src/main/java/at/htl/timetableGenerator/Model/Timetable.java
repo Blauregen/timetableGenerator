@@ -1,4 +1,4 @@
-package at.htl.timetableGenerator;
+package at.htl.timetableGenerator.Model;
 
 import at.htl.timetableGenerator.constrains.Constraint;
 import at.htl.timetableGenerator.constrains.constraints.DoubleHourConstraint;

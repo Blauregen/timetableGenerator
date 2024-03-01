@@ -1,16 +1,16 @@
 package at.htl.timetableGenerator.constrains.constraints;
 
-import at.htl.timetableGenerator.Lesson;
-import at.htl.timetableGenerator.Room;
-import at.htl.timetableGenerator.Teacher;
-import at.htl.timetableGenerator.Timetable;
+import at.htl.timetableGenerator.Model.Lesson;
+import at.htl.timetableGenerator.Model.Room;
+import at.htl.timetableGenerator.Model.Teacher;
+import at.htl.timetableGenerator.Model.Timetable;
 import at.htl.timetableGenerator.constrains.Constraint;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.Set;
 
-import static at.htl.timetableGenerator.Timetable.FREISTUNDE;
+import static at.htl.timetableGenerator.Model.Timetable.FREISTUNDE;
 
 /**
  * This class represents a constraint in a timetable where no course is placed before the current

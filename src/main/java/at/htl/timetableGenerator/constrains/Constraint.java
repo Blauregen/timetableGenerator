@@ -1,9 +1,9 @@
 package at.htl.timetableGenerator.constrains;
 
-import at.htl.timetableGenerator.Lesson;
-import at.htl.timetableGenerator.Room;
-import at.htl.timetableGenerator.Teacher;
-import at.htl.timetableGenerator.Timetable;
+import at.htl.timetableGenerator.Model.Lesson;
+import at.htl.timetableGenerator.Model.Room;
+import at.htl.timetableGenerator.Model.Teacher;
+import at.htl.timetableGenerator.Model.Timetable;
 
 import java.util.Map;
 import java.util.Set;

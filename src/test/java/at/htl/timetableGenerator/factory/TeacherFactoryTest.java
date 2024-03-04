@@ -24,7 +24,7 @@ class TeacherFactoryTest {
 		subjects.add(new Subject("English", "E", 3));
 
 		Set<Teacher> teachers = assertDoesNotThrow(
-				() -> TeacherFactory.createFromFile("src/test/testFiles/correctTeacherFactory.csv", subjects,
+				() -> TeacherFactory.createFromFile("src/test/resources/correctTeacherFactory.csv", subjects,
 				                                    ";"));
 
 		Set<Subject> factorySubjects = new HashSet<>();
@@ -33,7 +33,7 @@ class TeacherFactoryTest {
 		assertEquals(subjects, factorySubjects);
 
 		assertThrows(ImportException.class,
-		             () -> TeacherFactory.createFromFile("src/test/testFiles/incorrectTeacherFactory.csv",
+		             () -> TeacherFactory.createFromFile("src/test/resources/incorrectTeacherFactory.csv",
 		                                                 subjects, ";"));
 
 		assertThrows(ImportException.class, () -> TeacherFactory.createFromFile(

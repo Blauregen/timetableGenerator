@@ -15,11 +15,11 @@ class SubjectFactoryTest {
 		// tested
 
 		assertDoesNotThrow(() -> {
-			SubjectFactory.createFromFile("src/test/testFiles/correctSubjectFactory.csv", ";");
+			SubjectFactory.createFromFile("src/test/resources/correctSubjectFactory.csv", ";");
 		});
 
 		assertThrows(ImportException.class, () -> SubjectFactory.createFromFile(
-				"src/test/testFiles/incorrectSubjectFactory.csv", ";"));
+				"src/test/resources/incorrectSubjectFactory.csv", ";"));
 
 		assertThrows(ImportException.class, () -> SubjectFactory.createFromFile(
 				"non/existing/path/but/pls/never_add/folders/called/like/this/or/everything" +

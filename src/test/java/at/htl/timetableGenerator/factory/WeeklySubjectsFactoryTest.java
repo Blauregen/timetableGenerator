@@ -25,11 +25,11 @@ class WeeklySubjectsFactoryTest {
 
 		assertDoesNotThrow(() -> {
 			WeeklySubjectsFactory.createFromFile(
-					"src/test/testFiles/correctWeeklySubjectsFactory.csv", subjects, ";");
+					"src/test/resources/correctWeeklySubjectsFactory.csv", subjects, ";");
 		});
 
 		assertThrows(ImportException.class, () -> WeeklySubjectsFactory.createFromFile(
-				"src/test/testFiles/incorrectWeeklySubjectsFactory.csv", subjects, ";"));
+				"src/test/resources/incorrectWeeklySubjectsFactory.csv", subjects, ";"));
 
 		assertThrows(ImportException.class, () -> WeeklySubjectsFactory.createFromFile(
 				"non/existing/path/but/pls/never_add/folders/called/like/this/or/everything" +

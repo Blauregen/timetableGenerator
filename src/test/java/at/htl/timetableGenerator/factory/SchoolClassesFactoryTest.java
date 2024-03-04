@@ -29,7 +29,7 @@ class SchoolClassesFactoryTest {
 
 		HashMap<String, HashSet<WeeklySubject>> possibleWeeklySubjects =
 				WeeklySubjectsFactory.createFromFile(
-						"src/test/testFiles/correctWeeklySubjectsFactory.csv", subjects, ";");
+						"src/test/resources/correctWeeklySubjectsFactory.csv", subjects, ";");
 
 		assertThrows(ImportException.class,
 		             () -> SchoolClassesFactory.createFromString("arg; arg; arg", teachers,
@@ -37,12 +37,12 @@ class SchoolClassesFactoryTest {
 
 		assertDoesNotThrow(() -> {
 			SchoolClassesFactory.createFromFile(
-					"src/test/testFiles/correctSchoolClassesFactory.csv", teachers,
+					"src/test/resources/correctSchoolClassesFactory.csv", teachers,
 					possibleWeeklySubjects, ";");
 		});
 
 		assertThrows(ImportException.class, () -> SchoolClassesFactory.createFromFile(
-				"src/test/testFiles/incorrectSchoolClassesFactory.csv", teachers,
+				"src/test/resources/incorrectSchoolClassesFactory.csv", teachers,
 				possibleWeeklySubjects, ";"));
 
 		assertThrows(ImportException.class, () -> SchoolClassesFactory.createFromFile(

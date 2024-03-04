@@ -1,6 +1,6 @@
 package at.htl.timetableGenerator;
 
-import at.htl.timetableGenerator.Model.*;
+import at.htl.timetableGenerator.model.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
@@ -15,8 +15,8 @@ public class TeacherTest {
 	void testConstructor() {
 		String name = "Walter von der Vogelweide";
 		Set<Subject> subjects = new HashSet<>();
-		subjects.add(new Subject("German", "GE"));
-		subjects.add(new Subject("Music", "MU"));
+		subjects.add(new Subject("German", "GE", 3));
+		subjects.add(new Subject("Music", "MU", 3));
 		Teacher walter = new Teacher(name, subjects, 10, 5);
 
 		assertEquals(name, walter.getName());
@@ -26,12 +26,12 @@ public class TeacherTest {
 	@Test
 	void testSetters() {
 		Set<Subject> subjects = new HashSet<>();
-		subjects.add(new Subject("German", "GE"));
-		subjects.add(new Subject("Medicine", "ME"));
+		subjects.add(new Subject("German", "GE", 3));
+		subjects.add(new Subject("Medicine", "ME", 3));
 		Teacher hildegard = new Teacher("Hildegard von Bingen", subjects, 10, 5);
 
 		Set<Subject> newSubjects = new HashSet<>();
-		Timetable timetable = new Timetable(5, 8);
+		Timetable timetable = new Timetable(5, 8, 1000);
 
 		hildegard.setSubjects(newSubjects);
 		hildegard.setOccupiedLessons(timetable);
@@ -43,10 +43,10 @@ public class TeacherTest {
 	@Test
 	void testSingleSetterAndGetters() {
 		Set<Subject> subjects = new HashSet<>();
-		Subject german = new Subject("German", "GE");
+		Subject german = new Subject("German", "GE", 3);
 		TimeSlot monday0 = new TimeSlot(DayOfWeek.MONDAY, 0);
 		subjects.add(german);
-		subjects.add(new Subject("Lyrik", "LY"));
+		subjects.add(new Subject("Lyrik", "LY", 3));
 		Teacher ludwig =
 				new Teacher("Carl Joachim Friedrich Ludwig „Achim“ von Arnim", subjects, 10, 5);
 
@@ -58,7 +58,7 @@ public class TeacherTest {
 
 	@Test
 	void testToString() {
-		Subject dichtung = new Subject("Dichtung", "Dt");
+		Subject dichtung = new Subject("Dichtung", "Dt", 3);
 		Set<Subject> subjects = new HashSet<>();
 		subjects.add(dichtung);
 		Teacher heinrich = new Teacher("Heinrich von Veldeke", subjects, 10, 5);
@@ -68,7 +68,7 @@ public class TeacherTest {
 	@Test
 	void testAddRemoveSubject() {
 		Teacher hildegard = new Teacher("Hildegard von Bingen", new HashSet<>(), 11, 6);
-		Subject medicine = new Subject("Medizin", "MED");
+		Subject medicine = new Subject("Medizin", "MED", 3);
 
 		assertEquals(0, hildegard.getSubjects().size());
 

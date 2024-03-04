@@ -1,7 +1,7 @@
-package at.htl.timetableGenerator.constrains;
+package at.htl.timetableGenerator.constraints;
 
-import at.htl.timetableGenerator.Model.*;
-import at.htl.timetableGenerator.constrains.constraints.DoubleHourConstraint;
+import at.htl.timetableGenerator.constraints.constraints.DoubleHourConstraint;
+import at.htl.timetableGenerator.model.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
@@ -16,9 +16,9 @@ class DoubleHourConstraintTest {
 	@Test
 	void check() {
 		DoubleHourConstraint constraint = new DoubleHourConstraint();
-		Timetable timetable = new Timetable(2, 2);
-		Subject math = new Subject("Maths", "AM");
-		Subject german = new Subject("German", "D");
+		Timetable timetable = new Timetable(2, 2, 50);
+		Subject math = new Subject("Maths", "AM", 3);
+		Subject german = new Subject("German", "D", 3);
 		Lesson maths = new Lesson(math, new TimeSlot(DayOfWeek.MONDAY, 0));
 		Lesson secondMath = new Lesson(math, new TimeSlot(DayOfWeek.MONDAY, 1));
 		Lesson germans = new Lesson(german, new TimeSlot(DayOfWeek.TUESDAY, 0));

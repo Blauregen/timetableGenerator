@@ -1,4 +1,4 @@
-package at.htl.timetableGenerator.constrains;
+package at.htl.timetableGenerator.constraints;
 
 public enum TimeKeyword {
 	BEFORE,

@@ -1,6 +1,6 @@
 package at.htl.timetableGenerator;
 
-import at.htl.timetableGenerator.Model.Subject;
+import at.htl.timetableGenerator.model.Subject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +14,7 @@ class SubjectTest {
 
 	@BeforeEach
 	void setup() {
-		subject = new Subject("Angewandte Mathematik", "AM");
+		subject = new Subject("Angewandte Mathematik", "AM", 3);
 	}
 
 	@Test
@@ -24,8 +24,8 @@ class SubjectTest {
 
 	@Test
 	void testEquals() {
-		Subject sameSubject = new Subject("Angewandte Mathematik", "M");
-		Subject notSameSubject = new Subject("Mathe", "AM");
+		Subject sameSubject = new Subject("Angewandte Mathematik", "M", 3);
+		Subject notSameSubject = new Subject("Mathe", "AM", 3);
 		assertEquals(subject, subject);
 		assertNotEquals(subject, null);
 		assertNotEquals(subject, new Object());

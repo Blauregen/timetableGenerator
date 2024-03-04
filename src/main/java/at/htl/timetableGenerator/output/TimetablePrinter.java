@@ -1,8 +1,8 @@
 package at.htl.timetableGenerator.output;
 
-import at.htl.timetableGenerator.Model.Lesson;
-import at.htl.timetableGenerator.Model.Subject;
-import at.htl.timetableGenerator.Model.Timetable;
+import at.htl.timetableGenerator.model.Lesson;
+import at.htl.timetableGenerator.model.Subject;
+import at.htl.timetableGenerator.model.Timetable;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 

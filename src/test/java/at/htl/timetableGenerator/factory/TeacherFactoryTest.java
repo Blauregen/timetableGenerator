@@ -1,8 +1,8 @@
 package at.htl.timetableGenerator.factory;
 
-import at.htl.timetableGenerator.Model.Subject;
-import at.htl.timetableGenerator.Model.Teacher;
 import at.htl.timetableGenerator.exceptions.ImportException;
+import at.htl.timetableGenerator.model.Subject;
+import at.htl.timetableGenerator.model.Teacher;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
@@ -19,9 +19,9 @@ class TeacherFactoryTest {
 		// tested
 
 		Set<Subject> subjects = new HashSet<>();
-		subjects.add(new Subject("Deutsch", "D"));
-		subjects.add(new Subject("Latin", "L"));
-		subjects.add(new Subject("English", "E"));
+		subjects.add(new Subject("Deutsch", "D", 3));
+		subjects.add(new Subject("Latin", "L", 3));
+		subjects.add(new Subject("English", "E", 3));
 
 		Set<Teacher> teachers = assertDoesNotThrow(
 				() -> TeacherFactory.createFromFile("src/test/testFiles/correctTeacherFactory.csv", subjects,

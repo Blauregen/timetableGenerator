@@ -1,7 +1,7 @@
-package at.htl.timetableGenerator.constrains;
+package at.htl.timetableGenerator.constraints;
 
-import at.htl.timetableGenerator.Model.*;
-import at.htl.timetableGenerator.constrains.constraints.RoomConstraint;
+import at.htl.timetableGenerator.constraints.constraints.RoomConstraint;
+import at.htl.timetableGenerator.model.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
@@ -15,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class RoomConstraintTest {
 	@Test
 	void roomConstraintCheckReturnsTrueWhenRoomIsFree() {
-		Timetable timetable = new Timetable(5, 10);
-		Subject subject = new Subject("Maths", "M");
+		Timetable timetable = new Timetable(5, 10, 50);
+		Subject subject = new Subject("Maths", "M", 3);
 		TimeSlot timeSlot = new TimeSlot(DayOfWeek.MONDAY, 8);
 		Lesson lesson = new Lesson(subject, timeSlot);
 		Set<Teacher> teachers = new HashSet<>();
@@ -32,8 +32,8 @@ class RoomConstraintTest {
 
 	@Test
 	void roomConstraintCheckReturnsFalseWhenNoRoomIsFree() {
-		Timetable timetable = new Timetable(5, 10);
-		Subject subject = new Subject("Maths", "M");
+		Timetable timetable = new Timetable(5, 10, 50);
+		Subject subject = new Subject("Maths", "M", 3);
 		TimeSlot timeSlot = new TimeSlot(DayOfWeek.MONDAY, 8);
 		Lesson lesson = new Lesson(subject, timeSlot);
 		Set<Teacher> teachers = new HashSet<>();
@@ -49,8 +49,8 @@ class RoomConstraintTest {
 
 	@Test
 	void roomConstraintUpdatesRoomWhenFreeSlotExists() {
-		Timetable timetable = new Timetable(5, 10);
-		Subject subject = new Subject("Maths", "M");
+		Timetable timetable = new Timetable(5, 10, 50);
+		Subject subject = new Subject("Maths", "M", 3);
 		TimeSlot timeSlot = new TimeSlot(DayOfWeek.MONDAY, 8);
 		Lesson lesson = new Lesson(subject, timeSlot);
 		Set<Teacher> teachers = new HashSet<>();
@@ -67,11 +67,11 @@ class RoomConstraintTest {
 
 	@Test
 	void roomConstraintDoesNotUpdateRoomWhenNoFreeSlotExists() {
-		Timetable timetable = new Timetable(1, 2);
-		Subject subject = new Subject("Maths", "M");
+		Timetable timetable = new Timetable(1, 2, 50);
+		Subject subject = new Subject("Maths", "M", 3);
 		TimeSlot timeSlot = new TimeSlot(DayOfWeek.MONDAY, 0);
 		Lesson lesson = new Lesson(subject, timeSlot);
-		Lesson lesson2 = new Lesson(new Subject("German", "D"), timeSlot.nextHour());
+		Lesson lesson2 = new Lesson(new Subject("German", "D", 3), timeSlot.nextHour());
 		Set<Teacher> teachers = new HashSet<>();
 		Map<String, Room> rooms = new HashMap<>();
 		Room room = new Room("101");

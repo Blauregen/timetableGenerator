@@ -1,7 +1,7 @@
 package at.htl.timetableGenerator.factory;
 
-import at.htl.timetableGenerator.Model.Subject;
 import at.htl.timetableGenerator.exceptions.ImportException;
+import at.htl.timetableGenerator.model.Subject;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
@@ -18,7 +18,7 @@ class WeeklySubjectsFactoryTest {
 
 		Set<Subject> subjects = new HashSet<>();
 		subjects.add(new Subject("Deutsch",
-		                         "D")); //Needed, so jacoco recognizes the default constructor as tested
+		                         "D", 3)); //Needed, so jacoco recognizes the default constructor as tested
 
 		assertThrows(ImportException.class,
 		             () -> WeeklySubjectsFactory.createFromString("1;2;3;4;5;", subjects, ";"));

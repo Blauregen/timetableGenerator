@@ -1,4 +1,4 @@
-package at.htl.timetableGenerator.Model;
+package at.htl.timetableGenerator.model;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -27,7 +27,7 @@ public class Teacher {
 	public Teacher(String name, Set<Subject> subjects, int hoursPerDay, int daysPerWeek) {
 		this.name = name;
 		this.subjects = subjects;
-		this.occupiedLessons = new Timetable(daysPerWeek, hoursPerDay);
+		this.occupiedLessons = new Timetable(daysPerWeek, hoursPerDay, Integer.MAX_VALUE);
 	}
 
 	/**

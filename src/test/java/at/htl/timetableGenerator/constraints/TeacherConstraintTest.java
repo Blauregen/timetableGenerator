@@ -1,7 +1,7 @@
-package at.htl.timetableGenerator.constrains;
+package at.htl.timetableGenerator.constraints;
 
-import at.htl.timetableGenerator.Model.*;
-import at.htl.timetableGenerator.constrains.constraints.TeacherConstraint;
+import at.htl.timetableGenerator.constraints.constraints.TeacherConstraint;
+import at.htl.timetableGenerator.model.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
@@ -15,9 +15,9 @@ class TeacherConstraintTest {
 	@Test
 	void check() {
 		TeacherConstraint constraint = new TeacherConstraint();
-		Timetable timetable = new Timetable(1, 1);
-		Subject math = new Subject("Maths", "AM");
-		Subject german = new Subject("German", "D");
+		Timetable timetable = new Timetable(1, 1, 50);
+		Subject math = new Subject("Maths", "AM", 3);
+		Subject german = new Subject("German", "D", 3);
 		Lesson maths = new Lesson(math, new TimeSlot(DayOfWeek.MONDAY, 0));
 		Lesson germans = new Lesson(german, new TimeSlot(DayOfWeek.MONDAY, 0));
 		HashSet<Subject> subjects = new HashSet<>();
@@ -45,10 +45,10 @@ class TeacherConstraintTest {
 	@Test
 	void updateOnSuccess() {
 		TeacherConstraint constraint = new TeacherConstraint();
-		Timetable timetable = new Timetable(1, 1);
-		Subject math = new Subject("Maths", "AM");
-		Subject german = new Subject("German", "D");
-		Subject itp = new Subject("ITP", "itp");
+		Timetable timetable = new Timetable(1, 1, 50);
+		Subject math = new Subject("Maths", "AM", 3);
+		Subject german = new Subject("German", "D", 3);
+		Subject itp = new Subject("ITP", "itp", 3);
 		Lesson maths = new Lesson(math, new TimeSlot(DayOfWeek.MONDAY, 0));
 		Lesson germans = new Lesson(german, new TimeSlot(DayOfWeek.MONDAY, 0));
 		Lesson itps = new Lesson(itp, new TimeSlot(DayOfWeek.MONDAY, 0));

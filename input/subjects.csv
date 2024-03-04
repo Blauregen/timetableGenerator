@@ -1,9 +1,9 @@
 SubjectName;SubjectAbbreviation
-Lyrik;LY
-Dichtung;DT
-Angewandte Mathematik;AM
-Minnegesang;MG
-Informationstechnische Projekte;ITP
-Softwareentwicklung;SEW
-Geschichte;GPB
-Englisch;EN
+Lyrik;LY;1
+Dichtung;DT;1
+Angewandte Mathematik;AM;3
+Minnegesang;MG;1
+Informationstechnische Projekte;ITP;2
+Softwareentwicklung;SEW;2
+Geschichte;GPB;2
+Englisch;EN;1

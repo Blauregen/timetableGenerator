@@ -1,6 +1,6 @@
-package at.htl.timetableGenerator.constrains;
+package at.htl.timetableGenerator.constraints;
 
-import at.htl.timetableGenerator.constrains.constraints.CustomConstraint;
+import at.htl.timetableGenerator.constraints.constraints.CustomConstraint;
 import at.htl.timetableGenerator.factory.ConstraintFactory;
 
 import java.util.Set;

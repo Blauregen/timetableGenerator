@@ -1,8 +1,8 @@
 package at.htl.timetableGenerator;
 
-import at.htl.timetableGenerator.Model.*;
-import at.htl.timetableGenerator.constrains.Constraint;
-import at.htl.timetableGenerator.constrains.constraints.DoubleHourConstraint;
+import at.htl.timetableGenerator.constraints.Constraint;
+import at.htl.timetableGenerator.constraints.constraints.DoubleHourConstraint;
+import at.htl.timetableGenerator.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,9 +20,9 @@ class SchoolClassTest {
 
 	@BeforeEach
 	void setup() {
-		Subject subject1 = new Subject("Angewandte Mathematik", "AM");
-		Subject subject2 = new Subject("Englisch", "E");
-		Subject subject3 = new Subject("Software Entwicklung", "SEW");
+		Subject subject1 = new Subject("Angewandte Mathematik", "AM", 3);
+		Subject subject2 = new Subject("Englisch", "E", 2);
+		Subject subject3 = new Subject("Software Entwicklung", "SEW", 2);
 
 		WeeklySubject weeklySubject1 = new WeeklySubject(subject1, 5);
 		WeeklySubject weeklySubject2 = new WeeklySubject(subject2, 2);
@@ -39,7 +39,7 @@ class SchoolClassTest {
 
 	@Test
 	void getAndSetFormTeacher() {
-		Subject subject2 = new Subject("Englisch", "E");
+		Subject subject2 = new Subject("Englisch", "E", 2);
 		HashSet<Subject> subjectsWellisch = new HashSet<>();
 		subjectsWellisch.add(subject2);
 		Teacher wellisch = new Teacher("Alexandra Wellisch", subjectsWellisch, 6, 4);
@@ -54,17 +54,17 @@ class SchoolClassTest {
 		/*
 		 * CREATE TEACHERS BEFORE CREATING TIMETABLE
 		 */
-		Subject subject1 = new Subject("Angewandte Mathematik", "AM");
+		Subject subject1 = new Subject("Angewandte Mathematik", "AM", 3);
 		HashSet<Subject> subjectsKerschner = new HashSet<>();
 		subjectsKerschner.add(subject1);
 		Teacher kerschner = new Teacher("Martin Kerschner", subjectsKerschner, 5, 5);
 
-		Subject subject2 = new Subject("Englisch", "E");
+		Subject subject2 = new Subject("Englisch", "E", 2);
 		HashSet<Subject> subjectsWellisch = new HashSet<>();
 		subjectsWellisch.add(subject2);
 		Teacher wellisch = new Teacher("Alexandra Wellisch", subjectsWellisch, 6, 4);
 
-		Subject subject3 = new Subject("Software Entwicklung", "SEW");
+		Subject subject3 = new Subject("Software Entwicklung", "SEW", 2);
 		HashSet<Subject> subjectsKarpfen = new HashSet<>();
 		subjectsKarpfen.add(subject3);
 		Teacher karpfen = new Teacher("Michal Karpowicz", subjectsKarpfen, 4, 3);
@@ -96,7 +96,7 @@ class SchoolClassTest {
 	void getAndSetWeeklySubjects() {
 		assertEquals(3, schoolClass.getWeeklySubjects().size());
 
-		Subject subject4 = new Subject("Deutsch", "D");
+		Subject subject4 = new Subject("Deutsch", "D", 2);
 		WeeklySubject weeklySubject4 = new WeeklySubject(subject4, 4);
 		HashSet<WeeklySubject> weeklySubjects = new HashSet<>();
 		weeklySubjects.add(weeklySubject4);
@@ -117,7 +117,7 @@ class SchoolClassTest {
 
 	@Test
 	void getAndSetLesson() {
-		Subject subject3 = new Subject("Software Entwicklung", "SEW");
+		Subject subject3 = new Subject("Software Entwicklung", "SEW", 2);
 		HashSet<Subject> subjectsKarpfen = new HashSet<>();
 		subjectsKarpfen.add(subject3);
 		Teacher karpfen = new Teacher("Michal Karpowicz", subjectsKarpfen, 4, 3);
@@ -126,7 +126,7 @@ class SchoolClassTest {
 		teachers.add(karpfen);
 
 		TimeSlot timeSlot = new TimeSlot(DayOfWeek.MONDAY, 0);
-		Subject subject = new Subject("Englisch", "E");
+		Subject subject = new Subject("Englisch", "E", 2);
 		Lesson lesson = new Lesson(subject, timeSlot);
 		Lesson secondLesson = new Lesson(subject, timeSlot);
 
@@ -157,10 +157,11 @@ class SchoolClassTest {
 
 	@Test
 	void setTimetable() {
-		schoolClass.setTimetable(new Timetable(3, 9));
+		schoolClass.setTimetable(new Timetable(3, 9, 10));
 		assertEquals(9, schoolClass.getTimetable().getMaxNoOfHoursPerDay());
 		assertEquals(3, schoolClass.getTimetable().getNoOfDayPerWeek());
 		assertEquals(27, schoolClass.getTimetable().getTimetable().size());
+		assertEquals(10, schoolClass.getTimetable().getMaxTotalScore());
 	}
 
 	@Test
@@ -180,7 +181,7 @@ class SchoolClassTest {
 
 	@Test
 	void testGetBestAvailableLesson() {
-		Subject subject3 = new Subject("Software Entwicklung", "SEW");
+		Subject subject3 = new Subject("Software Entwicklung", "SEW", 2);
 		HashSet<Subject> subjectsKarpfen = new HashSet<>();
 		subjectsKarpfen.add(subject3);
 		Teacher karpfen = new Teacher("Michal Karpowicz", subjectsKarpfen, 5, 3);

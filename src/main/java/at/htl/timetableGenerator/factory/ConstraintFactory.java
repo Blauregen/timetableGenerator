@@ -1,7 +1,7 @@
 package at.htl.timetableGenerator.factory;
 
-import at.htl.timetableGenerator.constrains.TimeKeyword;
-import at.htl.timetableGenerator.constrains.constraints.CustomConstraint;
+import at.htl.timetableGenerator.constraints.TimeKeyword;
+import at.htl.timetableGenerator.constraints.constraints.CustomConstraint;
 import at.htl.timetableGenerator.exceptions.ImportException;
 import org.jetbrains.annotations.NotNull;
 

@@ -1,13 +1,13 @@
-package at.htl.timetableGenerator.constrains.constraints;
+package at.htl.timetableGenerator.constraints.constraints;
 
-import at.htl.timetableGenerator.Model.*;
-import at.htl.timetableGenerator.constrains.Constraint;
+import at.htl.timetableGenerator.constraints.Constraint;
+import at.htl.timetableGenerator.model.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.Set;
 
-import static at.htl.timetableGenerator.Model.Timetable.FREISTUNDE;
+import static at.htl.timetableGenerator.model.Timetable.FREISTUNDE;
 
 /**
  * This class represents a teacher constraint in a timetable.

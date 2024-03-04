@@ -1,6 +1,6 @@
 package at.htl.timetableGenerator;
 
-import at.htl.timetableGenerator.Model.*;
+import at.htl.timetableGenerator.model.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
@@ -15,7 +15,7 @@ class LessonTest {
 
 	@Test
 	void testConstructor() {
-		Subject subject = new Subject("Maths", "M");
+		Subject subject = new Subject("Maths", "M", 3);
 		TimeSlot timeslot = new TimeSlot(DayOfWeek.FRIDAY, 8);
 		Lesson lesson = new Lesson(subject, timeslot);
 
@@ -25,10 +25,10 @@ class LessonTest {
 
 	@Test
 	void testSetters() {
-		Subject subject = new Subject("Maths", "M");
+		Subject subject = new Subject("Maths", "M", 3);
 		TimeSlot timeslot = new TimeSlot(DayOfWeek.SATURDAY, 9);
 		Lesson lesson = new Lesson(subject, timeslot);
-		Subject newSubject = new Subject("English", "E");
+		Subject newSubject = new Subject("English", "E", 2);
 		TimeSlot newTimeSlot = new TimeSlot(DayOfWeek.MONDAY, 7);
 		Room lazarett = new Room("Hildegards Lazarett");
 
@@ -43,7 +43,7 @@ class LessonTest {
 
 	@Test
 	void testToString() {
-		Subject subject = new Subject("Maths", "M");
+		Subject subject = new Subject("Maths", "M", 3);
 		TimeSlot timeslot = new TimeSlot(DayOfWeek.SATURDAY, 9);
 		Lesson lesson = new Lesson(subject, timeslot);
 
@@ -52,7 +52,7 @@ class LessonTest {
 
 	@Test
 	void equalsReturnsTrueWhenAllFieldsAreEqual() {
-		Subject subject = new Subject("Maths", "M");
+		Subject subject = new Subject("Maths", "M", 3);
 		TimeSlot timeSlot = new TimeSlot(DayOfWeek.MONDAY, 1);
 		Teacher teacher = new Teacher("Friedrich II. (Leiningen)", new HashSet<>(), 5, 5);
 
@@ -76,8 +76,8 @@ class LessonTest {
 
 	@Test
 	void equalsReturnsFalseWhenSubjectsAreDifferent() {
-		Subject subject1 = new Subject("Maths", "M");
-		Subject subject2 = new Subject("English", "E");
+		Subject subject1 = new Subject("Maths", "M", 3);
+		Subject subject2 = new Subject("English", "E", 2);
 		TimeSlot timeSlot = new TimeSlot(DayOfWeek.MONDAY, 1);
 		Teacher teacher = new Teacher("Neidhart", new HashSet<>(), 5, 5);
 		HashSet<WeeklySubject> weeklySubjects = new HashSet<>();
@@ -100,7 +100,7 @@ class LessonTest {
 
 	@Test
 	void equalsReturnsFalseWhenRoomisDifferent() {
-		Subject subject1 = new Subject("Maths", "M");
+		Subject subject1 = new Subject("Maths", "M", 3);
 		TimeSlot timeSlot = new TimeSlot(DayOfWeek.MONDAY, 1);
 		Teacher teacher = new Teacher("Neidhart", new HashSet<>(), 5, 5);
 		HashSet<WeeklySubject> weeklySubjects = new HashSet<>();
@@ -124,7 +124,7 @@ class LessonTest {
 
 	@Test
 	void equalsReturnsFalseWhenTimeslotsAreDifferent() {
-		Subject subject1 = new Subject("Maths", "M");
+		Subject subject1 = new Subject("Maths", "M", 3);
 		TimeSlot timeSlot = new TimeSlot(DayOfWeek.MONDAY, 1);
 		TimeSlot timeSlot2 = new TimeSlot(DayOfWeek.MONDAY, 2);
 		Teacher teacher = new Teacher("Neidhart", new HashSet<>(), 5, 5);
@@ -148,7 +148,7 @@ class LessonTest {
 
 	@Test
 	void equalsReturnsFalseWhenSchoolClassAreDifferent() {
-		Subject subject1 = new Subject("Maths", "M");
+		Subject subject1 = new Subject("Maths", "M", 3);
 		TimeSlot timeSlot = new TimeSlot(DayOfWeek.MONDAY, 1);
 		Teacher teacher = new Teacher("Neidhart", new HashSet<>(), 5, 5);
 		HashSet<WeeklySubject> weeklySubjects = new HashSet<>();
@@ -172,7 +172,7 @@ class LessonTest {
 
 	@Test
 	void equalsReturnsFalseWhenTeachersAreDifferent() {
-		Subject subject1 = new Subject("Maths", "M");
+		Subject subject1 = new Subject("Maths", "M", 3);
 		TimeSlot timeSlot = new TimeSlot(DayOfWeek.MONDAY, 1);
 		Teacher teacher = new Teacher("Neidhart", new HashSet<>(), 5, 5);
 		Teacher teacher2 = new Teacher("Otto von Botenlauben", new HashSet<>(), 5, 5);
@@ -196,7 +196,7 @@ class LessonTest {
 
 	@Test
 	void equalsReturnsFalseWhenComparedWithNull() {
-		Subject subject = new Subject("Maths", "M");
+		Subject subject = new Subject("Maths", "M", 3);
 		TimeSlot timeSlot = new TimeSlot(DayOfWeek.MONDAY, 8);
 		Lesson lesson = new Lesson(subject, timeSlot);
 
@@ -205,7 +205,7 @@ class LessonTest {
 
 	@Test
 	void equalsReturnsFalseWhenComparedWithDifferentClass() {
-		Subject subject = new Subject("Maths", "M");
+		Subject subject = new Subject("Maths", "M", 3);
 		TimeSlot timeSlot = new TimeSlot(DayOfWeek.MONDAY, 8);
 		Lesson lesson = new Lesson(subject, timeSlot);
 
@@ -214,7 +214,7 @@ class LessonTest {
 
 	@Test
 	void testHashCode() {
-		Subject subject = new Subject("Maths", "M");
+		Subject subject = new Subject("Maths", "M", 3);
 		TimeSlot timeslot = new TimeSlot(DayOfWeek.SATURDAY, 9);
 		Lesson lesson = new Lesson(subject, timeslot);
 
@@ -224,8 +224,8 @@ class LessonTest {
 	@Test
 	void testSetAndGetTeacher() {
 		Set<Subject> subjects = new HashSet<>();
-		Subject german = new Subject("German", "GE");
-		Subject minnegesang = new Subject("Minnegesang", "MG");
+		Subject german = new Subject("German", "GE", 2);
+		Subject minnegesang = new Subject("Minnegesang", "MG", 1);
 		subjects.add(german);
 		subjects.add(minnegesang);
 		TimeSlot timeSlot = new TimeSlot(DayOfWeek.THURSDAY, 7);

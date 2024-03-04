@@ -1,6 +1,6 @@
-package at.htl.timetableGenerator.Model;
+package at.htl.timetableGenerator.model;
 
-import at.htl.timetableGenerator.constrains.Constraint;
+import at.htl.timetableGenerator.constraints.Constraint;
 import at.htl.timetableGenerator.output.CSVExporter;
 import at.htl.timetableGenerator.output.ExcelExporter;
 import at.htl.timetableGenerator.output.ExportData;
@@ -174,7 +174,8 @@ public class School {
 				counter++;
 				System.out.println("Attempt " + (counter + 1));
 				for (Teacher teacher : teachers) {
-					teacher.setOccupiedLessons(new Timetable(daysPerWeek, maxHoursPerDay));
+					teacher.setOccupiedLessons(new Timetable(daysPerWeek, maxHoursPerDay,
+					                                         Integer.MAX_VALUE));
 				}
 
 				for (SchoolClass schoolClass : schoolClasses) {
@@ -184,8 +185,8 @@ public class School {
 				}
 			} catch (Exception ignored) {
 				timetables.forEach((name, timetable) -> timetable.setTimetable(new HashMap<>()));
-				teachers.forEach(
-						teacher -> teacher.setOccupiedLessons(new Timetable(daysPerWeek, maxHoursPerDay)));
+				teachers.forEach(teacher -> teacher.setOccupiedLessons(
+						new Timetable(daysPerWeek, maxHoursPerDay, Integer.MAX_VALUE)));
 				rooms.forEach((name, room) -> room.getTimetable().setTimetable(new HashMap<>()));
 				timetables = new HashMap<>();
 			}

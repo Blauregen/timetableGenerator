@@ -1,7 +1,7 @@
-package at.htl.timetableGenerator.constrains.constraints;
+package at.htl.timetableGenerator.constraints.constraints;
 
-import at.htl.timetableGenerator.Model.*;
-import at.htl.timetableGenerator.constrains.Constraint;
+import at.htl.timetableGenerator.constraints.Constraint;
+import at.htl.timetableGenerator.model.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -12,7 +12,7 @@ import java.util.Set;
  * of the same subject are scheduled in a row.
  * It implements the Constraint interface.
  */
-public class NoMoreThanThreeInRowConstraint implements Constraint {
+public class NoMoreThanTwoInRowConstraint implements Constraint {
 
 	/**
 	 * Checks if the given lesson violates the constraint in the given timetable.
@@ -37,8 +37,6 @@ public class NoMoreThanThreeInRowConstraint implements Constraint {
 		}
 
 		return timetable.getLesson(timeSlot.prevHour()).getSubject() != subject ||
-		       timetable.getLesson(timeSlot.prevHour().prevHour()).getSubject() != subject ||
-		       timetable.getLesson(timeSlot.prevHour().prevHour().prevHour()).getSubject() !=
-		       subject;
+		       timetable.getLesson(timeSlot.prevHour().prevHour()).getSubject() != subject;
 	}
 }

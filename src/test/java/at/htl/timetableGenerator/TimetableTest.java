@@ -1,14 +1,14 @@
 package at.htl.timetableGenerator;
 
-import at.htl.timetableGenerator.Model.Lesson;
-import at.htl.timetableGenerator.Model.Subject;
-import at.htl.timetableGenerator.Model.TimeSlot;
-import at.htl.timetableGenerator.Model.Timetable;
-import at.htl.timetableGenerator.constrains.Constraint;
-import at.htl.timetableGenerator.constrains.constraints.DoubleHourConstraint;
-import at.htl.timetableGenerator.constrains.constraints.NoMoreThanThreeInRowConstraint;
-import at.htl.timetableGenerator.constrains.constraints.RoomConstraint;
-import at.htl.timetableGenerator.constrains.constraints.TeacherConstraint;
+import at.htl.timetableGenerator.constraints.Constraint;
+import at.htl.timetableGenerator.constraints.constraints.DoubleHourConstraint;
+import at.htl.timetableGenerator.constraints.constraints.NoMoreThanTwoInRowConstraint;
+import at.htl.timetableGenerator.constraints.constraints.RoomConstraint;
+import at.htl.timetableGenerator.constraints.constraints.TeacherConstraint;
+import at.htl.timetableGenerator.model.Lesson;
+import at.htl.timetableGenerator.model.Subject;
+import at.htl.timetableGenerator.model.TimeSlot;
+import at.htl.timetableGenerator.model.Timetable;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ class TimetableTest {
 
 	@BeforeEach
 	void setUp() {
-		timetable = new Timetable(5, 10);
+		timetable = new Timetable(5, 10, 100);
 	}
 
 	@AfterEach
@@ -35,7 +35,7 @@ class TimetableTest {
 	@Test
 	void testConstructor() {
 		HashSet<Constraint> constraints = new HashSet<>();
-		constraints.add(new NoMoreThanThreeInRowConstraint());
+		constraints.add(new NoMoreThanTwoInRowConstraint());
 		DoubleHourConstraint doubleHourConstraint = new DoubleHourConstraint();
 		TeacherConstraint teacherConstraint = new TeacherConstraint();
 		RoomConstraint roomConstraint = new RoomConstraint();
@@ -43,7 +43,7 @@ class TimetableTest {
 		constraints.add(teacherConstraint);
 		constraints.add(roomConstraint);
 
-		timetable = new Timetable(5, 10, constraints);
+		timetable = new Timetable(5, 10, constraints, 100);
 
 		constraints.remove(doubleHourConstraint);
 		constraints.remove(teacherConstraint);
@@ -69,7 +69,7 @@ class TimetableTest {
 
 	@Test
 	void setTimetable() {
-		Subject am = new Subject("Mathe", "AM");
+		Subject am = new Subject("Mathe", "AM", 3);
 		HashMap<TimeSlot, Lesson> lessons = new HashMap<>();
 		lessons.put(new TimeSlot(DayOfWeek.MONDAY, 0),
 		            new Lesson(am, new TimeSlot(DayOfWeek.MONDAY, 0)));
@@ -89,7 +89,7 @@ class TimetableTest {
 
 	@Test
 	void setAndGetLesson() {
-		Subject am = new Subject("Mathe", "AM");
+		Subject am = new Subject("Mathe", "AM", 3);
 		TimeSlot slot = new TimeSlot(DayOfWeek.MONDAY, 0);
 		timetable.setLesson(new Lesson(am, slot));
 		assertEquals(timetable.getLesson(slot).getSubject(), am);
@@ -97,7 +97,7 @@ class TimetableTest {
 
 	@Test
 	void setAndGetLessonInvalidTime() {
-		Subject am = new Subject("Mathe", "AM");
+		Subject am = new Subject("Mathe", "AM", 3);
 		TimeSlot slot = new TimeSlot(DayOfWeek.SUNDAY, 0);
 		TimeSlot secondSlot = new TimeSlot(DayOfWeek.MONDAY, 11);
 		TimeSlot thirdSlot = new TimeSlot(DayOfWeek.MONDAY, -1);
@@ -154,8 +154,8 @@ class TimetableTest {
 
 	@Test
 	void contains() {
-		Subject am = new Subject("Mathe", "AM");
-		Subject d = new Subject("german", "D");
+		Subject am = new Subject("Mathe", "AM", 3);
+		Subject d = new Subject("german", "D", 3);
 		TimeSlot slot = new TimeSlot(DayOfWeek.MONDAY, 0);
 		timetable.setLesson(new Lesson(am, slot));
 		assertTrue(timetable.contains(am));
@@ -164,11 +164,11 @@ class TimetableTest {
 
 	@Test
 	void testAvailableDoubleHourSpot() {
-		Subject math = new Subject("Math", "AM");
+		Subject math = new Subject("Math", "AM", 3);
 
 		HashSet<Constraint> constraints = new HashSet<>();
-		constraints.add(new NoMoreThanThreeInRowConstraint());
-		timetable = new Timetable(5, 10, constraints);
+		constraints.add(new NoMoreThanTwoInRowConstraint());
+		timetable = new Timetable(5, 10, constraints, 1000);
 
 		assertFalse(timetable.hasAvailableDoubleHourSpot(math));
 		timetable.setLesson(new Lesson(math, new TimeSlot(DayOfWeek.MONDAY, 0)));
@@ -180,20 +180,20 @@ class TimetableTest {
 
 	@Test
 	void hasAvailableDoubleHourSpotReturnsTrueWhenDoubleHourSpotIsAvailable() {
-		Subject subject = new Subject("Math", "M");
+		Subject subject = new Subject("Math", "M", 3);
 		timetable.setLesson(new Lesson(subject, new TimeSlot(DayOfWeek.MONDAY, 0)));
 		assertTrue(timetable.hasAvailableDoubleHourSpot(subject));
 	}
 
 	@Test
 	void hasAvailableDoubleHourSpotReturnsFalseWhenDoubleHourSpotIsNotAvailable() {
-		Subject subject = new Subject("Math", "M");
+		Subject subject = new Subject("Math", "M", 3);
 		assertFalse(timetable.hasAvailableDoubleHourSpot(subject));
 	}
 
 	@Test
 	void hasAvailableDoubleHourSpotReturnsFalseWhenConstraintsAreNotMet() {
-		Subject subject = new Subject("Math", "M");
+		Subject subject = new Subject("Math", "M", 3);
 		timetable.setLesson(new Lesson(subject, new TimeSlot(DayOfWeek.MONDAY, 0)));
 		timetable.getConstraints().add((timetable, lesson, lessons, rooms) -> false);
 		assertFalse(timetable.hasAvailableDoubleHourSpot(subject));
@@ -202,9 +202,9 @@ class TimetableTest {
 	@Test
 	void testCheckConstraints() {
 		HashSet<Constraint> constraints = new HashSet<>();
-		constraints.add(new NoMoreThanThreeInRowConstraint());
-		timetable = new Timetable(5, 10, constraints);
-		Subject math = new Subject("Math", "AM");
+		constraints.add(new NoMoreThanTwoInRowConstraint());
+		timetable = new Timetable(5, 10, constraints, 1000);
+		Subject math = new Subject("Math", "AM", 3);
 		assertTrue(timetable.checkConstraints(new TimeSlot(DayOfWeek.MONDAY, 0), math));
 
 		timetable.setLesson(new Lesson(math, new TimeSlot(DayOfWeek.MONDAY, 0)));
@@ -215,7 +215,7 @@ class TimetableTest {
 
 	@Test
 	void testToString() {
-		Subject am = new Subject("Mathe", "AM");
+		Subject am = new Subject("Mathe", "AM", 3);
 		TimeSlot slot = new TimeSlot(DayOfWeek.MONDAY, 0);
 		timetable.setLesson(new Lesson(am, slot));
 		assertTrue(timetable.toString().contains("AM"));

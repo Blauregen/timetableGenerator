@@ -1,7 +1,7 @@
 package at.htl.timetableGenerator.factory;
 
-import at.htl.timetableGenerator.Model.Subject;
 import at.htl.timetableGenerator.exceptions.ImportException;
+import at.htl.timetableGenerator.model.Subject;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -16,7 +16,7 @@ import java.util.stream.Stream;
  * It includes methods for creating a Subject from a string and from a file.
  */
 public class SubjectFactory {
-	private static final int VALID_SUBJECT_ARRAY_LENGTH = 2;
+	private static final int VALID_SUBJECT_ARRAY_LENGTH = 3;
 
 	public SubjectFactory() {
 	}
@@ -45,8 +45,9 @@ public class SubjectFactory {
 
 		String name = field[0].strip(); // Name of subject is expected to be here
 		String shortName = field[1].strip(); // Shortened name of subject is expected to be here
+		int score = Integer.parseInt(field[2].strip());
 
-		return new Subject(name, shortName);
+		return new Subject(name, shortName, score);
 	}
 
 	/**

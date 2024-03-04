@@ -1,10 +1,10 @@
 package at.htl.timetableGenerator;
 
-import at.htl.timetableGenerator.Model.*;
-import at.htl.timetableGenerator.constrains.Constraint;
-import at.htl.timetableGenerator.constrains.ConstraintParser;
-import at.htl.timetableGenerator.constrains.ConstraintUtils;
+import at.htl.timetableGenerator.constraints.Constraint;
+import at.htl.timetableGenerator.constraints.ConstraintParser;
+import at.htl.timetableGenerator.constraints.ConstraintUtils;
 import at.htl.timetableGenerator.factory.*;
+import at.htl.timetableGenerator.model.*;
 import at.htl.timetableGenerator.output.ExportData;
 import at.htl.timetableGenerator.output.ExportFormat;
 import org.apache.commons.cli.*;

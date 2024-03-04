@@ -1,7 +1,7 @@
-package at.htl.timetableGenerator.Model;
+package at.htl.timetableGenerator.model;
 
-import at.htl.timetableGenerator.constrains.Constraint;
-import at.htl.timetableGenerator.constrains.constraints.NonePlacedBeforeConstraint;
+import at.htl.timetableGenerator.constraints.Constraint;
+import at.htl.timetableGenerator.constraints.constraints.NonePlacedBeforeConstraint;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.DayOfWeek;
@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static at.htl.timetableGenerator.App.random;
-import static at.htl.timetableGenerator.Model.Timetable.FREISTUNDE;
+import static at.htl.timetableGenerator.model.Timetable.FREISTUNDE;
 
 /**
  * This class represents a school class in a school.
@@ -86,8 +86,10 @@ public class SchoolClass {
 	 */
 	public Timetable generateTimetable(int daysPerWeek, int maxHoursPerDay, Set<Teacher> teachers,
 	                                   Map<String, Room> rooms) {
-		this.timetable = new Timetable(daysPerWeek, maxHoursPerDay, constraints);
+		int sum = weeklySubjects.stream().mapToInt(
+				weeklySubject -> weeklySubject.getSubject().score() * weeklySubject.getNoPerWeek()).sum();
 
+		this.timetable = new Timetable(daysPerWeek, maxHoursPerDay, constraints, sum);
 		LinkedList<WeeklySubject> weeklySubjectsList = new LinkedList<>(weeklySubjects);
 
 		while (!weeklySubjectsList.isEmpty()) {

@@ -1,9 +1,9 @@
-package at.htl.timetableGenerator.Model;
+package at.htl.timetableGenerator.model;
 
-import at.htl.timetableGenerator.constrains.Constraint;
-import at.htl.timetableGenerator.constrains.constraints.DoubleHourConstraint;
-import at.htl.timetableGenerator.constrains.constraints.RoomConstraint;
-import at.htl.timetableGenerator.constrains.constraints.TeacherConstraint;
+import at.htl.timetableGenerator.constraints.Constraint;
+import at.htl.timetableGenerator.constraints.constraints.DoubleHourConstraint;
+import at.htl.timetableGenerator.constraints.constraints.RoomConstraint;
+import at.htl.timetableGenerator.constraints.constraints.TeacherConstraint;
 import at.htl.timetableGenerator.output.TimetablePrinter;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,16 +23,16 @@ import java.util.stream.Collectors;
  * is available for a subject, and get a lesson at a given time slot.
  */
 public class Timetable {
-	public static final Subject FREISTUNDE = new Subject("Freistunde", "");
+	public static final Subject FREISTUNDE = new Subject("Freistunde", "", 0);
 	public static final int MIN_NUMBER_OF_HOURS_PER_DAY = 1;
 	public static final int MIN_NUMBER_OF_DAYS_PER_WEEK = 1;
+	// The set of constraints for this timetable
+	private final int maxTotalScore;
 	private HashMap<TimeSlot, Lesson> timetable;  // The timetable
 	private int maxNoOfHoursPerDay;
 	// The maximum number of hours per day
 	private int noOfDayPerWeek;  // The number of days per week
 	private @NotNull Set<Constraint> constraints = new HashSet<>();
-	// The set of constraints for this timetable
-
 	/**
 	 * Constructs a new Timetable with the specified number of days per week, maximum number of
 	 * hours per day, and
@@ -42,19 +42,18 @@ public class Timetable {
 	 * @param maxNoOfHoursPerDay the maximum number of hours per day
 	 * @param constraints        the set of constraints for this timetable
 	 */
-	public Timetable(int noOfDayPerWeek, int maxNoOfHoursPerDay,
-	                 @NotNull Set<Constraint> constraints) {
+	public Timetable(int noOfDayPerWeek, int maxNoOfHoursPerDay, @NotNull Set<Constraint> constraints,
+	                 int maxTotalScore) {
 		setNoOfDayPerWeek(noOfDayPerWeek);
 		setMaxNoOfHoursPerDay(maxNoOfHoursPerDay);
-		this.constraints =
-				constraints.stream().filter((o) -> !(o instanceof DoubleHourConstraint ||
-				                                     o instanceof TeacherConstraint ||
-				                                     o instanceof RoomConstraint))
-				           .collect(Collectors.toSet());
+		this.constraints = constraints.stream().filter((o) -> !(o instanceof DoubleHourConstraint ||
+		                                                        o instanceof TeacherConstraint ||
+		                                                        o instanceof RoomConstraint))
+		                              .collect(Collectors.toSet());
+		this.maxTotalScore = maxTotalScore;
 
 		setTimetable(FREISTUNDE);
 	}
-
 	/**
 	 * Constructs a new Timetable with the specified number of days per week and maximum number of
 	 * hours per day.
@@ -62,8 +61,21 @@ public class Timetable {
 	 * @param noOfDayPerWeek     the number of days per week
 	 * @param maxNoOfHoursPerDay the maximum number of hours per day
 	 */
-	public Timetable(int noOfDayPerWeek, int maxNoOfHoursPerDay) {
-		this(noOfDayPerWeek, maxNoOfHoursPerDay, new HashSet<>());
+	public Timetable(int noOfDayPerWeek, int maxNoOfHoursPerDay, int maxTotalScore) {
+		this(noOfDayPerWeek, maxNoOfHoursPerDay, new HashSet<>(), maxTotalScore);
+	}
+
+	public int getMaxTotalScore() {
+		return maxTotalScore;
+	}
+
+	public void setConstraints(@NotNull Set<Constraint> constraints) {
+		this.constraints = constraints;
+	}
+
+	public int getScoreForDay(DayOfWeek day) {
+		return timetable.entrySet().stream().filter(entry -> entry.getKey().getDay() == day)
+		                .mapToInt(entry -> entry.getValue().getSubject().score()).sum();
 	}
 
 	public @NotNull Set<Constraint> getConstraints() {
@@ -141,8 +153,8 @@ public class Timetable {
 	public void setMaxNoOfHoursPerDay(int maxNoOfHoursPerDay) {
 		if (maxNoOfHoursPerDay < MIN_NUMBER_OF_HOURS_PER_DAY) {
 			throw new IllegalArgumentException(
-					"Max number of hours per day can't be smaller than " +
-					MIN_NUMBER_OF_HOURS_PER_DAY + "!");
+					"Max number of hours per day can't be smaller than " + MIN_NUMBER_OF_HOURS_PER_DAY +
+					"!");
 		}
 
 		this.maxNoOfHoursPerDay = maxNoOfHoursPerDay;
@@ -200,8 +212,7 @@ public class Timetable {
 	 */
 	public boolean checkConstraints(TimeSlot timeSlot, Subject subject) {
 		for (Constraint constraint : constraints) {
-			if (!constraint.check(this, new Lesson(subject, timeSlot), new HashSet<>(),
-			                      new HashMap<>())) {
+			if (!constraint.check(this, new Lesson(subject, timeSlot), new HashSet<>(), new HashMap<>())) {
 				return false;
 			}
 		}
@@ -265,8 +276,8 @@ public class Timetable {
 		Lesson[][] lessonsArray = new Lesson[noOfDayPerWeek][maxNoOfHoursPerDay];
 		Collection<Lesson> lessons = timetable.values();
 
-		lessons.forEach(lesson -> lessonsArray[lesson.getTimeSlot().getDay()
-		                                             .ordinal()][lesson.getTimeSlot().getHour()] =
+		lessons.forEach(lesson -> lessonsArray[lesson.getTimeSlot().getDay().ordinal()][lesson.getTimeSlot()
+		                                                                                      .getHour()] =
 				lesson);
 
 		return lessonsArray;
@@ -280,7 +291,7 @@ public class Timetable {
 	 * @return the number of times the subject appears in the timetable
 	 */
 	public int getNoOfSubject(@NotNull Subject subject) {
-		return (int) timetable.values().stream()
-		                      .filter(lesson -> lesson.getSubject().equals(subject)).count();
+		return (int) timetable.values().stream().filter(lesson -> lesson.getSubject().equals(subject))
+		                      .count();
 	}
 }

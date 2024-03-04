@@ -1,9 +1,9 @@
 package at.htl.timetableGenerator.factory;
 
-import at.htl.timetableGenerator.Model.Subject;
-import at.htl.timetableGenerator.Model.Teacher;
-import at.htl.timetableGenerator.Model.WeeklySubject;
 import at.htl.timetableGenerator.exceptions.ImportException;
+import at.htl.timetableGenerator.model.Subject;
+import at.htl.timetableGenerator.model.Teacher;
+import at.htl.timetableGenerator.model.WeeklySubject;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -21,7 +21,7 @@ class SchoolClassesFactoryTest {
 		// as tested
 
 		HashSet<Subject> subjects = new HashSet<>();
-		subjects.add(new Subject("Deutsch", "D"));
+		subjects.add(new Subject("Deutsch", "D", 3));
 
 		Teacher hildegard = new Teacher("Hildegard von Bingen", subjects, 5, 5);
 		HashSet<Teacher> teachers = new HashSet<>();

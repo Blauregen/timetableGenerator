@@ -1,4 +1,4 @@
-package at.htl.timetableGenerator.Model;
+package at.htl.timetableGenerator.model;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -11,7 +11,7 @@ import java.util.Objects;
  */
 public class Room {
 	private final String name;
-	private final Timetable timetable = new Timetable(7, 24);
+	private final Timetable timetable = new Timetable(7, 24, Integer.MAX_VALUE);
 
 	/**
 	 * Constructs a new Room with the specified name.

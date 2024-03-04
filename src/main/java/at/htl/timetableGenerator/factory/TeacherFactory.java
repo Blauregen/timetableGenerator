@@ -1,8 +1,8 @@
 package at.htl.timetableGenerator.factory;
 
-import at.htl.timetableGenerator.Model.Subject;
-import at.htl.timetableGenerator.Model.Teacher;
 import at.htl.timetableGenerator.exceptions.ImportException;
+import at.htl.timetableGenerator.model.Subject;
+import at.htl.timetableGenerator.model.Teacher;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;

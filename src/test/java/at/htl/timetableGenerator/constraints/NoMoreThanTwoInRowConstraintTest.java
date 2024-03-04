@@ -1,7 +1,7 @@
-package at.htl.timetableGenerator.constrains;
+package at.htl.timetableGenerator.constraints;
 
-import at.htl.timetableGenerator.Model.*;
-import at.htl.timetableGenerator.constrains.constraints.NoMoreThanThreeInRowConstraint;
+import at.htl.timetableGenerator.constraints.constraints.NoMoreThanTwoInRowConstraint;
+import at.htl.timetableGenerator.model.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
@@ -11,14 +11,14 @@ import java.util.HashSet;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class NoMoreThanThreeInRowConstraintTest {
+class NoMoreThanTwoInRowConstraintTest {
 
 	@Test
 	void check() {
-		NoMoreThanThreeInRowConstraint constraint = new NoMoreThanThreeInRowConstraint();
-		Timetable timetable = new Timetable(1, 4);
-		Subject math = new Subject("Maths", "AM");
-		Subject german = new Subject("German", "D");
+		NoMoreThanTwoInRowConstraint constraint = new NoMoreThanTwoInRowConstraint();
+		Timetable timetable = new Timetable(1, 4, 20);
+		Subject math = new Subject("Maths", "AM", 3);
+		Subject german = new Subject("German", "D", 2);
 		Lesson maths = new Lesson(math, new TimeSlot(DayOfWeek.MONDAY, 0));
 		Lesson secondMaths = new Lesson(math, new TimeSlot(DayOfWeek.MONDAY, 1));
 		Lesson thirdMaths = new Lesson(math, new TimeSlot(DayOfWeek.MONDAY, 2));

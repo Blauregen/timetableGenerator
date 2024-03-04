@@ -1,9 +1,9 @@
 package at.htl.timetableGenerator;
 
-import at.htl.timetableGenerator.Model.Lesson;
-import at.htl.timetableGenerator.Model.Room;
-import at.htl.timetableGenerator.Model.Subject;
-import at.htl.timetableGenerator.Model.TimeSlot;
+import at.htl.timetableGenerator.model.Lesson;
+import at.htl.timetableGenerator.model.Room;
+import at.htl.timetableGenerator.model.Subject;
+import at.htl.timetableGenerator.model.TimeSlot;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
@@ -18,7 +18,7 @@ class RoomTest {
 		String roomName = "Hildegards Lazarett";
 		Room lazarett = new Room(roomName);
 		Lesson lesson =
-				new Lesson(new Subject("Medizine", "MED"), new TimeSlot(DayOfWeek.MONDAY, 0));
+				new Lesson(new Subject("Medizine", "MED", 1), new TimeSlot(DayOfWeek.MONDAY, 0));
 
 		assertEquals(roomName, lazarett.getName());
 

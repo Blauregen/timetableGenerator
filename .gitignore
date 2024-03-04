@@ -5,6 +5,7 @@ output/**/*
 output/*
 logs
 logs/*
+frontend/node_modules
 
 .idea/**/csv-editor.xml
 

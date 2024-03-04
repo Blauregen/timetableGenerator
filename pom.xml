@@ -221,6 +221,8 @@
 					<excludes>
 						<exclude>at/htl/timetableGenerator/App.class</exclude>
 						<exclude>at/htl/timetableGenerator/output/*</exclude>
+						<exclude>at/htl/timetableGenerator/backend/*</exclude>
+<!--					ToDo: Add backend back to code coverage when implemented-->
 					</excludes>
 				</configuration>
 				<executions>

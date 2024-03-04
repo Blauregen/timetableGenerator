@@ -1,7 +1,7 @@
 package at.htl.timetableGenerator.factory;
 
-import at.htl.timetableGenerator.constraints.TimeKeyword;
-import at.htl.timetableGenerator.constraints.constraints.CustomConstraint;
+import at.htl.timetableGenerator.constraints.DurationKeyword;
+import at.htl.timetableGenerator.constraints.constraints.CustomMultipleConstraint;
 import at.htl.timetableGenerator.exceptions.ImportException;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,8 +16,8 @@ import java.util.stream.Stream;
  * This class provides factory methods for creating Subject objects.
  * It includes methods for creating a Subject from a string and from a file.
  */
-public class ConstraintFactory {
-	public ConstraintFactory() {
+public class MultipleConstraintFactory {
+	public MultipleConstraintFactory() {
 	}
 
 	/**
@@ -30,22 +30,22 @@ public class ConstraintFactory {
 	 *
 	 * @throws ImportException if the line is not valid.
 	 */
-	public static @NotNull CustomConstraint createFromString(@NotNull String line) {
+	public static @NotNull CustomMultipleConstraint createFromString(@NotNull String line) {
 		String[] field = line.split("\"");
 
 		if (field.length != 3) {
-			throw new IllegalArgumentException("Most likely unclosed String literals");
+			throw new IllegalArgumentException("Most likely unclosed String literals in constraint config");
 		}
 
 		String subject = field[1];
 
 		String[] limits = field[2].substring(1).split(" ");
-		if (limits.length < 2 || limits.length > 3) {
+		if (limits.length != 2) {
 			throw new IllegalArgumentException("Syntax error in time specification");
 		}
 
-		TimeKeyword keyword = TimeKeyword.valueOf(limits[0].toUpperCase());
-		int hour = Integer.parseInt(limits[1]);
+		DurationKeyword keyword = DurationKeyword.valueOf(limits[0].toUpperCase());
+		int duration = Integer.parseInt(limits[1]);
 
 		String[] requires = field[0].substring(0, field[0].length() - 1).split(" ");
 		if (requires.length != 2) {
@@ -65,7 +65,7 @@ public class ConstraintFactory {
 			throw new IllegalArgumentException("Missing \"no\" after requirement specifier");
 		}
 
-		return new CustomConstraint(subject, hour, keyword, isRequired);
+		return new CustomMultipleConstraint(subject, duration, keyword, isRequired);
 	}
 
 	/**
@@ -78,9 +78,9 @@ public class ConstraintFactory {
 	 *
 	 * @throws ImportException if there is an error reading the file.
 	 */
-	public static @NotNull Set<CustomConstraint> createFromFile(@NotNull String path) {
+	public static @NotNull Set<CustomMultipleConstraint> createFromFile(@NotNull String path) {
 		try (Stream<String> lines = Files.lines(Paths.get(path))) {
-			return lines.map(ConstraintFactory::createFromString).collect(Collectors.toSet());
+			return lines.map(MultipleConstraintFactory::createFromString).collect(Collectors.toSet());
 		} catch (IOException e) {
 			throw new ImportException("Error reading File!", e);
 		}

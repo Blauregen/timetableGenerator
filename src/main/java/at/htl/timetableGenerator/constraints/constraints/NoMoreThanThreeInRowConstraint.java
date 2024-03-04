@@ -12,7 +12,7 @@ import java.util.Set;
  * of the same subject are scheduled in a row.
  * It implements the Constraint interface.
  */
-public class NoMoreThanTwoInRowConstraint implements Constraint {
+public class NoMoreThanThreeInRowConstraint implements Constraint {
 
 	/**
 	 * Checks if the given lesson violates the constraint in the given timetable.
@@ -27,8 +27,8 @@ public class NoMoreThanTwoInRowConstraint implements Constraint {
 	 * @return true if the constraint is satisfied, false otherwise.
 	 */
 	@Override
-	public boolean check(@NotNull Timetable timetable, @NotNull Lesson lesson,
-	                     Set<Teacher> teachers, Map<String, Room> rooms) {
+	public boolean check(@NotNull Timetable timetable, @NotNull Lesson lesson, Set<Teacher> teachers,
+	                     Map<String, Room> rooms) {
 		TimeSlot timeSlot = lesson.getTimeSlot();
 		Subject subject = lesson.getSubject();
 
@@ -37,6 +37,7 @@ public class NoMoreThanTwoInRowConstraint implements Constraint {
 		}
 
 		return timetable.getLesson(timeSlot.prevHour()).getSubject() != subject ||
-		       timetable.getLesson(timeSlot.prevHour().prevHour()).getSubject() != subject;
+		       timetable.getLesson(timeSlot.prevHour().prevHour()).getSubject() != subject ||
+		       timetable.getLesson(timeSlot.prevHour().prevHour().prevHour()).getSubject() != subject;
 	}
 }

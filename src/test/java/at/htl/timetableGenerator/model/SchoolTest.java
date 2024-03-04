@@ -1,7 +1,7 @@
 package at.htl.timetableGenerator.model;
 
 import at.htl.timetableGenerator.constraints.Constraint;
-import at.htl.timetableGenerator.constraints.constraints.NoMoreThanTwoInRowConstraint;
+import at.htl.timetableGenerator.constraints.constraints.NoMoreThanThreeInRowConstraint;
 import at.htl.timetableGenerator.output.ExportData;
 import at.htl.timetableGenerator.output.ExportFormat;
 import org.jetbrains.annotations.NotNull;
@@ -77,7 +77,7 @@ class SchoolTest {
 	@Test
 	void testConstraints() {
 		HashSet<Constraint> constraints = new HashSet<>();
-		Constraint constraint = new NoMoreThanTwoInRowConstraint();
+		Constraint constraint = new NoMoreThanThreeInRowConstraint();
 		constraints.add(constraint);
 
 		school.setConstraints(constraints);

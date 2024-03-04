@@ -45,7 +45,13 @@ public class SubjectFactory {
 
 		String name = field[0].strip(); // Name of subject is expected to be here
 		String shortName = field[1].strip(); // Shortened name of subject is expected to be here
-		int score = Integer.parseInt(field[2].strip());
+		int score;
+
+		try {
+			score = Integer.parseInt(field[2].strip());
+		} catch (NumberFormatException e) {
+			throw new ImportException("Invalid Score");
+		}
 
 		return new Subject(name, shortName, score);
 	}

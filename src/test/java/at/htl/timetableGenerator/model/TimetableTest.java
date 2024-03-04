@@ -1,14 +1,10 @@
-package at.htl.timetableGenerator;
+package at.htl.timetableGenerator.model;
 
 import at.htl.timetableGenerator.constraints.Constraint;
 import at.htl.timetableGenerator.constraints.constraints.DoubleHourConstraint;
 import at.htl.timetableGenerator.constraints.constraints.NoMoreThanTwoInRowConstraint;
 import at.htl.timetableGenerator.constraints.constraints.RoomConstraint;
 import at.htl.timetableGenerator.constraints.constraints.TeacherConstraint;
-import at.htl.timetableGenerator.model.Lesson;
-import at.htl.timetableGenerator.model.Subject;
-import at.htl.timetableGenerator.model.TimeSlot;
-import at.htl.timetableGenerator.model.Timetable;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

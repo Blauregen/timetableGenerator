@@ -1,8 +1,7 @@
-package at.htl.timetableGenerator;
+package at.htl.timetableGenerator.model;
 
 import at.htl.timetableGenerator.constraints.Constraint;
 import at.htl.timetableGenerator.constraints.constraints.NoMoreThanTwoInRowConstraint;
-import at.htl.timetableGenerator.model.*;
 import at.htl.timetableGenerator.output.ExportData;
 import at.htl.timetableGenerator.output.ExportFormat;
 import org.jetbrains.annotations.NotNull;

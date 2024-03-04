@@ -1,6 +1,5 @@
-package at.htl.timetableGenerator.constraints;
+package at.htl.timetableGenerator.constraints.constraints;
 
-import at.htl.timetableGenerator.constraints.constraints.RoomConstraint;
 import at.htl.timetableGenerator.model.*;
 import org.junit.jupiter.api.Test;
 

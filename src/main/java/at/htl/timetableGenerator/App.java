@@ -38,6 +38,7 @@ public class App {
 		try {
 			CommandLine cmd = parser.parse(options, args);
 			String configFile = cmd.getOptionValue("config");
+			System.out.println(configFile);
 
 			Ini ini = new Ini(new File(configFile));
 			int noOfDaysPerWeek = Integer.parseInt(ini.get("general", "noOfDaysPerWeek").strip());
@@ -144,6 +145,7 @@ public class App {
 
 	@NotNull
 	private static String getRelativePath(@NotNull String configFile, String classesPath) {
+		configFile = "./" + configFile;
 		return Paths.get(configFile).getParent() + FileSystems.getDefault().getSeparator() + classesPath;
 	}
 }

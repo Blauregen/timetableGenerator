@@ -40,13 +40,17 @@ class SchoolTest {
 		Subject subjectE = new Subject("Englisch", "E", 2);
 		Subject subjectAM = new Subject("Angewandte Mathematik", "AM", 3);
 		WeeklySubject weeklySubject1 = new WeeklySubject(subjectE, 2);
-		WeeklySubject weeklySubject2 = new WeeklySubject(subjectAM, 2);
+		WeeklySubject weeklySubject2 = new WeeklySubject(subjectAM, 1);
 		HashSet<WeeklySubject> weeklySubjects = new HashSet<>();
+		HashSet<WeeklySubject> weeklySubjects2 = new HashSet<>();
 		weeklySubjects.add(weeklySubject1);
 		weeklySubjects.add(weeklySubject2);
+		weeklySubjects2.add(weeklySubject2);
 		SchoolClass schoolClass = new SchoolClass("5AHIF", weeklySubjects);
+		SchoolClass schoolClass2 = new SchoolClass("5AHIF", weeklySubjects2);
 		HashSet<SchoolClass> schoolClasses = new HashSet<>();
 		schoolClasses.add(schoolClass);
+		schoolClasses.add(schoolClass2);
 
 		HashSet<Subject> wellischSubjects = new HashSet<>();
 		wellischSubjects.add(subjectE);
@@ -200,7 +204,12 @@ class SchoolTest {
 
 	@Test
 	void testGenerateTimetables() {
-		school.generateTimetables(5, 10);
+		school.generateTimetables(5, 10, 1);
+	}
+
+	@Test
+	void testGenerateTimetablesInvalid() {
+		assertThrows(IllegalArgumentException.class, () -> school.generateTimetables(1, 1, 1));
 	}
 
 	@Test
@@ -218,7 +227,7 @@ class SchoolTest {
 		exportFormats.add(ExportFormat.CSV_MULTIPLE);
 		school.addSchoolClass(bhitm3);
 		school.addRoom(new Room("101"));
-		school.generateTimetables(5, 10);
+		school.generateTimetables(5, 10, 1_000_000);
 		school.exportAllTimetables(exportData, exportFormats, "./testOutput/");
 
 		exportData.remove(ExportData.CLASSES);

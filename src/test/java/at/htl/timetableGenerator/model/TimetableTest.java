@@ -67,8 +67,7 @@ class TimetableTest {
 	void setTimetable() {
 		Subject am = new Subject("Mathe", "AM", 3);
 		HashMap<TimeSlot, Lesson> lessons = new HashMap<>();
-		lessons.put(new TimeSlot(DayOfWeek.MONDAY, 0),
-		            new Lesson(am, new TimeSlot(DayOfWeek.MONDAY, 0)));
+		lessons.put(new TimeSlot(DayOfWeek.MONDAY, 0), new Lesson(am, new TimeSlot(DayOfWeek.MONDAY, 0)));
 		timetable.setTimetable(lessons);
 		assertEquals(lessons, timetable.getTimetable());
 
@@ -99,14 +98,13 @@ class TimetableTest {
 		TimeSlot thirdSlot = new TimeSlot(DayOfWeek.MONDAY, -1);
 		TimeSlot fourthSlot = new TimeSlot(DayOfWeek.MONDAY, 11);
 
-		assertThrows(IllegalArgumentException.class,
-		             () -> timetable.setLesson(new Lesson(am, slot)), "Day is " + "invalid");
-		assertThrows(IllegalArgumentException.class,
-		             () -> timetable.setLesson(new Lesson(am, secondSlot)), "Time is invalid");
-		assertThrows(IllegalArgumentException.class,
-		             () -> timetable.setLesson(new Lesson(am, thirdSlot)), "Time is invalid");
-		assertEquals(new Lesson(Timetable.FREISTUNDE, fourthSlot),
-		             timetable.getLesson(fourthSlot));
+		assertThrows(IllegalArgumentException.class, () -> timetable.setLesson(new Lesson(am, slot)),
+		             "Day is " + "invalid");
+		assertThrows(IllegalArgumentException.class, () -> timetable.setLesson(new Lesson(am, secondSlot)),
+		             "Time is invalid");
+		assertThrows(IllegalArgumentException.class, () -> timetable.setLesson(new Lesson(am, thirdSlot)),
+		             "Time is invalid");
+		assertEquals(new Lesson(Timetable.FREISTUNDE, fourthSlot), timetable.getLesson(fourthSlot));
 	}
 
 	@Test
@@ -215,5 +213,17 @@ class TimetableTest {
 		TimeSlot slot = new TimeSlot(DayOfWeek.MONDAY, 0);
 		timetable.setLesson(new Lesson(am, slot));
 		assertTrue(timetable.toString().contains("AM"));
+	}
+
+	@Test
+	void testSetConstraints() {
+		HashSet<Constraint> constraints = new HashSet<>();
+		timetable.setConstraints(constraints);
+		assertEquals(constraints, timetable.getConstraints());
+	}
+
+	@Test
+	void testGetScoreForDay() {
+		assertEquals(0, timetable.getScoreForDay(DayOfWeek.MONDAY));
 	}
 }

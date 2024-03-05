@@ -131,7 +131,7 @@ public class App {
 			School school = new School(schoolName, schoolClasses, teachers);
 			school.setConstraints(constraints);
 			school.setRooms(rooms);
-			school.generateTimetables(noOfDaysPerWeek, noOfHoursPerDay);
+			school.generateTimetables(noOfDaysPerWeek, noOfHoursPerDay, 1_000_000);
 			school.exportAllTimetables(exportData, exportFormats, outputPath);
 			school.getSchoolClasses()
 			      .forEach((schoolClass -> System.out.println(schoolClass.getTimetable())));

@@ -165,14 +165,15 @@ public class School {
 	 *
 	 * @return a map of school class names to their respective timetables
 	 */
-	public @NotNull HashMap<String, Timetable> generateTimetables(int daysPerWeek, int maxHoursPerDay) {
+	public @NotNull HashMap<String, Timetable> generateTimetables(int daysPerWeek, int maxHoursPerDay,
+	                                                              int attempts) {
 		HashMap<String, Timetable> timetables = new HashMap<>();
 
 		int counter = 0;
-		while (timetables.isEmpty() && counter < 1_000_000) {
+		while (timetables.isEmpty() && counter < attempts) {
 			try {
 				counter++;
-				System.out.println("Attempt " + (counter + 1));
+				System.out.println("Attempt " + (counter));
 				for (Teacher teacher : teachers) {
 					teacher.setOccupiedLessons(new Timetable(daysPerWeek, maxHoursPerDay,
 					                                         Integer.MAX_VALUE));
@@ -190,6 +191,10 @@ public class School {
 				rooms.forEach((name, room) -> room.getTimetable().setTimetable(new HashMap<>()));
 				timetables = new HashMap<>();
 			}
+		}
+
+		if (timetables.isEmpty()) {
+			throw new IllegalArgumentException("Not Enough Time");
 		}
 
 		return timetables;

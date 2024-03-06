@@ -22,6 +22,10 @@ public class BalanceConstraint implements Constraint {
 		int maxScorePerDay =
 				(int) Math.ceil((double) timetable.getMaxTotalScore() / timetable.getNoOfDayPerWeek());
 
+		if (lesson.getSubject().score() > maxScorePerDay) {
+			return true;
+		}
+
 		timetable.setLesson(lesson);
 
 		if (timetable.getScoreForDay(lesson.getTimeSlot().getDay()) > maxScorePerDay) {

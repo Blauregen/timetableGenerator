@@ -1,7 +1,7 @@
 package at.htl.timetableGenerator.model;
 
 import at.htl.timetableGenerator.constraints.Constraint;
-import at.htl.timetableGenerator.constraints.constraints.DoubleHourConstraint;
+import at.htl.timetableGenerator.constraints.constraints.ContinuousHoursConstraint;
 import at.htl.timetableGenerator.constraints.constraints.RoomConstraint;
 import at.htl.timetableGenerator.constraints.constraints.TeacherConstraint;
 import at.htl.timetableGenerator.output.TimetablePrinter;
@@ -46,7 +46,7 @@ public class Timetable {
 	                 int maxTotalScore) {
 		setNoOfDayPerWeek(noOfDayPerWeek);
 		setMaxNoOfHoursPerDay(maxNoOfHoursPerDay);
-		this.constraints = constraints.stream().filter((o) -> !(o instanceof DoubleHourConstraint ||
+		this.constraints = constraints.stream().filter((o) -> !(o instanceof ContinuousHoursConstraint ||
 		                                                        o instanceof TeacherConstraint ||
 		                                                        o instanceof RoomConstraint))
 		                              .collect(Collectors.toSet());

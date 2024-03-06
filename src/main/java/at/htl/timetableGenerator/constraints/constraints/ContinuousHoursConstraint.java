@@ -15,7 +15,7 @@ import java.util.Set;
  * A double hour constraint checks if a course is scheduled for two consecutive hours.
  * It implements the Constraint interface and overrides the check method.
  */
-public class DoubleHourConstraint implements Constraint {
+public class ContinuousHoursConstraint implements Constraint {
 
 	/**
 	 * Checks if the given timetable, time slot, course, and set of teachers meet this double hour

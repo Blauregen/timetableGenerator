@@ -1,7 +1,7 @@
 package at.htl.timetableGenerator.factory;
 
 import at.htl.timetableGenerator.constraints.DurationKeyword;
-import at.htl.timetableGenerator.constraints.constraints.CustomMultipleConstraint;
+import at.htl.timetableGenerator.constraints.constraints.CustomDurationConstraint;
 import at.htl.timetableGenerator.exceptions.ImportException;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,7 +30,7 @@ public class MultipleConstraintFactory {
 	 *
 	 * @throws ImportException if the line is not valid.
 	 */
-	public static @NotNull CustomMultipleConstraint createFromString(@NotNull String line) {
+	public static @NotNull CustomDurationConstraint createFromString(@NotNull String line) {
 		String[] field = line.split("\"");
 
 		if (field.length != 3) {
@@ -65,7 +65,7 @@ public class MultipleConstraintFactory {
 			throw new IllegalArgumentException("Missing \"no\" after requirement specifier");
 		}
 
-		return new CustomMultipleConstraint(subject, duration, keyword, isRequired);
+		return new CustomDurationConstraint(subject, duration, keyword, isRequired);
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class MultipleConstraintFactory {
 	 *
 	 * @throws ImportException if there is an error reading the file.
 	 */
-	public static @NotNull Set<CustomMultipleConstraint> createFromFile(@NotNull String path) {
+	public static @NotNull Set<CustomDurationConstraint> createFromFile(@NotNull String path) {
 		try (Stream<String> lines = Files.lines(Paths.get(path))) {
 			return lines.map(MultipleConstraintFactory::createFromString).collect(Collectors.toSet());
 		} catch (IOException e) {

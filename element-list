@@ -1,5 +1,8 @@
 at.htl.timetableGenerator
-at.htl.timetableGenerator.constrains
+at.htl.timetableGenerator.backend
+at.htl.timetableGenerator.constraints
+at.htl.timetableGenerator.constraints.constraints
 at.htl.timetableGenerator.exceptions
 at.htl.timetableGenerator.factory
+at.htl.timetableGenerator.model
 at.htl.timetableGenerator.output

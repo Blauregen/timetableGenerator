@@ -1,7 +1,7 @@
 package at.htl.timetableGenerator.factory;
 
-import at.htl.timetableGenerator.Subject;
 import at.htl.timetableGenerator.exceptions.ImportException;
+import at.htl.timetableGenerator.model.Subject;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
@@ -18,18 +18,18 @@ class WeeklySubjectsFactoryTest {
 
 		Set<Subject> subjects = new HashSet<>();
 		subjects.add(new Subject("Deutsch",
-				"D")); //Needed, so jacoco recognizes the default constructor as tested
+		                         "D", 3)); //Needed, so jacoco recognizes the default constructor as tested
 
 		assertThrows(ImportException.class,
-				() -> WeeklySubjectsFactory.createFromString("1;2;3;4;5;", subjects, ";"));
+		             () -> WeeklySubjectsFactory.createFromString("1;2;3;4;5;", subjects, ";"));
 
 		assertDoesNotThrow(() -> {
 			WeeklySubjectsFactory.createFromFile(
-					"src/test/testFiles/correctWeeklySubjectsFactory.csv", subjects, ";");
+					"src/test/resources/correctWeeklySubjectsFactory.csv", subjects, ";");
 		});
 
 		assertThrows(ImportException.class, () -> WeeklySubjectsFactory.createFromFile(
-				"src/test/testFiles/incorrectWeeklySubjectsFactory.csv", subjects, ";"));
+				"src/test/resources/incorrectWeeklySubjectsFactory.csv", subjects, ";"));
 
 		assertThrows(ImportException.class, () -> WeeklySubjectsFactory.createFromFile(
 				"non/existing/path/but/pls/never_add/folders/called/like/this/or/everything" +

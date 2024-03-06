@@ -1,7 +1,7 @@
 package at.htl.timetableGenerator.output;
 
-import at.htl.timetableGenerator.Timetable;
 import at.htl.timetableGenerator.exceptions.ExportException;
+import at.htl.timetableGenerator.model.Timetable;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.jetbrains.annotations.NotNull;

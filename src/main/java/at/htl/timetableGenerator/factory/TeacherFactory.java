@@ -1,8 +1,8 @@
 package at.htl.timetableGenerator.factory;
 
-import at.htl.timetableGenerator.Subject;
-import at.htl.timetableGenerator.Teacher;
 import at.htl.timetableGenerator.exceptions.ImportException;
+import at.htl.timetableGenerator.model.Subject;
+import at.htl.timetableGenerator.model.Teacher;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -56,7 +56,7 @@ public class TeacherFactory {
 
 		for (String currentSubjectName : subjectsString) {
 			for (Subject currentSubject : possibleSubjects) {
-				if (currentSubject.name().equals(currentSubjectName)) {
+				if (currentSubject.name().equals(currentSubjectName.strip())) {
 					subjects.add(currentSubject);
 				}
 			}
@@ -82,9 +82,9 @@ public class TeacherFactory {
 	                                                   @NotNull Set<Subject> possibleSubjects,
 	                                                   @NotNull String delimiter) {
 		try (Stream<String> lines = Files.lines(Paths.get(path))) {
-			return lines.skip(1).map(line -> TeacherFactory.createFromString(line,
-					possibleSubjects,
-					delimiter)).collect(Collectors.toSet());
+			return lines.skip(1)
+			            .map(line -> TeacherFactory.createFromString(line, possibleSubjects, delimiter))
+			            .collect(Collectors.toSet());
 		} catch (IOException e) {
 			throw new ImportException("Error reading File!", e);
 		}

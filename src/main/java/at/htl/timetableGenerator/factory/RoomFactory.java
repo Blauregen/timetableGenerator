@@ -1,7 +1,7 @@
 package at.htl.timetableGenerator.factory;
 
-import at.htl.timetableGenerator.Room;
 import at.htl.timetableGenerator.exceptions.ImportException;
+import at.htl.timetableGenerator.model.Room;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;

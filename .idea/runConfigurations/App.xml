@@ -2,7 +2,8 @@
   <configuration default="false" name="App" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="at.htl.timetableGenerator.App" />
     <module name="TimetableGenerator" />
-    <option name="PROGRAM_PARAMETERS" value="-c input/school.config" />
+    <option name="PROGRAM_PARAMETERS" value="-c ./input/school.config" />
+    <shortenClasspath name="MANIFEST" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

@@ -25,6 +25,8 @@ jobs:
           title: "Release: v${{ steps.pom.outputs.version }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      - name: List target directory
+        run: ls -l ./target
       - name: Get latest release
         id: latest_release
         run: |
@@ -32,12 +34,17 @@ jobs:
           echo "::set-output name=id::$RELEASE_ID"
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      - name: Find asset
+        id: find_asset
+        run: |
+          ASSET_PATH=$(find ./target -name "TimetableGenerator-${{ steps.pom.outputs.version }}.jar" -maxdepth 1)
+          echo "::set-output name=path::$ASSET_PATH"
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
           upload_url: https://uploads.github.com/repos/${{ github.repository }}/releases/${{ steps.latest_release.outputs.id }}/assets
-          asset_path: ./target/TimetableGenerator-${{ steps.pom.outputs.version }}.jar
+          asset_path: ${{ steps.find_asset.outputs.path }}
           asset_name: TimetableGenerator-${{ steps.pom.outputs.version }}.jar
           asset_content_type: application/java-archive

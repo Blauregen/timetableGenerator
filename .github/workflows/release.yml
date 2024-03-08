@@ -26,6 +26,8 @@ jobs:
           tag: 'v${{ steps.pom.outputs.version }}'
           draft: false
           regex: "/.*/i"
+          changelog: 'CHANGELOG.md'
+          changelog-entry: '## [v${{ steps.pom.outputs.version }}] - ${{ github.event.head_commit.timestamp }}\n\n${{ github.event.head_commit.message }}\n\n'
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: Upload Release Asset

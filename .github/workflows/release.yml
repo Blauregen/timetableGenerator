@@ -20,14 +20,9 @@ jobs:
       - name: Extract version
         id: pom
         run: echo "::set-output name=version::$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)"
-      - uses: CupOfTea696/gh-action-auto-release@v1.0.2
+      - uses: elgohr/Github-Release-Action@v5
         with:
           title: "Release: v${{ steps.pom.outputs.version }}"
-          tag: 'v${{ steps.pom.outputs.version }}'
-          draft: false
-          regex: "/.*/i"
-          changelog: 'CHANGELOG.md'
-          changelog-entry: '## [v${{ steps.pom.outputs.version }}] - ${{ github.event.head_commit.timestamp }}\n\n${{ github.event.head_commit.message }}\n\n'
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: Upload Release Asset

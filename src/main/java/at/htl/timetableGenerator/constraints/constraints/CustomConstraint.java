@@ -6,6 +6,7 @@ import at.htl.timetableGenerator.model.Lesson;
 import at.htl.timetableGenerator.model.Room;
 import at.htl.timetableGenerator.model.Teacher;
 import at.htl.timetableGenerator.model.Timetable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.Set;
@@ -29,7 +30,7 @@ public class CustomConstraint implements Constraint {
 	}
 
 	@Override
-	public boolean check(Timetable timetable, Lesson lesson, Set<Teacher> teachers,
+	public boolean check(Timetable timetable, @NotNull Lesson lesson, Set<Teacher> teachers,
 	                     Map<String, Room> rooms) {
 		if (lesson.getSubject().name().equals(subject)) {
 			switch (keyword) {

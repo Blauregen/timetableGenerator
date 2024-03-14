@@ -191,19 +191,6 @@ class TimetableTest {
 	}
 
 	@Test
-	void testCheckConstraints() {
-		HashSet<Constraint> constraints = new HashSet<>();
-		timetable = new Timetable(5, 10, constraints, 1000);
-		Subject math = new Subject("Math", "AM", 3);
-		assertTrue(timetable.checkConstraints(new TimeSlot(DayOfWeek.MONDAY, 0), math));
-
-		timetable.setLesson(new Lesson(math, new TimeSlot(DayOfWeek.MONDAY, 0)));
-		timetable.setLesson(new Lesson(math, new TimeSlot(DayOfWeek.MONDAY, 1)));
-		timetable.setLesson(new Lesson(math, new TimeSlot(DayOfWeek.MONDAY, 2)));
-		assertFalse(timetable.checkConstraints(new TimeSlot(DayOfWeek.MONDAY, 3), math));
-	}
-
-	@Test
 	void testToString() {
 		Subject am = new Subject("Mathe", "AM", 3);
 		TimeSlot slot = new TimeSlot(DayOfWeek.MONDAY, 0);

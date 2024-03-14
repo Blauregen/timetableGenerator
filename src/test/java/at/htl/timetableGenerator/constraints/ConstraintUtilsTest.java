@@ -17,7 +17,7 @@ class ConstraintUtilsTest {
 	@Test
 	void getConstraintFromString() {
 		assertEquals(ContinuousHoursConstraint.class,
-		             Objects.requireNonNull(ConstraintUtils.getConstraintFromString("DoubleHourConstraint"))
+		             Objects.requireNonNull(ConstraintUtils.getConstraintFromString("ContinuousHoursConstraint"))
 		                    .getClass());
 		assertThrows(NoSuchConstraintException.class,
 		             () -> ConstraintUtils.getConstraintFromString("No Constraint"),

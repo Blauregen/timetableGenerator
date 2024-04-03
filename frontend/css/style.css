@@ -121,7 +121,7 @@ input{
     font-size: 2.75vw;
     font-weight: bold;
 }
-#view-values div{
+#view-values div, a{
     margin: 1.5vw;
 }
 #back{
@@ -130,4 +130,11 @@ input{
 }
 h3{
     font-size: 3vw;
+}
+a{
+    text-decoration: none;
+    color: white;
+}
+.info{
+    color: #586B92;
 }

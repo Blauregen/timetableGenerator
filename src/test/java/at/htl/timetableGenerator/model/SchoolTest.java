@@ -1,7 +1,5 @@
 package at.htl.timetableGenerator.model;
 
-import at.htl.timetableGenerator.constraints.Constraint;
-import at.htl.timetableGenerator.constraints.constraints.NoMoreThanThreeInRowConstraint;
 import at.htl.timetableGenerator.output.ExportData;
 import at.htl.timetableGenerator.output.ExportFormat;
 import org.jetbrains.annotations.NotNull;
@@ -76,24 +74,6 @@ class SchoolTest {
 	void testConstructorWithName() {
 		School htlLeonding = new School("HTL Leonding");
 		assertEquals("HTL Leonding", htlLeonding.getName());
-	}
-
-	@Test
-	void testConstraints() {
-		HashSet<Constraint> constraints = new HashSet<>();
-		Constraint constraint = new NoMoreThanThreeInRowConstraint();
-		constraints.add(constraint);
-
-		school.setConstraints(constraints);
-		assertEquals(constraints, school.getConstraints());
-
-		constraints.add(constraint);
-		school.addConstraint(constraint);
-		assertEquals(constraints, school.getConstraints());
-
-		constraints.remove(constraint);
-		school.removeConstraint(constraint);
-		assertEquals(constraints, school.getConstraints());
 	}
 
 	@Test

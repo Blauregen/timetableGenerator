@@ -7,18 +7,17 @@ import jakarta.ws.rs.core.MediaType;
 
 @Path("/test")
 public class TestResource {
-	public class Tester {
-		public String blub;
-		public int meep;
-	}
-
-
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Tester test(){
+	public Tester test() {
 		Tester tester = new Tester();
 		tester.blub = "Test";
 		tester.meep = 1;
 		return tester;
+	}
+
+	public static class Tester {
+		public String blub;
+		public int meep;
 	}
 }

@@ -1,6 +1,6 @@
 package at.htl.timetableGenerator.constraints;
 
-import at.htl.timetableGenerator.constraints.constraints.DoubleHourConstraint;
+import at.htl.timetableGenerator.constraints.constraints.ContinuousHoursConstraint;
 import at.htl.timetableGenerator.exceptions.NoSuchConstraintException;
 import org.junit.jupiter.api.Test;
 
@@ -16,8 +16,9 @@ class ConstraintUtilsTest {
 
 	@Test
 	void getConstraintFromString() {
-		assertEquals(DoubleHourConstraint.class,
-		             Objects.requireNonNull(ConstraintUtils.getConstraintFromString("DoubleHourConstraint"))
+		assertEquals(ContinuousHoursConstraint.class,
+		             Objects.requireNonNull(
+				                    ConstraintUtils.getConstraintFromString("ContinuousHoursConstraint"))
 		                    .getClass());
 		assertThrows(NoSuchConstraintException.class,
 		             () -> ConstraintUtils.getConstraintFromString("No Constraint"),

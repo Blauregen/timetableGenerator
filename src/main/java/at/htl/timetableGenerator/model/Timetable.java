@@ -69,10 +69,6 @@ public class Timetable {
 		return maxTotalScore;
 	}
 
-	public void setConstraints(@NotNull Set<Constraint> constraints) {
-		this.constraints = constraints;
-	}
-
 	public int getScoreForDay(DayOfWeek day) {
 		return timetable.entrySet().stream().filter(entry -> entry.getKey().getDay() == day)
 		                .mapToInt(entry -> entry.getValue().getSubject().score()).sum();
@@ -80,6 +76,10 @@ public class Timetable {
 
 	public @NotNull Set<Constraint> getConstraints() {
 		return constraints;
+	}
+
+	public void setConstraints(@NotNull Set<Constraint> constraints) {
+		this.constraints = constraints;
 	}
 
 	/**

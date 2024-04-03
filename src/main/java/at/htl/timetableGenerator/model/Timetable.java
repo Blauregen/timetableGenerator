@@ -33,6 +33,7 @@ public class Timetable {
 	// The maximum number of hours per day
 	private int noOfDayPerWeek;  // The number of days per week
 	private @NotNull Set<Constraint> constraints = new HashSet<>();
+
 	/**
 	 * Constructs a new Timetable with the specified number of days per week, maximum number of
 	 * hours per day, and
@@ -54,6 +55,7 @@ public class Timetable {
 
 		setTimetable(FREISTUNDE);
 	}
+
 	/**
 	 * Constructs a new Timetable with the specified number of days per week and maximum number of
 	 * hours per day.

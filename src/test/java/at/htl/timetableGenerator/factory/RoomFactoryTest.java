@@ -13,12 +13,12 @@ class RoomFactoryTest {
 				new RoomFactory(); //Needed, so jacoco recognizes the default constructor as tested
 
 		assertDoesNotThrow(() -> {
-			RoomFactory.createFromFile("src/test/testFiles/correctRoomFactory.csv", ";");
+			RoomFactory.createFromFile("src/test/resources/correctRoomFactory.csv", ";");
 		});
 
 		assertThrows(ImportException.class,
-				() -> RoomFactory.createFromFile("src/test/testFiles/incorrectRoomFactory.csv",
-						";"));
+		             () -> RoomFactory.createFromFile("src/test/resources/incorrectRoomFactory.csv",
+		                                              ";"));
 
 		assertThrows(ImportException.class, () -> RoomFactory.createFromFile(
 				"non/existing/path/but/pls/never_add/folders/called/like/this/or/everything" +

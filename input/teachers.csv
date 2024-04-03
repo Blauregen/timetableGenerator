@@ -1,7 +1,8 @@
 TeacherName;hoursPerDay;daysPerWeek;Subjects
-Alexandra Wellisch;5;5;Englisch, Geschichte
-Robert Reder;5;5;Informationstechnische Projekte, Softwareentwicklung
-Martin Kerschner;3;7;Angewandte Mathematik
-Walther von der Vogelweide;4;6;Lyrik
-Carl Joachim Friedrich Ludwig „Achim“ von Arnim;5;6;Dichtung
-Heinrich von Veldeke;4;5;Minnegesang
+Alexandra Wellisch;10;5;Englisch, Geschichte
+Robert Reder;10;5;Informationstechnische Projekte, Softwareentwicklung
+Martin Kerschner;10;5;Angewandte Mathematik
+Walther von der Vogelweide;10;5;Lyrik
+Carl Joachim Friedrich Ludwig „Achim“ von Arnim;10;5;Dichtung
+Heinrich von Veldeke;10;5;Minnegesang
+Hildegard von Bingen;10;5;Minnegesang

@@ -13,7 +13,7 @@ class IncompatibleSubjectExceptionTest {
 
 		assertThrows(IncompatibleSubjectException.class, () -> {
 			throw new IncompatibleSubjectException("Teacher doesn't teach that subject",
-					new IllegalArgumentException());
+			                                       new IllegalArgumentException());
 		});
 	}
 }

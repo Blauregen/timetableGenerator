@@ -1,10 +1,10 @@
 package at.htl.timetableGenerator.output;
 
-import at.htl.timetableGenerator.Lesson;
-import at.htl.timetableGenerator.Teacher;
-import at.htl.timetableGenerator.TimeSlot;
-import at.htl.timetableGenerator.Timetable;
 import at.htl.timetableGenerator.exceptions.ExportException;
+import at.htl.timetableGenerator.model.Lesson;
+import at.htl.timetableGenerator.model.Teacher;
+import at.htl.timetableGenerator.model.TimeSlot;
+import at.htl.timetableGenerator.model.Timetable;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jetbrains.annotations.NotNull;

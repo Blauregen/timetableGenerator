@@ -1,9 +1,9 @@
 package at.htl.timetableGenerator.factory;
 
-import at.htl.timetableGenerator.SchoolClass;
-import at.htl.timetableGenerator.Teacher;
-import at.htl.timetableGenerator.WeeklySubject;
 import at.htl.timetableGenerator.exceptions.ImportException;
+import at.htl.timetableGenerator.model.SchoolClass;
+import at.htl.timetableGenerator.model.Teacher;
+import at.htl.timetableGenerator.model.WeeklySubject;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -94,7 +94,7 @@ public class SchoolClassesFactory {
 	 * @param teachers               the set of teachers.
 	 * @param possibleWeeklySubjects the map of possible weekly subjects for the school classes.
 	 * @param delimiter              the delimiter used to separate fields in the lines of the
-	 *                                  file.
+	 *                               file.
 	 *
 	 * @return a set of SchoolClass objects created from the file.
 	 *
@@ -108,8 +108,9 @@ public class SchoolClassesFactory {
 		try (Stream<String> lines = Files.lines(Paths.get(path))) {
 			return lines.skip(1)
 			            .map(line -> SchoolClassesFactory.createFromString(line, teachers,
-					            possibleWeeklySubjects,
-					            delimiter)).collect(Collectors.toSet());
+			                                                               possibleWeeklySubjects,
+			                                                               delimiter))
+			            .collect(Collectors.toSet());
 		} catch (IOException e) {
 			throw new ImportException("Error reading File!", e);
 		}

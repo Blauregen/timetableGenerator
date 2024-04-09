@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Jar Application" type="JarApplication">
+    <option name="JAR_PATH" value="$PROJECT_DIR$/target/TimetableGenerator-0.2-jar-with-dependencies.jar" />
+    <option name="PROGRAM_PARAMETERS" value="-c ./input/school.config" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <method v="2" />
+  </configuration>
+</component>

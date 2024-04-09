@@ -1,7 +1,7 @@
 package at.htl.timetableGenerator.model;
 
 import at.htl.timetableGenerator.constraints.Constraint;
-import at.htl.timetableGenerator.constraints.constraints.DoubleHourConstraint;
+import at.htl.timetableGenerator.constraints.constraints.ContinuousHoursConstraint;
 import at.htl.timetableGenerator.constraints.constraints.RoomConstraint;
 import at.htl.timetableGenerator.constraints.constraints.TeacherConstraint;
 import at.htl.timetableGenerator.output.TimetablePrinter;
@@ -33,6 +33,7 @@ public class Timetable {
 	// The maximum number of hours per day
 	private int noOfDayPerWeek;  // The number of days per week
 	private @NotNull Set<Constraint> constraints = new HashSet<>();
+
 	/**
 	 * Constructs a new Timetable with the specified number of days per week, maximum number of
 	 * hours per day, and
@@ -46,7 +47,7 @@ public class Timetable {
 	                 int maxTotalScore) {
 		setNoOfDayPerWeek(noOfDayPerWeek);
 		setMaxNoOfHoursPerDay(maxNoOfHoursPerDay);
-		this.constraints = constraints.stream().filter((o) -> !(o instanceof DoubleHourConstraint ||
+		this.constraints = constraints.stream().filter((o) -> !(o instanceof ContinuousHoursConstraint ||
 		                                                        o instanceof TeacherConstraint ||
 		                                                        o instanceof RoomConstraint))
 		                              .collect(Collectors.toSet());
@@ -54,6 +55,7 @@ public class Timetable {
 
 		setTimetable(FREISTUNDE);
 	}
+
 	/**
 	 * Constructs a new Timetable with the specified number of days per week and maximum number of
 	 * hours per day.
@@ -69,10 +71,6 @@ public class Timetable {
 		return maxTotalScore;
 	}
 
-	public void setConstraints(@NotNull Set<Constraint> constraints) {
-		this.constraints = constraints;
-	}
-
 	public int getScoreForDay(DayOfWeek day) {
 		return timetable.entrySet().stream().filter(entry -> entry.getKey().getDay() == day)
 		                .mapToInt(entry -> entry.getValue().getSubject().score()).sum();
@@ -80,6 +78,10 @@ public class Timetable {
 
 	public @NotNull Set<Constraint> getConstraints() {
 		return constraints;
+	}
+
+	public void setConstraints(@NotNull Set<Constraint> constraints) {
+		this.constraints = constraints;
 	}
 
 	/**

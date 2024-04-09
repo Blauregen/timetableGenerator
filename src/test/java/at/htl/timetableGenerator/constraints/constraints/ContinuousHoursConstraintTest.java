@@ -10,11 +10,11 @@ import java.util.HashSet;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class DoubleHourConstraintTest {
+class ContinuousHoursConstraintTest {
 
 	@Test
 	void check() {
-		DoubleHourConstraint constraint = new DoubleHourConstraint();
+		ContinuousHoursConstraint constraint = new ContinuousHoursConstraint();
 		Timetable timetable = new Timetable(2, 2, 50);
 		Subject math = new Subject("Maths", "AM", 3);
 		Subject german = new Subject("German", "D", 3);

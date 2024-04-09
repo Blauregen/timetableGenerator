@@ -1,7 +1,7 @@
 package at.htl.timetableGenerator.model;
 
 import at.htl.timetableGenerator.constraints.Constraint;
-import at.htl.timetableGenerator.constraints.constraints.DoubleHourConstraint;
+import at.htl.timetableGenerator.constraints.constraints.ContinuousHoursConstraint;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -165,7 +165,7 @@ class SchoolClassTest {
 
 	@Test
 	void addAndRemoveConstraint() {
-		Constraint constraint = new DoubleHourConstraint();
+		Constraint constraint = new ContinuousHoursConstraint();
 
 		assertEquals(1, schoolClass.getConstraints().size());
 

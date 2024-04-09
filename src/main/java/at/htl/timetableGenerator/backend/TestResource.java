@@ -71,12 +71,6 @@ public class TestResource {
 //		result.answer = constraintsAsString.toArray(new String[0]);
 //		return result;
 //	}
-
-	//durationKeywords
-//	Liste von Duration Keywords aus DurationKeywords.java
-//timeKeywords
-//	List von Time Keywords aus TimeKeywords.java
-
 	@GET
 	@Path("/getAllTimeKeywords")
 	@Produces(MediaType.APPLICATION_JSON)

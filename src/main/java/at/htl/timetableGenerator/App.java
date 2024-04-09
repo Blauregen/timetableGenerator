@@ -38,7 +38,6 @@ public class App {
 		try {
 			CommandLine cmd = parser.parse(options, args);
 			String configFile = cmd.getOptionValue("config");
-			System.out.println(configFile);
 
 			Ini ini = new Ini(new File(configFile));
 			int noOfDaysPerWeek = Integer.parseInt(ini.get("general", "noOfDaysPerWeek").strip());
@@ -136,9 +135,8 @@ public class App {
 			school.getSchoolClasses()
 			      .forEach((schoolClass -> System.out.println(schoolClass.getTimetable())));
 
-
 			System.out.println("Generation seed: " + currentSeed);
-		} catch (ParseException | IOException e) {
+		} catch (ParseException | IOException | NullPointerException e) {
 			throw new IllegalArgumentException("No valid config file passed");
 		}
 	}

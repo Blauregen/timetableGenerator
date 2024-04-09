@@ -53,11 +53,9 @@ public class ConstraintUtils {
 	}
 
 	public static Set<Class<?>> getAllConstraints() {
-		String packageName = ".at.htl.timetableGenerator.constraints.constraints";
-		String formattedFileSeparator = formatFileSeparatorForAllOperatingSystems(File.separator);
+		String packageName = "at.htl.timetableGenerator.constraints.constraints";
 		InputStream stream =
-				ClassLoader.getSystemClassLoader().getResourceAsStream(packageName.replaceAll("[.]",
-				                                                                              formattedFileSeparator));
+				ClassLoader.getSystemClassLoader().getResourceAsStream(packageName.replaceAll("[.]", "/"));
 		if (stream == null) {
 			throw new RuntimeException("WTF why did you move the constraints?");
 		}
@@ -67,20 +65,6 @@ public class ConstraintUtils {
 		                                                                                   packageName))
 		             .filter(Objects::nonNull).filter(clazz -> !clazz.getName().contains("Custom"))
 		             .collect(Collectors.toSet());
-	}
-	/**
-	 * This method formats the file separator, so it is properly escaped in RegEx
-	 *
-	 * @param fileSeparator the fileSeparator, that should be checked
-	 *
-	 * @return the formatted fileSeparator
-	 *
-	 */
-	private static String formatFileSeparatorForAllOperatingSystems(String fileSeparator){
-		if ("\\".equals(fileSeparator)) {
-			return "\\\\";
-		}
-		return fileSeparator;
 	}
 
 	private static @Nullable Class<?> getClass(@NotNull String className, String packageName) {

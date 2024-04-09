@@ -1,6 +1,7 @@
 package at.htl.timetableGenerator.backend;
 
 import at.htl.timetableGenerator.constraints.ConstraintUtils;
+import at.htl.timetableGenerator.constraints.TimeKeyword;
 import at.htl.timetableGenerator.output.ExportData;
 import at.htl.timetableGenerator.output.ExportFormat;
 import io.vertx.codegen.TypeParamInfo;
@@ -54,20 +55,42 @@ public class TestResource {
 		return result;
 	}
 
+//	@GET
+//	@Path("/getAllConstraints")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public multipleAnswersReturnObject constraints(){
+//		multipleAnswersReturnObject result = new multipleAnswersReturnObject();
+//
+//		Set<Class<?>> constraints = ConstraintUtils.getAllConstraints();
+//		List<String> constraintsAsString = new LinkedList<>();
+//
+//		for (Class<?> currentConstraint : constraints) {
+//			constraintsAsString.add(currentConstraint.toString());
+//		}
+//
+//		result.answer = constraintsAsString.toArray(new String[0]);
+//		return result;
+//	}
+
+	//durationKeywords
+//	Liste von Duration Keywords aus DurationKeywords.java
+//timeKeywords
+//	List von Time Keywords aus TimeKeywords.java
+
 	@GET
-	@Path("/getAllConstraints")
+	@Path("/getAllTimeKeywords")
 	@Produces(MediaType.APPLICATION_JSON)
-	public multipleAnswersReturnObject constraints(){
+	public multipleAnswersReturnObject timeKeywords(){
 		multipleAnswersReturnObject result = new multipleAnswersReturnObject();
 
-		Set<Class<?>> constraints = ConstraintUtils.getAllConstraints();
-		List<String> constraintsAsString = new LinkedList<>();
+		TimeKeyword[] timeKeywords = TimeKeyword.values();
+		List<String> timeKeywordsAsString = new LinkedList<>();
 
-		for (Class<?> currentConstraint : constraints) {
-			constraintsAsString.add(currentConstraint.toString());
+		for (TimeKeyword currentExportData : timeKeywords) {
+			timeKeywordsAsString.add(currentExportData.toString());
 		}
 
-		result.answer = constraintsAsString.toArray(new String[0]);
+		result.answer = timeKeywordsAsString.toArray(new String[0]);
 		return result;
 	}
 }

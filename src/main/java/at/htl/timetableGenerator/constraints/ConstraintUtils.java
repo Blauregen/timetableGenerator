@@ -53,7 +53,7 @@ public class ConstraintUtils {
 	}
 
 	public static Set<Class<?>> getAllConstraints() {
-		String packageName = "at.htl.timetableGenerator.constraints.constraints";
+		String packageName = ".at.htl.timetableGenerator.constraints.constraints";
 		String formattedFileSeparator = formatFileSeparatorForAllOperatingSystems(File.separator);
 		InputStream stream =
 				ClassLoader.getSystemClassLoader().getResourceAsStream(packageName.replaceAll("[.]",

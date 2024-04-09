@@ -1,6 +1,7 @@
 package at.htl.timetableGenerator.backend;
 
 import at.htl.timetableGenerator.constraints.ConstraintUtils;
+import at.htl.timetableGenerator.constraints.DurationKeyword;
 import at.htl.timetableGenerator.constraints.TimeKeyword;
 import at.htl.timetableGenerator.output.ExportData;
 import at.htl.timetableGenerator.output.ExportFormat;
@@ -10,6 +11,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
+import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -85,6 +87,23 @@ public class TestResource {
 		}
 
 		result.answer = timeKeywordsAsString.toArray(new String[0]);
+		return result;
+	}
+
+	@GET
+	@Path("/getAllDurationKeywords")
+	@Produces(MediaType.APPLICATION_JSON)
+	public multipleAnswersReturnObject durationKeywords(){
+		multipleAnswersReturnObject result = new multipleAnswersReturnObject();
+
+		DurationKeyword[] timeKeywords = DurationKeyword.values();
+		List<String> durationKeywordsAsString = new LinkedList<>();
+
+		for (DurationKeyword currentExportData : timeKeywords) {
+			durationKeywordsAsString.add(currentExportData.toString());
+		}
+
+		result.answer = durationKeywordsAsString.toArray(new String[0]);
 		return result;
 	}
 }

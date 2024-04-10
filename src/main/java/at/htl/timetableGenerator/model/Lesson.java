@@ -111,11 +111,9 @@ public class Lesson {
 			return false;
 		}
 		Lesson lesson = (Lesson) o;
-		return Objects.equals(subject, lesson.subject) &&
-		       Objects.equals(timeSlot, lesson.timeSlot) &&
-		       Objects.equals(teacher, lesson.teacher) &&
-		       Objects.equals(schoolClass, lesson.schoolClass) && Objects.equals(room,
-		                                                                         lesson.room);
+		return Objects.equals(subject, lesson.subject) && Objects.equals(timeSlot, lesson.timeSlot) &&
+		       Objects.equals(teacher, lesson.teacher) && Objects.equals(schoolClass, lesson.schoolClass) &&
+		       Objects.equals(room, lesson.room);
 	}
 
 	@Override

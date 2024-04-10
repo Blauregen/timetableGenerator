@@ -30,8 +30,8 @@ public class NonePlacedBeforeConstraint implements Constraint {
 	 * @return true if the constraint is met, false otherwise
 	 */
 	@Override
-	public boolean check(@NotNull Timetable timetable, @NotNull Lesson lesson,
-	                     Set<Teacher> teachers, Map<String, Room> rooms) {
+	public boolean check(@NotNull Timetable timetable, @NotNull Lesson lesson, Set<Teacher> teachers,
+	                     Map<String, Room> rooms) {
 		return timetable.getLesson(lesson.getTimeSlot()).getSubject() == FREISTUNDE;
 	}
 

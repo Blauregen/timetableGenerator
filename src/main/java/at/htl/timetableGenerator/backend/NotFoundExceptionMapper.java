@@ -14,7 +14,8 @@ public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundExceptio
 	@Override
 	public Response toResponse(NotFoundException exception) {
 		String text = new Scanner(
-				Objects.requireNonNull(this.getClass().getResourceAsStream("/META-INF/resources/notfound.html")),
+				Objects.requireNonNull(
+						this.getClass().getResourceAsStream("/META-INF/resources/notfound.html")),
 				StandardCharsets.UTF_8).useDelimiter("\\A").next();
 		return Response.status(404).entity(text).build();
 	}

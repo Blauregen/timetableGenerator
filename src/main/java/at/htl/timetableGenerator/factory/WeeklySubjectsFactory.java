@@ -40,7 +40,8 @@ public class WeeklySubjectsFactory {
 	 * @throws ImportException if the line is not valid or the subject is not valid.
 	 */
 	public static @NotNull Pair<String, WeeklySubject> createFromString(@NotNull String line,
-	                                                                    @NotNull Set<Subject> possibleSubjects,
+	                                                                    @NotNull
+	                                                                    Set<Subject> possibleSubjects,
 	                                                                    @NotNull String delimiter) {
 		// Splitting the line (csv) and storing it in an array for later access
 		String[] field = line.split(delimiter);

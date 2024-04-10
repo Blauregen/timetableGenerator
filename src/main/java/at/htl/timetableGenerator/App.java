@@ -7,6 +7,7 @@ import at.htl.timetableGenerator.factory.*;
 import at.htl.timetableGenerator.model.*;
 import at.htl.timetableGenerator.output.ExportData;
 import at.htl.timetableGenerator.output.ExportFormat;
+import at.htl.timetableGenerator.springs.PotentialCalculator;
 import org.apache.commons.cli.*;
 import org.ini4j.Ini;
 import org.jetbrains.annotations.NotNull;
@@ -130,14 +131,16 @@ public class App {
 			School school = new School(schoolName, schoolClasses, teachers);
 			school.setConstraints(constraints);
 			school.setRooms(rooms);
-			school.generateTimetables(noOfDaysPerWeek, noOfHoursPerDay, 1_000_000);
-			school.exportAllTimetables(exportData, exportFormats, outputPath);
-			school.getSchoolClasses()
-			      .forEach((schoolClass -> System.out.println(schoolClass.getTimetable())));
 
 			System.out.println("Generation seed: " + currentSeed);
+			school.generateTimetables(noOfDaysPerWeek, noOfHoursPerDay, 1_000_000)
+			      .forEach((name, timetable) -> {
+				      System.out.println(
+						      name + ": " + PotentialCalculator.calculateTimetablePotential(timetable));
+				      System.out.println(timetable);
+			      });
 		} catch (ParseException | IOException | NullPointerException e) {
-			throw new IllegalArgumentException("No valid config file passed");
+			throw new IllegalArgumentException("No valid config file passed", e);
 		}
 	}
 

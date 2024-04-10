@@ -185,10 +185,10 @@ public class School {
 					timetables.put(schoolClass.getName(), timetable);
 				}
 			} catch (Exception ignored) {
-				timetables.forEach((name, timetable) -> timetable.setTimetable(new HashMap<>()));
+				timetables.forEach((_, timetable) -> timetable.setTimetable(new HashMap<>()));
 				teachers.forEach(teacher -> teacher.setOccupiedLessons(
 						new Timetable(daysPerWeek, maxHoursPerDay, Integer.MAX_VALUE)));
-				rooms.forEach((name, room) -> room.getTimetable().setTimetable(new HashMap<>()));
+				rooms.forEach((_, room) -> room.getTimetable().setTimetable(new HashMap<>()));
 				timetables = new HashMap<>();
 			}
 		}

@@ -8,11 +8,9 @@ import at.htl.timetableGenerator.output.TimetablePrinter;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.DayOfWeek;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
+
 
 /**
  * This class represents a timetable in a School.
@@ -52,8 +50,7 @@ public class Timetable {
 		                                                        o instanceof RoomConstraint))
 		                              .collect(Collectors.toSet());
 		this.maxTotalScore = maxTotalScore;
-
-		setTimetable(FREISTUNDE);
+		this.timetable = new HashMap<>();
 	}
 
 	/**
@@ -65,6 +62,10 @@ public class Timetable {
 	 */
 	public Timetable(int noOfDayPerWeek, int maxNoOfHoursPerDay, int maxTotalScore) {
 		this(noOfDayPerWeek, maxNoOfHoursPerDay, new HashSet<>(), maxTotalScore);
+	}
+
+	public List<Map.Entry<TimeSlot, Lesson>> getSortedTimetable() {
+		return getTimetable().entrySet().stream().sorted(Map.Entry.comparingByKey()).toList();
 	}
 
 	public int getMaxTotalScore() {
@@ -276,11 +277,18 @@ public class Timetable {
 	 */
 	public Lesson[] @NotNull [] getTimetableAsArray() {
 		Lesson[][] lessonsArray = new Lesson[noOfDayPerWeek][maxNoOfHoursPerDay];
-		Collection<Lesson> lessons = timetable.values();
+		for (int i = 0; i < this.noOfDayPerWeek; i++) {
+			for (int j = 0; j < this.maxNoOfHoursPerDay; j++) {
+				lessonsArray[i][j] = new Lesson(FREISTUNDE, new TimeSlot(DayOfWeek.of(i + 1), j));
+			}
+		}
 
-		lessons.forEach(lesson -> lessonsArray[lesson.getTimeSlot().getDay().ordinal()][lesson.getTimeSlot()
-		                                                                                      .getHour()] =
-				lesson);
+		timetable.entrySet().forEach((timeSlotLessonEntry -> {
+			int day = timeSlotLessonEntry.getKey().getDay().ordinal();
+			int hour = timeSlotLessonEntry.getKey().getHour();
+
+			lessonsArray[day][hour] = timeSlotLessonEntry.getValue();
+		}));
 
 		return lessonsArray;
 	}

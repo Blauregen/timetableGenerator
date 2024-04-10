@@ -13,11 +13,11 @@ public class CustomDurationConstraint implements Constraint {
 	private final int length;
 	private final DurationKeyword keyword;
 	private final boolean isRequired;
-	private String subject;
+	private final String subject;
 
 	public CustomDurationConstraint(String subject, int duration, DurationKeyword keyword,
 	                                boolean isRequired) {
-		this.subject = subject;
+		this.subject = subject.replaceAll("\\*", ".*");
 		this.length = duration;
 		this.keyword = keyword;
 		this.isRequired = isRequired;
@@ -31,8 +31,6 @@ public class CustomDurationConstraint implements Constraint {
 	@Override
 	public boolean check(Timetable timetable, @NotNull Lesson lesson, Set<Teacher> teachers,
 	                     Map<String, Room> rooms) {
-		subject = subject.replaceAll("\\*", ".*");
-
 		if (lesson.getSubject().name().matches(subject)) {
 			if (Objects.requireNonNull(keyword) == DurationKeyword.LONGER) {
 				TimeSlot timeSlot = lesson.getTimeSlot();

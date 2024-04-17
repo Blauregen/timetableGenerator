@@ -141,8 +141,8 @@ public final class TimetablePrinter {
 			int noOfPaddingSpaces = getPadding(columnWidth, currentDay);
 			String paddingString = " ".repeat(noOfPaddingSpaces);
 			formattedTT.append(paddingString);
-			formattedTT.append(String.format("%1$-" + (columnWidth - paddingString.length()) + "s",
-			                                 currentDay));
+			formattedTT.append(
+					String.format("%1$-" + (columnWidth - paddingString.length()) + "s", currentDay));
 
 			if (i < tt.getNoOfDayPerWeek() - 1) {
 				formattedTT.append('|');

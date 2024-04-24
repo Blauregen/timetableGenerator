@@ -43,14 +43,17 @@ public class Timetable {
 	 * @param maxNoOfHoursPerDay the maximum number of hours per day
 	 * @param constraints        the set of constraints for this timetable
 	 */
-	public Timetable(int noOfDayPerWeek, int maxNoOfHoursPerDay, @NotNull Set<Constraint> constraints,
+	public Timetable(int noOfDayPerWeek, int maxNoOfHoursPerDay, Set<Constraint> constraints,
 	                 int maxTotalScore) {
 		setNoOfDayPerWeek(noOfDayPerWeek);
 		setMaxNoOfHoursPerDay(maxNoOfHoursPerDay);
-		this.constraints = constraints.stream().filter((o) -> !(o instanceof ContinuousHoursConstraint ||
-		                                                        o instanceof TeacherConstraint ||
-		                                                        o instanceof RoomConstraint))
-		                              .collect(Collectors.toSet());
+		if(constraints != null){
+			this.constraints = constraints.stream().filter((o) -> !(o instanceof ContinuousHoursConstraint ||
+			                                                        o instanceof TeacherConstraint ||
+			                                                        o instanceof RoomConstraint))
+			                              .collect(Collectors.toSet());
+		}
+
 		this.maxTotalScore = maxTotalScore;
 
 		setTimetable(FREISTUNDE);

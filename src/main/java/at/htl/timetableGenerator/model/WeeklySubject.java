@@ -10,18 +10,18 @@ import java.util.Objects;
  */
 public class WeeklySubject {
 	private Subject subject;  // The subject that is taught
-	private int noPerWeek;  // The number of times the subject is taught per week
+	private int timesPerWeek;  // The number of times the subject is taught per week
 
 	/**
 	 * Constructs a new WeeklySubjects with the given subject and number of times it is taught per
 	 * week.
 	 *
 	 * @param subject   The subject that is taught.
-	 * @param noPerWeek The number of times the subject is taught per week.
+	 * @param timesPerWeek The number of times the subject is taught per week.
 	 */
-	public WeeklySubject(Subject subject, int noPerWeek) {
+	public WeeklySubject(Subject subject, int timesPerWeek) {
 		this.subject = subject;
-		this.noPerWeek = noPerWeek;
+		this.timesPerWeek = timesPerWeek;
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class WeeklySubject {
 		}
 		WeeklySubject that = (WeeklySubject) o;
 		return Objects.equals(subject, that.subject) &&
-		       this.noPerWeek == ((WeeklySubject) o).noPerWeek;
+		       this.timesPerWeek == ((WeeklySubject) o).timesPerWeek;
 	}
 
 	/**
@@ -81,17 +81,17 @@ public class WeeklySubject {
 	 *
 	 * @return The number of times the subject is taught per week.
 	 */
-	public int getNoPerWeek() {
-		return noPerWeek;
+	public int getTimesPerWeek() {
+		return timesPerWeek;
 	}
 
 	/**
 	 * Sets the number of times the subject is taught per week.
 	 *
-	 * @param noPerWeek The number of times to set.
+	 * @param timesPerWeek The number of times to set.
 	 */
-	public void setNoPerWeek(int noPerWeek) {
-		this.noPerWeek = noPerWeek;
+	public void setTimesPerWeek(int timesPerWeek) {
+		this.timesPerWeek = timesPerWeek;
 	}
 
 	/**
@@ -102,6 +102,6 @@ public class WeeklySubject {
 	 */
 	@Override
 	public String toString() {
-		return String.format("%s: %d", subject, noPerWeek);
+		return String.format("%s: %d", subject, timesPerWeek);
 	}
 }

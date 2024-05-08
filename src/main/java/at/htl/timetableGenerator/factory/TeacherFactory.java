@@ -62,7 +62,7 @@ public class TeacherFactory {
 			}
 		}
 
-		return new Teacher(name, subjects, hoursPerDay, daysPerWeek);
+		return new Teacher("Firstname", name, subjects, hoursPerDay, daysPerWeek);
 	}
 
 	/**

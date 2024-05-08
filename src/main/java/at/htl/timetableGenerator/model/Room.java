@@ -12,6 +12,9 @@ import java.util.Objects;
 public class Room {
 	private final String name;
 	private final Timetable timetable = new Timetable(7, 24, Integer.MAX_VALUE);
+	public Long id;
+	private int maxPeople;
+	private RoomType roomType;
 
 	/**
 	 * Constructs a new Room with the specified name.
@@ -20,6 +23,22 @@ public class Room {
 	 */
 	public Room(String name) {
 		this.name = name;
+	}
+
+	public RoomType getRoomType() {
+		return roomType;
+	}
+
+	public void setRoomType(RoomType roomType) {
+		this.roomType = roomType;
+	}
+
+	public int getMaxPeople() {
+		return maxPeople;
+	}
+
+	public void setMaxPeople(int maxPeople) {
+		this.maxPeople = maxPeople;
 	}
 
 	/**

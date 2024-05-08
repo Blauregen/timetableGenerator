@@ -17,10 +17,8 @@ import java.util.Set;
  * A school is defined by a set of school classes and a set of teachers.
  */
 public class School {
-	private Long id;
-	private static Long idCounter = 0L;
 	private final String name;
-	// school
+	public Long id;
 	private @NotNull Map<String, Room> rooms = new HashMap<>();
 	private Set<Constraint> constraints = new HashSet<>();
 	private @NotNull Set<SchoolClass> schoolClasses = new HashSet<>();
@@ -34,8 +32,9 @@ public class School {
 	 * @param schoolClasses the set of school classes in this school
 	 * @param teachers      the set of teachers in this school
 	 */
-	public School(String name, @NotNull Set<SchoolClass> schoolClasses, @NotNull Set<Teacher> teachers) {
-		this.id = idCounter++;
+	public School(Long id, String name, @NotNull Set<SchoolClass> schoolClasses,
+	              @NotNull Set<Teacher> teachers) {
+		this.id = id;
 		this.name = name;
 		setSchoolClasses(schoolClasses);
 		setTeachers(teachers);
@@ -246,7 +245,7 @@ public class School {
 		}
 
 		if (exportData.contains(ExportData.TEACHERS)) {
-			teachers.forEach(teacher -> timetables.put(teacher.getName(), teacher.getTimetable()));
+			teachers.forEach(teacher -> timetables.put(teacher.toString(), teacher.getTimetable()));
 		}
 
 		if (exportData.contains(ExportData.ROOMS)) {

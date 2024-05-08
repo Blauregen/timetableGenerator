@@ -12,10 +12,10 @@
 	<url>https://github.com/Blauregen/timetableGenerator</url>
 
 	<properties>
-		<maven.compiler.source>21</maven.compiler.source>
-		<maven.compiler.target>21</maven.compiler.target>
+		<maven.compiler.source>22</maven.compiler.source>
+		<maven.compiler.target>22</maven.compiler.target>
 		<compiler-plugin.version>3.11.0</compiler-plugin.version>
-		<maven.compiler.release>17</maven.compiler.release>
+		<maven.compiler.release>22</maven.compiler.release>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
@@ -27,6 +27,18 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>io.quarkus</groupId>
+				<artifactId>quarkus-hibernate-orm-rest-data-panache</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>io.quarkus</groupId>
+				<artifactId>quarkus-hibernate-orm-panache</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>io.quarkus</groupId>
+				<artifactId>quarkus-jdbc-mariadb</artifactId>
+			</dependency>
 			<dependency>
 				<groupId>${quarkus.platform.group-id}</groupId>
 				<artifactId>${quarkus.platform.artifact-id}</artifactId>
@@ -191,7 +203,7 @@
 				<configuration>
 					<systemPropertyVariables>
 						<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-<!--						<maven.home>${maven.home}</maven.home>-->
+						<!--						<maven.home>${maven.home}</maven.home>-->
 					</systemPropertyVariables>
 				</configuration>
 			</plugin>
@@ -208,9 +220,10 @@
 				</executions>
 				<configuration>
 					<systemPropertyVariables>
-						<native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
+						<native.image.path>${project.build.directory}/${project.build.finalName}-runner
+						</native.image.path>
 						<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-<!--						<maven.home>${maven.home}</maven.home>-->
+						<!--						<maven.home>${maven.home}</maven.home>-->
 					</systemPropertyVariables>
 				</configuration>
 			</plugin>
@@ -222,7 +235,7 @@
 						<exclude>at/htl/timetableGenerator/App.class</exclude>
 						<exclude>at/htl/timetableGenerator/output/*</exclude>
 						<exclude>at/htl/timetableGenerator/backend/*</exclude>
-<!--					ToDo: Add backend back to code coverage when implemented-->
+						<!--					ToDo: Add backend back to code coverage when implemented-->
 					</excludes>
 				</configuration>
 				<executions>

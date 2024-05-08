@@ -20,6 +20,7 @@ import static at.htl.timetableGenerator.model.Timetable.FREISTUNDE;
 public class SchoolClass {
 	private final String name;  // The name of the school class
 	private final Set<Constraint> constraints = new HashSet<>();
+	public Long id;
 	// The set of constraints for this school class
 	private HashSet<WeeklySubject> weeklySubjects;
 	// The list of weekly courses for this school class
@@ -87,7 +88,7 @@ public class SchoolClass {
 	public Timetable generateTimetable(int daysPerWeek, int maxHoursPerDay, Set<Teacher> teachers,
 	                                   Map<String, Room> rooms) {
 		int sum = weeklySubjects.stream().mapToInt(
-				weeklySubject -> weeklySubject.getSubject().score() * weeklySubject.getNoPerWeek()).sum();
+				weeklySubject -> weeklySubject.getSubject().score() * weeklySubject.getTimesPerWeek()).sum();
 
 		this.timetable = new Timetable(daysPerWeek, maxHoursPerDay, constraints, sum);
 		LinkedList<WeeklySubject> weeklySubjectsList = new LinkedList<>(weeklySubjects);
@@ -95,7 +96,7 @@ public class SchoolClass {
 		while (!weeklySubjectsList.isEmpty()) {
 			WeeklySubject weeklySubject = weeklySubjectsList.get(random.nextInt(weeklySubjectsList.size()));
 
-			if (timetable.getNoOfSubject(weeklySubject.getSubject()) < weeklySubject.getNoPerWeek()) {
+			if (timetable.getNoOfSubject(weeklySubject.getSubject()) < weeklySubject.getTimesPerWeek()) {
 				Lesson bestAvailableLesson =
 						getBestAvailableLesson(timetable, weeklySubject.getSubject(), teachers, rooms);
 				this.setLesson(bestAvailableLesson);

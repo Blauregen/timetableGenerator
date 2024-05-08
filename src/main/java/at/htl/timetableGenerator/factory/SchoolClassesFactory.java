@@ -40,10 +40,9 @@ public class SchoolClassesFactory {
 	 *
 	 * @throws ImportException if the line is not valid.
 	 */
-	public static @NotNull SchoolClass createFromString(@NotNull String line,
-	                                                    @NotNull Set<Teacher> teachers,
-	                                                    @NotNull HashMap<String,
-			                                                    HashSet<WeeklySubject>> possibleWeeklySubjects,
+	public static @NotNull SchoolClass createFromString(@NotNull String line, @NotNull Set<Teacher> teachers,
+	                                                    @NotNull
+	                                                    HashMap<String, HashSet<WeeklySubject>> possibleWeeklySubjects,
 	                                                    @NotNull String delimiter) {
 		// Splitting the line (csv) and storing it in an array for later access
 		String[] field = line.split(delimiter);
@@ -59,7 +58,7 @@ public class SchoolClassesFactory {
 		HashSet<WeeklySubject> weeklySubjects = new HashSet<>();
 
 		for (Teacher teacher : teachers) {
-			if (teacher.getName().equals(teacherName)) {
+			if (teacher.getLastName().equals(teacherName)) {
 				formTeacher = teacher;
 			}
 		}
@@ -101,15 +100,13 @@ public class SchoolClassesFactory {
 	 * @throws ImportException if there is an error reading the file.
 	 */
 	public static @NotNull Set<SchoolClass> createFromFile(@NotNull String path,
-	                                                       @NotNull Set<Teacher> teachers,
-	                                                       @NotNull HashMap<String,
-			                                                       HashSet<WeeklySubject>> possibleWeeklySubjects,
+	                                                       @NotNull Set<Teacher> teachers, @NotNull
+	                                                       HashMap<String, HashSet<WeeklySubject>> possibleWeeklySubjects,
 	                                                       @NotNull String delimiter) {
 		try (Stream<String> lines = Files.lines(Paths.get(path))) {
-			return lines.skip(1)
-			            .map(line -> SchoolClassesFactory.createFromString(line, teachers,
-			                                                               possibleWeeklySubjects,
-			                                                               delimiter))
+			return lines.skip(1).map(line -> SchoolClassesFactory.createFromString(line, teachers,
+			                                                                       possibleWeeklySubjects,
+			                                                                       delimiter))
 			            .collect(Collectors.toSet());
 		} catch (IOException e) {
 			throw new ImportException("Error reading File!", e);

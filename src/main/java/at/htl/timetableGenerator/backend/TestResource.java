@@ -177,17 +177,17 @@ public class TestResource {
 
 		HashSet<Subject> wellischSubjects = new HashSet<>();
 		wellischSubjects.add(subjectE);
-		Teacher wellisch = new Teacher("Wellisch", wellischSubjects, 5, 5);
+		Teacher wellisch = new Teacher("Alex", "Wellisch", wellischSubjects, 5, 5);
 
 		HashSet<Subject> kerschnerSubjects = new HashSet<>();
 		kerschnerSubjects.add(subjectAM);
-		Teacher kerschner = new Teacher("Kerschner", kerschnerSubjects, 7, 3);
+		Teacher kerschner = new Teacher("Martin", "Kerschner", kerschnerSubjects, 7, 3);
 
 		HashSet<Teacher> teachers = new HashSet<>();
 		teachers.add(wellisch);
 		teachers.add(kerschner);
 
-		return new School(name, schoolClasses, teachers);
+		return new School(0L, name, schoolClasses, teachers);
 	}
 
 

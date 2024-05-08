@@ -127,7 +127,7 @@ public class App {
 			Map<String, Room> rooms =
 					RoomFactory.createFromFile(getRelativePath(configFile, roomPath), delimiter);
 
-			School school = new School(schoolName, schoolClasses, teachers);
+			School school = new School(0L, schoolName, schoolClasses, teachers);
 			school.setConstraints(constraints);
 			school.setRooms(rooms);
 			school.generateTimetables(noOfDaysPerWeek, noOfHoursPerDay, 1_000_000);

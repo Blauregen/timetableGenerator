@@ -14,7 +14,7 @@ public class WeeklySubjectTest {
 		int noPerWeek = 10;
 		WeeklySubject weeklySubject = new WeeklySubject(mathSubject, 10);
 
-		assertEquals(noPerWeek, weeklySubject.getNoPerWeek());
+		assertEquals(noPerWeek, weeklySubject.getTimesPerWeek());
 		assertEquals(mathSubject, weeklySubject.getSubject());
 	}
 
@@ -31,10 +31,10 @@ public class WeeklySubjectTest {
 		Subject newSubject = new Subject("Maths", "M", 3);
 
 		weeklySubject.setSubject(newSubject);
-		weeklySubject.setNoPerWeek(newNumbersPerWeek);
+		weeklySubject.setTimesPerWeek(newNumbersPerWeek);
 
 		assertEquals(newSubject, weeklySubject.getSubject());
-		assertEquals(newNumbersPerWeek, weeklySubject.getNoPerWeek());
+		assertEquals(newNumbersPerWeek, weeklySubject.getTimesPerWeek());
 	}
 
 	@Test

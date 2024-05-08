@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * This record represents a subject with a name and a short name.
  */
-public record Subject(String name, String shortName, int score) {
+public record Subject(Long id, String name, String shortName, int score) {
 
 	/**
 	 * Returns a string representation of the subject.

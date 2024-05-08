@@ -1,7 +1,6 @@
 package at.htl.timetableGenerator.model;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.Set;
@@ -12,31 +11,27 @@ import java.util.Set;
  * lessons.
  */
 public class Teacher {
-	private final String name;  // The name of the teacher
+	private final String firstName;  // The name of the teacher
+	private final String lastName;  // The name of the teacher
+	public Long id;
 	private Set<Subject> subjects;  // The set of subjects this teacher can teach
 	private Timetable occupiedLessons; // The timetable of lessons this teacher is occupied with
 
 	/**
 	 * Constructs a new Teacher with the specified name and subjects.
 	 *
-	 * @param name        the name of the teacher
+	 * @param firstName   the firstname of the teacher
+	 * @param lastName    the lastname of the teacher
 	 * @param subjects    the set of subjects this teacher can teach
 	 * @param hoursPerDay number of hours per day that the teacher teaches
 	 * @param daysPerWeek number of days that the teacher teaches
 	 */
-	public Teacher(String name, Set<Subject> subjects, int hoursPerDay, int daysPerWeek) {
-		this.name = name;
+	public Teacher(String firstName, String lastName, Set<Subject> subjects, int hoursPerDay,
+	               int daysPerWeek) {
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.subjects = subjects;
 		this.occupiedLessons = new Timetable(daysPerWeek, hoursPerDay, Integer.MAX_VALUE);
-	}
-
-	/**
-	 * Returns the name of this teacher.
-	 *
-	 * @return the name of this teacher
-	 */
-	public String getName() {
-		return name;
 	}
 
 	/**
@@ -107,7 +102,7 @@ public class Teacher {
 	 */
 	@Override
 	public String toString() {
-		return this.name;
+		return this.firstName + " " + this.lastName;
 	}
 
 	/**
@@ -138,7 +133,7 @@ public class Teacher {
 	 * false otherwise.
 	 */
 	@Override
-	public boolean equals(@Nullable Object o) {
+	public boolean equals(Object o) {
 		if (this == o) {
 			return true;
 		}
@@ -146,18 +141,19 @@ public class Teacher {
 			return false;
 		}
 		Teacher teacher = (Teacher) o;
-		return Objects.equals(name, teacher.name);
+		return Objects.equals(id, teacher.id);
 	}
 
-	/**
-	 * Returns a hash code value for this teacher.
-	 * The hash code is computed based on the name of the teacher.
-	 * This method is supported for the benefit of hash tables such as those provided by HashMap.
-	 *
-	 * @return a hash code value for this object.
-	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(name);
+		return Objects.hashCode(id);
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
 	}
 }

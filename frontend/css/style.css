@@ -1,0 +1,140 @@
+:root{
+    --timetables-font-size: 2vw;
+}
+
+*{
+    font-family: sans-serif;
+    margin: 0;
+}
+body{
+    background-color: #08191F;
+    overflow-x: hidden;
+}
+
+.box-flex-centered-row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.box-flex-spaced-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.box-flex-start-row{
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: row;
+}
+
+.box-flex-spaced-column{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.box-flex-centered-column{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+.box-flex-start-column{
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    flex-direction: column;
+}
+header{
+    position: fixed;
+    top: 0;
+    box-sizing: border-box;
+    background-color: #1C2F48;
+    width: 100vw;
+    padding: 1.25vh 0;
+}
+
+#header-svg{
+    margin-left: 4vw;
+    width: 12.5vw;
+}
+
+input{
+    text-align: start;
+    width: 30vw;
+    padding: 1vw 1vw 1vw 5vw;
+    margin: 1.5vw 2vw;
+    border-radius: 4vw;
+    border: none;
+    background-color: #D9D9D9;
+}
+
+.box-school{
+    margin-top: 20vh;
+    padding: 0;
+}
+
+.school{
+    background-color: #46678E;
+    color: white;
+    margin: 0.75vw;
+    width: 65vw;
+}
+
+.values p, h2{
+    margin: 2vw;
+    font-size: var(--timetables-font-size);
+    font-weight: bold;
+}
+
+.values p{
+    color: #00044D;
+}
+
+#edit{
+    margin-top: 21.5vh;
+    margin-right: 2vw;
+    background-color: #46678E;
+    width: 6.25vw;
+    height: 6.25vw;
+}
+#edit img{
+    width: 6vw;
+}
+#school-view{
+    margin-top: 20vh;
+    width: 75vw;
+    color: #586B92;
+}
+#school-view h2{
+    font-size: 4vw;
+    margin-bottom: 1vh;
+}
+#view-values p{
+    font-size: 2.75vw;
+    font-weight: bold;
+}
+#view-values div, a{
+    margin: 1.5vw;
+}
+#back{
+
+    margin: 4.25vh 3vw 0 0;
+}
+h3{
+    font-size: 3vw;
+}
+a{
+    text-decoration: none;
+    color: white;
+}
+.info{
+    color: #586B92;
+}

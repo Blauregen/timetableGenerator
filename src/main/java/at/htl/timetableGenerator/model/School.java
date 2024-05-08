@@ -17,6 +17,8 @@ import java.util.Set;
  * A school is defined by a set of school classes and a set of teachers.
  */
 public class School {
+	private Long id;
+	private static Long idCounter = 0L;
 	private final String name;
 	// school
 	private @NotNull Map<String, Room> rooms = new HashMap<>();
@@ -33,6 +35,7 @@ public class School {
 	 * @param teachers      the set of teachers in this school
 	 */
 	public School(String name, @NotNull Set<SchoolClass> schoolClasses, @NotNull Set<Teacher> teachers) {
+		this.id = idCounter++;
 		this.name = name;
 		setSchoolClasses(schoolClasses);
 		setTeachers(teachers);

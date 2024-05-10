@@ -15,10 +15,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Path("/api")
-public class TestResource {
+public class TimetableResource {
 	public class MultipleStringsReturnObject {
 		public String[] answer;
-//=====================================================================
+//==========================ERROR CODES==============================
 //Information [100 - 199]		==		Success [200 - 299]
 //---------------------------------------------------------------------
 //100 - Continue				==		200 - Ok
@@ -153,6 +153,27 @@ public class TestResource {
 		return schools;
 	}
 
+	@GET
+	@Path("/getAllRooms")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Room> rooms(){
+		List<Room> rooms = new LinkedList<>();
+		rooms.add(new Room("123-A"));
+		rooms.add(new Room("123-B"));
+		rooms.add(new Room("E24"));
+		rooms.add(new Room("U11"));
+		rooms.add(new Room("112"));
+		rooms.add(new Room("143"));
+		rooms.add(new Room("206"));
+		rooms.add(new Room("208"));
+		rooms.add(new Room("U07"));
+		rooms.add(new Room("101"));
+		rooms.add(new Room("E46"));
+		rooms.add(new Room("116"));
+
+		return rooms;
+	}
+
 	private static School getSampleSchool(String name){
 		Subject subjectE = new Subject("Englisch", "E", 2);
 		Subject subjectAM = new Subject("Angewandte Mathematik", "AM", 3);
@@ -189,6 +210,7 @@ public class TestResource {
 
 		return new School(name, schoolClasses, teachers);
 	}
+
 
 
 }

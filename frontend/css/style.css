@@ -1,6 +1,9 @@
 :root{
     --timetables-font-size: 2vw;
 }
+img{
+    width: 100%;
+}
 
 *{
     font-family: sans-serif;
@@ -29,6 +32,12 @@ body{
     display: flex;
     justify-content: center;
     align-items: start;
+    flex-direction: row;
+}
+.box-flex-end-row{
+    display: flex;
+    justify-content: end;
+    align-items: center;
     flex-direction: row;
 }
 
@@ -63,7 +72,7 @@ header{
 
 #header-svg{
     margin-left: 4vw;
-    width: 12.5vw;
+    width: 15%;
 }
 
 input{
@@ -125,8 +134,11 @@ input{
     margin: 1.5vw;
 }
 #back{
-
+    width: 7.5%;
     margin: 4.25vh 3vw 0 0;
+}
+#back img{
+    width: 100%;
 }
 h3{
     font-size: 3vw;
@@ -137,4 +149,17 @@ a{
 }
 .info{
     color: #586B92;
+}
+.school img{
+    width: 50%;
+    margin: 0;
+}
+.school a{
+    margin: 0;
+}
+.school p{
+    margin: 0;
+}
+.item{
+    width: 7.5vw;
 }

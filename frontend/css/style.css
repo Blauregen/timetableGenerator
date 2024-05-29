@@ -96,6 +96,12 @@ input{
     margin: 0.75vw;
     width: 65vw;
 }
+.school-teachers{
+    background-color: #46678E;
+    color: white;
+    margin: 0.75vw;
+    width: 65vw;
+}
 
 .values p, h2{
     margin: 2vw;
@@ -104,6 +110,15 @@ input{
 }
 
 .values p{
+    color: #00044D;
+}
+.values-teachers p, h2{
+    margin: 2vw;
+    font-size: var(--timetables-font-size);
+    font-weight: bold;
+}
+
+.values-teachers p{
     color: #00044D;
 }
 
@@ -159,6 +174,16 @@ a{
 }
 .school p{
     margin: 0;
+}
+.school-teachers img{
+    width: 50%;
+    margin: 0;
+}
+.school-teachers a{
+    margin: 0;
+}
+.school-teachers p{
+
 }
 .item{
     width: 7.5vw;

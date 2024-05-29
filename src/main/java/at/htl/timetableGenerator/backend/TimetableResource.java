@@ -30,10 +30,10 @@ public class TimetableResource {
 //Redirect [300 - 399]			==		Client Error [400 - 499]
 //----------------------------------------------------------------------
 //300 - Multiple Choices		==		400 - Bad Request
-//301 - Moved Permanantly		==		401 - Unauthorized
+//301 - Moved Permanently		==		401 - Unauthorized
 //304 - Not Modified			==		403 - Forbidden
 //307 - Temporary Redirect		==		404 - Not Found
-//308 - Permanant Redirect		==		409 - Conflict
+//308 - Permanent Redirect		==		409 - Conflict
 //======================================================================
 //Server Error [500 - 599]
 //----------------------------------------------------------------------
@@ -174,6 +174,11 @@ public class TimetableResource {
 		return rooms;
 	}
 
+	/**
+	 * Creates a school with sample data as replacement for what will later be data from the database
+	 *
+	 * @param name The name of the sample school that should be created
+	 */
 	private static School getSampleSchool(String name){
 		Subject subjectE = new Subject("Englisch", "E", 2);
 		Subject subjectAM = new Subject("Angewandte Mathematik", "AM", 3);

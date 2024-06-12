@@ -1,67 +1,71 @@
-:root{
+:root {
     --timetables-font-size: 2vw;
 }
-img{
+
+img {
     width: 100%;
 }
 
-*{
+* {
     font-family: sans-serif;
     margin: 0;
 }
-body{
+
+body {
     background-color: #08191F;
     overflow-x: hidden;
 }
 
-.box-flex-centered-row{
+.box-flex-centered-row {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
 }
 
-.box-flex-spaced-row{
+.box-flex-spaced-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
 }
 
-.box-flex-start-row{
+.box-flex-start-row {
     display: flex;
     justify-content: center;
     align-items: start;
     flex-direction: row;
 }
-.box-flex-end-row{
+
+.box-flex-end-row {
     display: flex;
     justify-content: end;
     align-items: center;
     flex-direction: row;
 }
 
-.box-flex-spaced-column{
+.box-flex-spaced-column {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 
-.box-flex-centered-column{
+.box-flex-centered-column {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
 }
 
-.box-flex-start-column{
+.box-flex-start-column {
     display: flex;
     justify-content: start;
     align-items: start;
     flex-direction: column;
 }
-header{
+
+header {
     position: fixed;
     top: 0;
     box-sizing: border-box;
@@ -70,12 +74,12 @@ header{
     padding: 1.25vh 0;
 }
 
-#header-svg{
+#header-svg {
     margin-left: 4vw;
     width: 15%;
 }
 
-input{
+input {
     text-align: start;
     width: 30vw;
     padding: 1vw 1vw 1vw 5vw;
@@ -85,109 +89,129 @@ input{
     background-color: #D9D9D9;
 }
 
-.box-school{
+.box-school {
     margin-top: 20vh;
     padding: 0;
 }
 
-.school{
-    background-color: #46678E;
-    color: white;
-    margin: 0.75vw;
-    width: 65vw;
-}
-.school-teachers{
+.school {
     background-color: #46678E;
     color: white;
     margin: 0.75vw;
     width: 65vw;
 }
 
-.values p, h2{
+.school-teachers {
+    background-color: #46678E;
+    color: white;
+    margin: 0.75vw;
+    width: 65vw;
+}
+
+.values p, h2 {
     margin: 2vw;
     font-size: var(--timetables-font-size);
     font-weight: bold;
 }
 
-.values p{
+.values p {
     color: #00044D;
 }
-.values-teachers p, h2{
+
+.values-teachers p, h2 {
     margin: 2vw;
     font-size: var(--timetables-font-size);
     font-weight: bold;
 }
 
-.values-teachers p{
+.values-teachers p {
     color: #00044D;
 }
 
-#edit{
+#edit {
     margin-top: 21.5vh;
     margin-right: 2vw;
     background-color: #46678E;
     width: 6.25vw;
     height: 6.25vw;
 }
-#edit img{
+
+#edit img {
     width: 6vw;
 }
-#school-view{
+
+#school-view {
     margin-top: 20vh;
     width: 75vw;
     color: #586B92;
 }
-#school-view h2{
+
+#school-view h2 {
     font-size: 4vw;
     margin-bottom: 1vh;
 }
-#view-values p{
+
+#view-values p {
     font-size: 2.75vw;
     font-weight: bold;
 }
-#view-values div, a{
+
+#view-values div, a {
     margin: 1.5vw;
 }
-#back{
+
+#back {
     width: 7.5%;
     margin: 4.25vh 3vw 0 0;
 }
-#back img{
+
+#back img {
     width: 100%;
 }
-h3{
+
+h3 {
     font-size: 3vw;
 }
-a{
+
+a {
     text-decoration: none;
     color: white;
 }
-.info{
+
+.info {
     color: #586B92;
 }
-.school img{
+
+.school img {
     width: 50%;
     margin: 0;
 }
-.school a{
+
+.school a {
     margin: 0;
 }
-.school p{
+
+.school p {
     margin: 0;
 }
-.school-teachers img{
+
+.school-teachers img {
     width: 50%;
     margin: 0;
 }
-.school-teachers a{
+
+.school-teachers a {
     margin: 0;
 }
-.school-teachers p{
+
+.school-teachers p {
 
 }
-.item{
+
+.item {
     width: 7.5vw;
 }
+
 .grid-timetable {
     width: 75%;
     margin: 2.5%;
@@ -199,18 +223,20 @@ a{
     background-color: black;
     border-radius: 2.5%;
 }
-.grid-timetable h3, .grid-timetable div{
+
+.grid-timetable h3, .grid-timetable div {
     padding: 1%;
     margin: 1%;
     color: white;
     background-color: #ffffff;
     text-align: center;
 }
-.grid-timetable:first-child{
+
+.grid-timetable:first-child {
     border-top-left-radius: 2.5%;
 }
 
-table{
+table {
     color: white;
     border-collapse: collapse;
     margin-top: 10%;
@@ -220,30 +246,46 @@ table{
     border-radius: 2.5rem;
     padding: 1.5%;
 }
-.thing{
-margin-top: 14vh
-}
 
-th, td{
+th, td {
     box-sizing: border-box;
-    width: 5rem;
     height: 5rem;
+    /*width: 5rem;*/
     text-align: center;
 }
-th:nth-child(-n + 7){
+
+th:nth-child(-n + 7) {
     border-bottom: black solid 0.15rem;
 }
-th:first-child{
+
+th:first-child {
     border-bottom: unset;
 }
-td{
+
+td {
+
     width: 10%;
-    background-color: #46678E;
+    /*background-color: #46678E;*/
     border-radius: 1%;
     padding: 0.25rem;
-    margin: 2vw !important;
 }
 
+.box-subject {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+    margin: 12.5%;
+    height: 85%;
+    border-radius: 0.25rem;
+    text-align: center;
+    background-color: #46678E;
+}
+.timestamp{
+    padding: 0;
+    width: 10%;
+    margin: 0;
+}
 
 
 

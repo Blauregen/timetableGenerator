@@ -1,6 +1,9 @@
 :root{
     --timetables-font-size: 2vw;
 }
+img{
+    width: 100%;
+}
 
 *{
     font-family: sans-serif;
@@ -29,6 +32,12 @@ body{
     display: flex;
     justify-content: center;
     align-items: start;
+    flex-direction: row;
+}
+.box-flex-end-row{
+    display: flex;
+    justify-content: end;
+    align-items: center;
     flex-direction: row;
 }
 
@@ -63,7 +72,7 @@ header{
 
 #header-svg{
     margin-left: 4vw;
-    width: 12.5vw;
+    width: 15%;
 }
 
 input{
@@ -87,6 +96,12 @@ input{
     margin: 0.75vw;
     width: 65vw;
 }
+.school-teachers{
+    background-color: #46678E;
+    color: white;
+    margin: 0.75vw;
+    width: 65vw;
+}
 
 .values p, h2{
     margin: 2vw;
@@ -95,6 +110,15 @@ input{
 }
 
 .values p{
+    color: #00044D;
+}
+.values-teachers p, h2{
+    margin: 2vw;
+    font-size: var(--timetables-font-size);
+    font-weight: bold;
+}
+
+.values-teachers p{
     color: #00044D;
 }
 
@@ -125,8 +149,11 @@ input{
     margin: 1.5vw;
 }
 #back{
-
+    width: 7.5%;
     margin: 4.25vh 3vw 0 0;
+}
+#back img{
+    width: 100%;
 }
 h3{
     font-size: 3vw;
@@ -138,3 +165,86 @@ a{
 .info{
     color: #586B92;
 }
+.school img{
+    width: 50%;
+    margin: 0;
+}
+.school a{
+    margin: 0;
+}
+.school p{
+    margin: 0;
+}
+.school-teachers img{
+    width: 50%;
+    margin: 0;
+}
+.school-teachers a{
+    margin: 0;
+}
+.school-teachers p{
+
+}
+.item{
+    width: 7.5vw;
+}
+.grid-timetable {
+    width: 75%;
+    margin: 2.5%;
+    display: grid;
+    grid-template-columns: 0.75fr repeat(6, 1fr);
+    grid-template-rows: 0.75fr repeat(16, 1fr);
+    grid-column-gap: 0;
+    grid-row-gap: 0;
+    background-color: black;
+    border-radius: 2.5%;
+}
+.grid-timetable h3, .grid-timetable div{
+    padding: 1%;
+    margin: 1%;
+    color: white;
+    background-color: #ffffff;
+    text-align: center;
+}
+.grid-timetable:first-child{
+    border-top-left-radius: 2.5%;
+}
+
+table{
+    color: white;
+    border-collapse: collapse;
+    margin-top: 10%;
+    width: 75%;
+    height: 80%;
+    background-color: rgba(61, 77, 109, 0.49);
+    border-radius: 2.5rem;
+    padding: 1.5%;
+}
+.thing{
+margin-top: 14vh
+}
+
+th, td{
+    box-sizing: border-box;
+    width: 5rem;
+    height: 5rem;
+    text-align: center;
+}
+th:nth-child(-n + 7){
+    border-bottom: black solid 0.15rem;
+}
+th:first-child{
+    border-bottom: unset;
+}
+td{
+    width: 10%;
+    background-color: #46678E;
+    border-radius: 1%;
+    padding: 0.25rem;
+    margin: 2vw !important;
+}
+
+
+
+
+

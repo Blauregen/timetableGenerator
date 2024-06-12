@@ -1,10 +1,8 @@
 package at.htl.timetableGenerator.model;
 
 import at.htl.timetableGenerator.constraints.Constraint;
-import at.htl.timetableGenerator.output.CSVExporter;
-import at.htl.timetableGenerator.output.ExcelExporter;
 import at.htl.timetableGenerator.output.ExportData;
-import at.htl.timetableGenerator.output.ExportFormat;
+import at.htl.timetableGenerator.output.TimetableExporter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -20,6 +18,7 @@ public class School {
 	private Long id;
 	private static Long idCounter = 0L;
 	private final String name;
+	private final HashSet<TimetableExporter> exporters = new HashSet<>();
 	// school
 	private @NotNull Map<String, Room> rooms = new HashMap<>();
 	private Set<Constraint> constraints = new HashSet<>();
@@ -48,6 +47,10 @@ public class School {
 	 */
 	public School(String name) {
 		this.name = name;
+	}
+
+	public void addExporter(TimetableExporter exporter) {
+		exporters.add(exporter);
 	}
 
 	/**
@@ -188,10 +191,10 @@ public class School {
 					timetables.put(schoolClass.getName(), timetable);
 				}
 			} catch (Exception ignored) {
-				timetables.forEach((name, timetable) -> timetable.setTimetable(new HashMap<>()));
+				timetables.forEach((_, timetable) -> timetable.setTimetable(new HashMap<>()));
 				teachers.forEach(teacher -> teacher.setOccupiedLessons(
 						new Timetable(daysPerWeek, maxHoursPerDay, Integer.MAX_VALUE)));
-				rooms.forEach((name, room) -> room.getTimetable().setTimetable(new HashMap<>()));
+				rooms.forEach((_, room) -> room.getTimetable().setTimetable(new HashMap<>()));
 				timetables = new HashMap<>();
 			}
 		}
@@ -232,12 +235,10 @@ public class School {
 	/**
 	 * Exports all timetables of the school to the specified directory in the specified formats.
 	 *
-	 * @param exportData   the data to export
-	 * @param exportFormat the formats to export in
-	 * @param directory    the directory to export to
+	 * @param exportData the data to export
+	 * @param directory  the directory to export to
 	 */
-	public void exportAllTimetables(@NotNull Set<ExportData> exportData,
-	                                @NotNull Set<ExportFormat> exportFormat, String directory) {
+	public void exportAllTimetables(@NotNull Set<ExportData> exportData, String directory) {
 		HashMap<String, Timetable> timetables = new HashMap<>();
 
 		if (exportData.contains(ExportData.CLASSES)) {
@@ -253,17 +254,7 @@ public class School {
 			rooms.values().forEach(room -> timetables.put(room.getName(), room.getTimetable()));
 		}
 
-		if (exportFormat.contains(ExportFormat.CSV)) {
-			CSVExporter.exportTimetablesToSingleFile(timetables, directory + this.name + ".csv");
-		}
-
-		if (exportFormat.contains(ExportFormat.CSV_MULTIPLE)) {
-			CSVExporter.exportTimetablesToMultipleFiles(timetables, directory + this.name);
-		}
-
-		if (exportFormat.contains(ExportFormat.EXCEL)) {
-			ExcelExporter.exportToWorkbook(timetables, directory + this.name + ".xlsx");
-		}
+		exporters.forEach(exporter -> exporter.export(timetables, directory));
 	}
 
 	/**

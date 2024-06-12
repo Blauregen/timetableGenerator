@@ -11,7 +11,7 @@ import java.util.Objects;
  * This class represents a time slot in a timetable.
  * A time slot is defined by a day of the week and an hour of the day.
  */
-public final class TimeSlot {
+public final class TimeSlot implements Comparable<TimeSlot> {
 	private DayOfWeek day;  // The day of the week for this time slot
 	private int hour;  // The hour of the day for this time slot
 
@@ -150,5 +150,16 @@ public final class TimeSlot {
 			throw new IllegalArgumentException("Trying to get timeslot for negative time");
 		}
 		return new TimeSlot(this.day, this.hour - 1);
+	}
+
+	@Override
+	public int compareTo(@NotNull TimeSlot o) {
+		int dayCompare = this.getDay().compareTo(o.getDay());
+
+		if (dayCompare == 0) {
+			return Integer.compare(this.getHour(), o.getHour());
+		}
+
+		return dayCompare;
 	}
 }

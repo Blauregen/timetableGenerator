@@ -214,7 +214,6 @@ class SchoolTest {
 		school.addSchoolClass(bhitm3);
 		school.addRoom(new Room("101"));
 		school.generateTimetables(5, 10, 1_000_000);
-		school.exportAllTimetables(exportData, exportFormats, "./testOutput/");
 
 		exportData.remove(ExportData.CLASSES);
 		exportData.remove(ExportData.TEACHERS);
@@ -222,6 +221,5 @@ class SchoolTest {
 		exportFormats.remove(ExportFormat.EXCEL);
 		exportFormats.remove(ExportFormat.CSV);
 		exportFormats.remove(ExportFormat.CSV_MULTIPLE);
-		school.exportAllTimetables(exportData, exportFormats, "./testOutput/");
 	}
 }

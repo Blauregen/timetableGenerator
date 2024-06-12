@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * This class provides a method to export timetables to an Excel workbook.
  */
-public class ExcelExporter {
+public class ExcelExporter implements TimetableExporter {
 
 	/**
 	 * Exports multiple timetables to an Excel workbook.
@@ -36,7 +36,7 @@ public class ExcelExporter {
 	 *
 	 * @throws ExportException if an error occurs during the export process
 	 */
-	public static void exportToWorkbook(@NotNull Map<String, Timetable> timetables,
+	public void export(@NotNull Map<String, Timetable> timetables,
 	                                    @NotNull String stringPath) {
 		Path path = Paths.get(stringPath);
 		if (!Files.exists(path)) {
